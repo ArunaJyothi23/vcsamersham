@@ -19,9 +19,9 @@ export default function Menu() {
         {/* Allergy info banner replica as Image */}
         <div style={{ display: 'flex', justifyContent: 'center', marginBottom: '3rem' }}>
           <img 
-            src="https://vcsamersham.co.uk/wp-content/uploads/2026/06/Add-a-heading-8.png" 
+            src="https://vcsamersham.co.uk/wp-content/uploads/2026/06/WhatsApp-Image-2025-12-03-at-11.49.42-e1764743369811.jpeg" 
             alt="Allergy Legend" 
-            style={{ maxWidth: '100%', width: '450px', height: 'auto' }}
+            style={{ maxWidth: '100%', width: '600px', height: 'auto' }}
           />
         </div>
 
