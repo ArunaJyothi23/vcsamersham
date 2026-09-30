@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import "./globals.css";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
-import AskKodee from "../components/AskKodee";
 
 export const metadata: Metadata = {
   title: "South Indian Vegetarian Restaurant Amersham | 100% Pure Veg",
@@ -39,7 +38,6 @@ export default function RootLayout({
           {children}
         </main>
         <Footer />
-        <AskKodee />
       </body>
     </html>
   );
