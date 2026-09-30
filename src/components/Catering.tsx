@@ -74,7 +74,7 @@ export default function Catering() {
         {/* Right Image */}
         <div style={{ flex: '1 1 500px' }}>
           <img 
-            src="https://vcsamersham.co.uk/wp-content/uploads/2026/07/CaffeChennai-70-1024x683.jpg" 
+            src="https://vcsamersham.co.uk/wp-content/uploads/2026/07/WhatsApp-Image-2025-11-03-at-20.09.01-e1762181892424-revfovesohdolmi0nfd5hx1m4gzkocdy54c36on35k.jpeg" 
             alt="South Indian Catering" 
             style={{ width: '100%', borderRadius: '24px', boxShadow: '0 20px 40px rgba(0,0,0,0.1)', objectFit: 'cover' }}
           />
