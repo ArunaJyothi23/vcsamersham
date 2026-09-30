@@ -6,8 +6,17 @@ export default function Reviews() {
 
   const reviews = [
     {
+      author: "Arunajyothi Boddu",
+      avatarLetter: "A",
+      avatarColor: "#ea4335", // Google Red/Orange
+      time: "8 minutes ago",
+      rating: 3,
+      text: "Nice food ..."
+    },
+    {
       author: "Nachural",
-      avatarImg: "https://images.unsplash.com/photo-1614730321146-b6fa6a46bcb4?w=100&h=100&fit=crop",
+      avatarLetter: "N",
+      avatarColor: "#0f766e",
       time: "4 months ago",
       rating: 3,
       text: "Really need to change the white plastic tray. I would also advise using the bain-marie for sambhar and rasam. Taste and"
@@ -22,7 +31,8 @@ export default function Reviews() {
     },
     {
       author: "Marudavanan Soma...",
-      avatarImg: "https://lh3.googleusercontent.com/a/ACg8ocK1wz7qBqC8281V2y2Q5zB37R4P7_413sD-qR3F-7b=s36-c-k-c0x00ffffff-no-rj", 
+      avatarLetter: "M", 
+      avatarColor: "#16a34a",
       time: "5 months ago",
       rating: 5,
       text: "Excellent restaurant with delicious vegetarian food in the beautiful small town of Amersham"
@@ -45,7 +55,8 @@ export default function Reviews() {
     },
     {
       author: "Ketan Bhavan",
-      avatarImg: "https://lh3.googleusercontent.com/a-/ALV-UjWOoHqC24DXYjU49qL73uA0J4934YhP5=s36-c-k-c0x00ffffff-no-rj",
+      avatarLetter: "K",
+      avatarColor: "#2563eb",
       time: "last year",
       rating: 5,
       text: "Really nice south Indian food! Really enjoyed our visit with a wide range of dosas that all tasted great!Pure vegetarian"
@@ -172,13 +183,9 @@ export default function Reviews() {
                 </div>
 
                 <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', marginBottom: '1.5rem' }}>
-                  {rev.avatarImg ? (
-                    <img src={rev.avatarImg} alt={rev.author} style={{ width: '45px', height: '45px', borderRadius: '50%', objectFit: 'cover' }} />
-                  ) : (
-                    <div style={{ width: '45px', height: '45px', borderRadius: '50%', backgroundColor: rev.avatarColor, color: '#fff', display: 'flex', justifyContent: 'center', alignItems: 'center', fontSize: '1.3rem', fontWeight: '500' }}>
-                      {rev.avatarLetter}
-                    </div>
-                  )}
+                  <div style={{ width: '45px', height: '45px', borderRadius: '50%', backgroundColor: rev.avatarColor, color: '#fff', display: 'flex', justifyContent: 'center', alignItems: 'center', fontSize: '1.3rem', fontWeight: '500' }}>
+                    {rev.avatarLetter}
+                  </div>
                   <div>
                     <h4 style={{ margin: '0 0 0.2rem 0', fontSize: '1rem', color: '#1a0dab', fontWeight: 'bold' }}>{rev.author}</h4>
                     <span style={{ fontSize: '0.85rem', color: '#666' }}>{rev.time}</span>
