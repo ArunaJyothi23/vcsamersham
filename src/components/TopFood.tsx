@@ -73,25 +73,9 @@ export default function TopFood() {
       `}</style>
       
       <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '0 1.25rem', marginBottom: '2.5rem' }}>
-        <span
-          style={{
-            color: '#d38b6d',
-            fontSize: '0.85rem',
-            fontWeight: 700,
-            letterSpacing: '2px',
-            textTransform: 'uppercase',
-            display: 'block',
-            marginBottom: '0.5rem',
-          }}
-        >
-          Fresh from our Kitchen
-        </span>
-        <h2 style={{ fontSize: 'clamp(2rem, 4vw, 2.8rem)', fontWeight: 800, color: '#111', marginBottom: '0.5rem' }}>
-          Top Food & Signatures
+        <h2 style={{ fontSize: 'clamp(2.2rem, 5vw, 3rem)', fontWeight: 800, color: '#111', textAlign: 'center', margin: 0 }}>
+          Top Food
         </h2>
-        <p style={{ color: '#666', fontSize: 'clamp(0.95rem, 1.8vw, 1.05rem)', maxWidth: '600px', margin: '0 auto' }}>
-          Crispy dosas, authentic sambar, soft idlis, and freshly prepared South Indian delicacies.
-        </p>
       </div>
 
       <div className="marquee-track">
