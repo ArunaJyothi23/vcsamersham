@@ -12,51 +12,65 @@ export default function OutdoorCatering() {
         textAlign: 'center',
         color: '#fff',
         backgroundColor: '#111',
-        backgroundImage: 'linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url("https://vcsamersham.co.uk/wp-content/uploads/2026/06/WhatsApp-Image-2025-11-03-at-18.48.43-1024x430.jpeg")',
+        backgroundImage: 'linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url("https://images.unsplash.com/photo-1546833999-b9f581a1996d?q=80&w=2000&auto=format&fit=crop")',
         backgroundSize: 'cover',
         backgroundPosition: 'center',
       }}>
+        <h1 style={{ 
+          fontSize: '3.5rem', 
+          fontWeight: 800, 
+          margin: 0,
+          textShadow: '2px 2px 4px rgba(0,0,0,0.8), -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000'
+        }}>
+          Outdoor Catering
+        </h1>
       </section>
 
       {/* Main Content */}
-      <section style={{ maxWidth: '1200px', margin: '4rem auto', padding: '0 2rem', textAlign: 'center' }}>
-        <p style={{ fontSize: '1.1rem', lineHeight: 1.8, color: '#333', marginBottom: '3rem' }}>
-          Authentic 100% vegetarian catering in UK, backed by 21+ years of experience. Proud to have catered to all the VIPs and VVIPs of Indian origin across the UK. Perfect for weddings, corporate events, housewarmings, and temple functions. Enjoy live dosa stations, soft idlis, crispy vadas, and traditional banana-leaf feasts with sambar, rasam, poriyal, and payasam—freshly prepared for a truly authentic and memorable experience.
-        </p>
-
-        {/* Options Bar */}
-        <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center', gap: '0.5rem', marginBottom: '4rem' }}>
-          {['Option 1', 'Option 2', 'Option 3', 'Option 4', 'Option 5', 'Option 6', 'Option 7', 'Option 8', 'Option 9'].map((opt, i) => (
-            <button key={i} style={{
-              backgroundColor: i === 0 ? '#4cd137' : '#d3997f',
-              color: '#fff',
-              border: 'none',
-              padding: '0.6rem 1.5rem',
-              borderRadius: '8px',
-              fontSize: '1rem',
-              fontWeight: 'bold',
-              cursor: 'pointer'
-            }}>
-              {opt}
-            </button>
-          ))}
+      <section style={{ maxWidth: '1000px', margin: '4rem auto', padding: '0 2rem' }}>
+        
+        <div style={{ textAlign: 'center', marginBottom: '4rem', maxWidth: '800px', margin: '0 auto' }}>
+          <h2 style={{ fontSize: '2.5rem', color: '#111', marginBottom: '1.5rem', fontWeight: 'bold' }}>
+            Authentic 100% Pure Vegetarian Catering
+          </h2>
+          <p style={{ fontSize: '1.2rem', color: '#4b5563', lineHeight: 1.8 }}>
+            Authentic 100% vegetarian catering in UK, backed by 21+ years of experience. Proud to have catered to all the VIPs and VVIPs of Indian origin across the UK. Perfect for weddings, corporate events, housewarmings, and temple functions. Enjoy live dosa stations, soft idlis, crispy vadas, and traditional banana-leaf feasts with sambar, rasam, poriyal, and payasam—freshly prepared for a truly authentic and memorable experience.
+          </p>
         </div>
 
-        {/* Standard Menu */}
-        <div style={{ textAlign: 'left' }}>
-          <h2 style={{ fontSize: '2rem', color: '#1a3b5c', marginBottom: '1.5rem', fontWeight: 'bold' }}>Standard Menu</h2>
-          <p style={{ fontSize: '1.1rem', color: '#333', lineHeight: 1.8, marginBottom: '2rem' }}>
-            Idly Or Veg Biryani, Meduvada (Live), Masala Dosa (Live), Plain Dosa(Live), Onion Dosa (Live), PodiDosa (Live), Onion Uthappam (Live), Capsicum Uthappam (Live), Chilli Uthappam (Live), Plain Uthappam (Live), PodiUthappam (Live), Coconut chutney, Tomato & Onion Chutney and Sambar.
-          </p>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '2rem', marginBottom: '5rem' }}>
+          <div style={{ backgroundColor: '#fdfbf7', padding: '2.5rem', borderRadius: '12px', borderTop: '4px solid #d38b6d', boxShadow: '0 4px 12px rgba(0,0,0,0.05)' }}>
+            <h3 style={{ fontSize: '1.5rem', color: '#111', marginBottom: '1rem' }}>Menu Option 1</h3>
+            <ul style={{ listStyle: 'none', padding: 0, margin: 0, color: '#4b5563', lineHeight: 1.8 }}>
+              <li>• Starters & Snacks</li>
+              <li>• Live Dosa Counter</li>
+              <li>• Main Course Curries</li>
+              <li>• Rice Varieties</li>
+              <li>• Traditional Sweets</li>
+            </ul>
+          </div>
+          <div style={{ backgroundColor: '#fdfbf7', padding: '2.5rem', borderRadius: '12px', borderTop: '4px solid #d38b6d', boxShadow: '0 4px 12px rgba(0,0,0,0.05)' }}>
+            <h3 style={{ fontSize: '1.5rem', color: '#111', marginBottom: '1rem' }}>Menu Option 2 (Premium)</h3>
+            <ul style={{ listStyle: 'none', padding: 0, margin: 0, color: '#4b5563', lineHeight: 1.8 }}>
+              <li>• Extended Starters</li>
+              <li>• Live Dosa & Vada Counters</li>
+              <li>• Grand Banana Leaf Feast</li>
+              <li>• Assorted Breads & Curries</li>
+              <li>• Multiple Desserts & Beverages</li>
+            </ul>
+          </div>
+        </div>
 
-          <h3 style={{ fontSize: '1.2rem', fontWeight: 'bold', marginBottom: '0.5rem', color: '#111' }}>Price :</h3>
-          <p style={{ fontSize: '1.1rem', color: '#333', lineHeight: 1.8 }}>
-            Minimum call out charge for Live Dosa Station for a Weekend is £480/ up to 40 people (£480/ can be reached by the number of people or by the menu),
-            Minimum call out charge for Live Dosa Station for a Weekday is £385/ up to 35 people (£385/ can be reached by the number of people or by the menu).
-          </p>
+        <div style={{ textAlign: 'center', backgroundColor: '#111', color: '#fff', borderRadius: '16px', padding: '4rem 2rem' }}>
+          <h2 style={{ fontSize: '2.5rem', marginBottom: '2rem' }}>Enquire Now</h2>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem', fontSize: '1.2rem' }}>
+            <p><strong>Email:</strong> vcsramersham@gmail.com</p>
+            <p><strong>Phone:</strong> +0149 497 2550</p>
+            <p><strong>Location:</strong> 94, Sycamore Road, Amersham, HP6 5EN</p>
+            <p style={{ marginTop: '1rem', color: '#9ca3af' }}>Please ring us between 11:00 AM TO 3.30PM AND 5.30 PM TO 10.30PM</p>
+          </div>
         </div>
       </section>
-
     </main>
   );
 }
