@@ -5,11 +5,11 @@ export const metadata = {
 
 export default function Disclaimer() {
   return (
-    <div style={{ padding: '4rem 2rem', backgroundColor: '#fff', color: '#111', fontFamily: 'inherit', lineHeight: '1.8' }}>
+    <div style={{ padding: 'clamp(2.5rem, 5vw, 4rem) clamp(1rem, 4vw, 2rem)', backgroundColor: '#fff', color: '#111', fontFamily: 'inherit', lineHeight: '1.8' }}>
       <div style={{ maxWidth: '900px', margin: '0 auto' }}>
-        <h1 style={{ fontSize: '3rem', fontWeight: 700, marginBottom: '2rem', color: '#1a2f4c' }}>Disclaimer</h1>
+        <h1 style={{ fontSize: 'clamp(2rem, 5vw, 3rem)', fontWeight: 700, marginBottom: '1.5rem', color: '#1a2f4c' }}>Disclaimer</h1>
 
-        <h2 style={{ fontSize: '2rem', fontWeight: 600, marginTop: '2rem', marginBottom: '1.5rem', color: '#1a2f4c' }}>Food Safety and Allergies</h2>
+        <h2 style={{ fontSize: 'clamp(1.35rem, 3.5vw, 1.85rem)', fontWeight: 600, marginTop: '2rem', marginBottom: '1rem', color: '#1a2f4c' }}>Food Safety and Allergies</h2>
         <p style={{ marginBottom: '2.5rem' }}>
           We are committed to maintaining high standards of food safety and hygiene in the preparation of all our dishes. However, as our kitchen handles a variety of ingredients, we cannot guarantee that any item is completely free from allergens. Customers with food allergies or specific dietary requirements must inform us clearly at the time of ordering so that we can take appropriate precautions.
         </p>

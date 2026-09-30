@@ -166,11 +166,11 @@ export default function Reviews() {
             {/* Review Cards */}
             {reviews.map((rev, idx) => (
               <div key={idx} style={{ 
-                minWidth: '320px',
-                maxWidth: '320px',
+                minWidth: 'min(320px, 80vw)',
+                maxWidth: 'min(320px, 80vw)',
                 backgroundColor: '#fff',
                 borderRadius: '8px',
-                padding: '2rem 1.5rem',
+                padding: '1.75rem 1.25rem',
                 textAlign: 'left',
                 boxShadow: '0 2px 10px rgba(0,0,0,0.05)',
                 position: 'relative',
@@ -202,15 +202,11 @@ export default function Reviews() {
           </div>
 
           {/* Dots Mock */}
-          <div style={{ display: 'flex', justifyContent: 'center', gap: '0.5rem', marginTop: '1rem' }}>
+          <div style={{ display: 'flex', justifyContent: 'center', gap: '0.5rem', marginTop: '1.5rem' }}>
             <div style={{ width: '8px', height: '8px', borderRadius: '50%', backgroundColor: '#f59e0b' }}></div>
             <div style={{ width: '8px', height: '8px', borderRadius: '50%', backgroundColor: '#e5e7eb' }}></div>
             <div style={{ width: '8px', height: '8px', borderRadius: '50%', backgroundColor: '#e5e7eb' }}></div>
           </div>
-        </div>
-
-        <div style={{ textAlign: 'left', marginTop: '3rem', color: '#666', fontSize: '0.9rem' }}>
-          [trustindex-feed-instagram]
         </div>
       </div>
     </section>

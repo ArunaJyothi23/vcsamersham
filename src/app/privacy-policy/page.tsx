@@ -5,16 +5,16 @@ export const metadata = {
 
 export default function PrivacyPolicy() {
   return (
-    <div style={{ padding: '4rem 2rem', backgroundColor: '#fff', color: '#111', fontFamily: 'inherit', lineHeight: '1.8' }}>
+    <div style={{ padding: 'clamp(2.5rem, 5vw, 4rem) clamp(1rem, 4vw, 2rem)', backgroundColor: '#fff', color: '#111', fontFamily: 'inherit', lineHeight: '1.8' }}>
       <div style={{ maxWidth: '900px', margin: '0 auto' }}>
-        <h1 style={{ fontSize: '3rem', fontWeight: 700, marginBottom: '1rem', color: '#1a2f4c' }}>Privacy Policy</h1>
+        <h1 style={{ fontSize: 'clamp(2rem, 5vw, 3rem)', fontWeight: 700, marginBottom: '1rem', color: '#1a2f4c' }}>Privacy Policy</h1>
         <p style={{ fontWeight: 'bold', marginBottom: '2rem' }}>Effective Date: 01/01/2027</p>
 
         <p style={{ marginBottom: '2.5rem' }}>
           At Veg chennai Srilalitha, we are committed to protecting your privacy and ensuring that your personal information is handled in a safe and responsible manner. This Privacy Policy outlines how we collect, use, and protect your information when you visit our website or place an order with us.
         </p>
 
-        <h2 style={{ fontSize: '2rem', fontWeight: 600, marginTop: '3rem', marginBottom: '1.5rem', color: '#1a2f4c' }}>Information We Collect</h2>
+        <h2 style={{ fontSize: 'clamp(1.35rem, 3.5vw, 1.85rem)', fontWeight: 600, marginTop: '2.5rem', marginBottom: '1rem', color: '#1a2f4c' }}>Information We Collect</h2>
         <p style={{ marginBottom: '1rem' }}>We may collect the following types of information:</p>
         <ul style={{ marginLeft: '1.5rem', marginBottom: '2.5rem', listStyleType: 'disc' }}>
           <li style={{ marginBottom: '0.8rem' }}>Website usage data (such as IP address, browser type, and pages visited)</li>

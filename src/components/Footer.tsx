@@ -33,10 +33,10 @@ export default function Footer() {
       <div style={{
         maxWidth: '1200px',
         margin: '0 auto',
-        padding: '0 2rem',
+        padding: '0 clamp(1.25rem, 4vw, 2rem)',
         display: 'grid',
-        gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))',
-        gap: '3rem',
+        gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 220px), 1fr))',
+        gap: '2.5rem',
         borderBottom: '1px solid #222',
         paddingBottom: '2.5rem',
         marginBottom: '1.5rem'

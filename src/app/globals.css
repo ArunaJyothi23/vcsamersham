@@ -1,5 +1,6 @@
 @import "tailwindcss";
 @plugin "@tailwindcss/typography";
+
 :root {
   --background: #ffffff;
   --foreground: #171717;
@@ -19,8 +20,65 @@
   }
 }
 
+html {
+  box-sizing: border-box;
+}
+
+body {
+  overflow-x: clip;
+}
+
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
 body {
   background: var(--background);
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
+  margin: 0;
+  padding: 0;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Catering form input overrides - ensures exact styling across browsers */
+.live-dosa-form input[type="text"],
+.live-dosa-form input[type="email"],
+.live-dosa-form input[type="tel"],
+.live-dosa-form input[type="number"],
+.live-dosa-form input[type="date"],
+.live-dosa-form textarea,
+.outdoor-enquiry-form input[type="text"],
+.outdoor-enquiry-form input[type="email"],
+.outdoor-enquiry-form input[type="tel"],
+.outdoor-enquiry-form input[type="number"],
+.outdoor-enquiry-form input[type="date"],
+.outdoor-enquiry-form textarea {
+  border: 1px solid #d38b6d !important;
+  border-radius: 6px !important;
+  padding: 0.85rem 1rem !important;
+  font-size: 1rem !important;
+  font-family: inherit !important;
+  background-color: #fff !important;
+  color: #333 !important;
+  outline: none !important;
+  box-sizing: border-box !important;
+  width: 100% !important;
+  height: auto !important;
+  box-shadow: none !important;
+}
+
+.live-dosa-form input:focus,
+.live-dosa-form textarea:focus,
+.outdoor-enquiry-form input:focus,
+.outdoor-enquiry-form textarea:focus {
+  border-color: #c57c5d !important;
+  box-shadow: 0 0 0 2px rgba(211, 139, 109, 0.2) !important;
+}
+
+.live-dosa-form input::placeholder,
+.live-dosa-form textarea::placeholder,
+.outdoor-enquiry-form input::placeholder,
+.outdoor-enquiry-form textarea::placeholder {
+  color: #9ca3af !important;
 }
