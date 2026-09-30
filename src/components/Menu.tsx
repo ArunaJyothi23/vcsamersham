@@ -17,7 +17,7 @@ export default function Menu() {
         </h2>
 
         {/* Allergy info banner replica as Image */}
-        <div style={{ display: 'flex', justifyContent: 'center', marginBottom: '3rem' }}>
+        <div style={{ display: 'flex', justifyContent: 'center', marginBottom: '1.5rem' }}>
           <img 
             src="https://vcsamersham.co.uk/wp-content/uploads/2026/06/WhatsApp-Image-2025-12-03-at-11.49.42-e1764743369811.jpeg" 
             alt="Allergy Legend" 
@@ -40,12 +40,12 @@ export default function Menu() {
               key={cat}
               onClick={() => setActiveCategory(cat)}
               style={{
-                padding: '0.6rem 1.2rem',
-                border: activeCategory === cat ? '1px solid #111' : '1px solid transparent',
-                borderRadius: '8px',
+                padding: '0.5rem 1.2rem',
+                border: 'none',
+                borderRadius: '5px',
                 backgroundColor: activeCategory === cat ? '#fff' : '#d39e7e',
                 color: activeCategory === cat ? '#111' : '#fff',
-                fontWeight: 'bold',
+                fontWeight: '600',
                 fontSize: '0.9rem',
                 cursor: 'pointer',
                 boxShadow: activeCategory === cat ? '0 4px 12px rgba(0,0,0,0.05)' : 'none',
