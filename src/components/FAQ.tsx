@@ -25,7 +25,7 @@ const faqs = [
 ];
 
 export default function FAQ() {
-  const [openIndex, setOpenIndex] = useState(0);
+  const [openIndex, setOpenIndex] = useState(-1);
 
   return (
     <section style={{ padding: '6rem 2rem', backgroundColor: '#fdfbf7' }}>

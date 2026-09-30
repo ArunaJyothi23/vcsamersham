@@ -3,17 +3,37 @@ import Link from 'next/link';
 import { useState, useEffect } from 'react';
 
 export default function Header() {
-  const [activeTab, setActiveTab] = useState('');
+  const [activeTab, setActiveTab] = useState('home');
 
   useEffect(() => {
-    // Set initial active tab based on window hash on load
-    setActiveTab(window.location.hash || '#home');
-
-    // Add event listener for hash changes
-    const handleHashChange = () => setActiveTab(window.location.hash || '#home');
-    window.addEventListener('hashchange', handleHashChange);
-    return () => window.removeEventListener('hashchange', handleHashChange);
+    // On load, handle hash if present, then remove it cleanly from URL
+    if (window.location.hash) {
+      const hash = window.location.hash.substring(1);
+      setActiveTab(hash || 'home');
+      // Clean up the URL
+      window.history.replaceState(null, '', window.location.pathname);
+    } else {
+      setActiveTab('home');
+    }
   }, []);
+
+  const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, targetId: string) => {
+    // Only intercept if we are already on the home page
+    if (window.location.pathname === '/') {
+      e.preventDefault();
+      if (targetId === 'home') {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      } else {
+        const element = document.getElementById(targetId);
+        if (element) {
+          element.scrollIntoView({ behavior: 'smooth' });
+        }
+      }
+      setActiveTab(targetId);
+      // Clean up the URL just in case
+      window.history.replaceState(null, '', '/');
+    }
+  };
 
   return (
     <>
@@ -59,14 +79,14 @@ export default function Header() {
             alignItems: 'center',
             fontSize: '1.1rem'
           }}>
-            <li style={{ borderBottom: activeTab === '#home' ? '3px solid #ffea00' : '3px solid transparent', paddingBottom: '4px', transition: 'border-color 0.2s' }}>
-              <Link href="/#home" onClick={() => setActiveTab('#home')} style={{ textDecoration: 'none', color: activeTab === '#home' ? '#fff' : '#ccc', fontWeight: 'bold' }}>Home</Link>
+            <li style={{ borderBottom: activeTab === 'home' ? '3px solid #ffea00' : '3px solid transparent', paddingBottom: '4px', transition: 'border-color 0.2s' }}>
+              <Link href="/#home" onClick={(e) => handleNavClick(e, 'home')} style={{ textDecoration: 'none', color: activeTab === 'home' ? '#fff' : '#ccc', fontWeight: 'bold' }}>Home</Link>
             </li>
-            <li style={{ borderBottom: activeTab === '#menu' ? '3px solid #ffea00' : '3px solid transparent', paddingBottom: '4px', transition: 'border-color 0.2s' }}>
-              <Link href="/#menu" onClick={() => setActiveTab('#menu')} style={{ textDecoration: 'none', color: activeTab === '#menu' ? '#fff' : '#ccc', fontWeight: 'bold', transition: 'color 0.2s' }} onMouseOver={e => e.currentTarget.style.color = '#fff'} onMouseOut={e => { if (activeTab !== '#menu') e.currentTarget.style.color = '#ccc'; }}>Menu</Link>
+            <li style={{ borderBottom: activeTab === 'menu' ? '3px solid #ffea00' : '3px solid transparent', paddingBottom: '4px', transition: 'border-color 0.2s' }}>
+              <Link href="/#menu" onClick={(e) => handleNavClick(e, 'menu')} style={{ textDecoration: 'none', color: activeTab === 'menu' ? '#fff' : '#ccc', fontWeight: 'bold', transition: 'color 0.2s' }} onMouseOver={e => e.currentTarget.style.color = '#fff'} onMouseOut={e => { if (activeTab !== 'menu') e.currentTarget.style.color = '#ccc'; }}>Menu</Link>
             </li>
-            <li style={{ borderBottom: activeTab === '#contact' ? '3px solid #ffea00' : '3px solid transparent', paddingBottom: '4px', transition: 'border-color 0.2s' }}>
-              <Link href="/#contact" onClick={() => setActiveTab('#contact')} style={{ textDecoration: 'none', color: activeTab === '#contact' ? '#fff' : '#ccc', fontWeight: 'bold', transition: 'color 0.2s' }} onMouseOver={e => e.currentTarget.style.color = '#fff'} onMouseOut={e => { if (activeTab !== '#contact') e.currentTarget.style.color = '#ccc'; }}>Contact</Link>
+            <li style={{ borderBottom: activeTab === 'contact' ? '3px solid #ffea00' : '3px solid transparent', paddingBottom: '4px', transition: 'border-color 0.2s' }}>
+              <Link href="/#contact" onClick={(e) => handleNavClick(e, 'contact')} style={{ textDecoration: 'none', color: activeTab === 'contact' ? '#fff' : '#ccc', fontWeight: 'bold', transition: 'color 0.2s' }} onMouseOver={e => e.currentTarget.style.color = '#fff'} onMouseOut={e => { if (activeTab !== 'contact') e.currentTarget.style.color = '#ccc'; }}>Contact</Link>
             </li>
             
             <li style={{ position: 'relative', cursor: 'pointer', paddingBottom: '7px' }} className="catering-group">
