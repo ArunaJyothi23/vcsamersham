@@ -11,7 +11,7 @@ export default function Hero() {
       color: '#fff',
       backgroundColor: '#111',
       // Using a clean high-quality Indian food background that closely matches the original vibe without the watermark text
-      backgroundImage: 'linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url("https://images.unsplash.com/photo-1610192244261-3f33de3f55e4?q=80&w=2000&auto=format&fit=crop")',
+      backgroundImage: 'linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url("https://vcsamersham.co.uk/wp-content/uploads/2026/07/WhatsApp-Image-2025-11-03-at-20.09.01-e1762181892424-revfovesohdolmi0nfd5hx1m4gzkocdy54c36on35k.jpeg")',
       backgroundSize: 'cover',
       backgroundPosition: 'center',
     }}>
