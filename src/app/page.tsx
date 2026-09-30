@@ -5,6 +5,7 @@ import OrderOnline from '../components/OrderOnline';
 import Catering from '../components/Catering';
 import WhyChooseUs from '../components/WhyChooseUs';
 import FAQ from '../components/FAQ';
+import Reviews from '../components/Reviews';
 import Contact from '../components/Contact';
 
 export default function Home() {
@@ -17,6 +18,7 @@ export default function Home() {
       <Catering />
       <WhyChooseUs />
       <FAQ />
+      <Reviews />
       <Contact />
     </>
   );

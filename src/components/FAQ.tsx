@@ -12,11 +12,15 @@ const faqs = [
   },
   {
     q: "Do you offer vegan and Jain options?",
-    a: "Absolutely! The majority of our menu can be made Vegan or Jain upon request. Please let our staff know your dietary requirements."
+    a: "Absolutely! All our food is 100% vegetarian, and we have extensive vegan options. We also cater to Jain dietary requirements with no onion, garlic, or root vegetables upon request."
   },
   {
     q: "Can I order food for takeaway?",
     a: "Yes, you can easily order online through our delivery partners or directly with us for collection."
+  },
+  {
+    q: "Do you cater for private events?",
+    a: "Yes! Whether it's a corporate gathering, wedding, or private party, our catering services bring authentic South Indian cuisine to your venue."
   }
 ];
 
