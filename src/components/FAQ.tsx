@@ -40,7 +40,7 @@ export default function FAQ() {
           {/* Left Image */}
           <div style={{ flex: '1 1 400px' }}>
             <img 
-              src="https://images.unsplash.com/photo-1615486171448-4fd143431afb?q=80&w=1000&auto=format&fit=crop" 
+              src="https://vcsamersham.co.uk/wp-content/uploads/2026/07/CaffeChennai-70-1024x683.jpg" 
               alt="South Indian Food Spread" 
               style={{ width: '100%', borderRadius: '16px', boxShadow: '0 20px 40px rgba(0,0,0,0.1)' }}
             />

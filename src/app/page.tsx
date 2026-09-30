@@ -1,7 +1,5 @@
 import Hero from '../components/Hero';
 import AboutSection from '../components/AboutSection';
-import Highlights from '../components/Highlights';
-import TopFood from '../components/TopFood';
 import Menu from '../components/Menu';
 import OrderOnline from '../components/OrderOnline';
 import Catering from '../components/Catering';
@@ -14,8 +12,6 @@ export default function Home() {
     <>
       <Hero />
       <AboutSection />
-      <Highlights />
-      <TopFood />
       <Menu />
       <OrderOnline />
       <Catering />
