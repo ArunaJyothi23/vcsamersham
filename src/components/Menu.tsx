@@ -64,11 +64,28 @@ export default function Menu() {
 
         {/* Allergy info banner replica */}
         <div style={{ display: 'flex', justifyContent: 'center', marginBottom: '3rem' }}>
-          <img 
-            src="https://vcsamersham.co.uk/wp-content/uploads/2026/06/Add-a-heading-6.png" 
-            alt="Menu Allergy Guide" 
-            style={{ width: '100%', maxWidth: '500px', height: 'auto', borderRadius: '4px' }}
-          />
+          <div style={{ 
+            backgroundColor: '#8291a1', 
+            padding: '0.8rem 1.5rem', 
+            display: 'flex', 
+            gap: '1.5rem', 
+            color: '#fff', 
+            fontSize: '0.75rem', 
+            fontWeight: 'bold',
+            flexWrap: 'wrap',
+            justifyContent: 'center',
+            maxWidth: '500px'
+          }}>
+            <span style={{display: 'flex', alignItems: 'center', gap: '0.3rem'}}><span style={{background: '#555', borderRadius: '50%', width: '20px', height: '20px', display: 'flex', alignItems: 'center', justifyContent: 'center'}}>N</span> Nuts</span>
+            <span style={{display: 'flex', alignItems: 'center', gap: '0.3rem'}}><span style={{background: '#555', borderRadius: '50%', width: '20px', height: '20px', display: 'flex', alignItems: 'center', justifyContent: 'center'}}>P</span> Peanut</span>
+            <span style={{display: 'flex', alignItems: 'center', gap: '0.3rem'}}><span style={{background: '#555', borderRadius: '50%', width: '20px', height: '20px', display: 'flex', alignItems: 'center', justifyContent: 'center'}}>M</span> Milk</span>
+            <span style={{display: 'flex', alignItems: 'center', gap: '0.3rem'}}><span style={{background: '#555', borderRadius: '50%', width: '20px', height: '20px', display: 'flex', alignItems: 'center', justifyContent: 'center'}}>V</span> Vegan</span>
+            <span style={{display: 'flex', alignItems: 'center', gap: '0.3rem'}}><span style={{background: '#555', borderRadius: '50%', width: '20px', height: '20px', display: 'flex', alignItems: 'center', justifyContent: 'center'}}>SE</span> Sesame</span>
+            <span style={{display: 'flex', alignItems: 'center', gap: '0.3rem'}}><span style={{background: '#555', borderRadius: '50%', width: '20px', height: '20px', display: 'flex', alignItems: 'center', justifyContent: 'center'}}>OJ</span> Option for Jain</span>
+            <span style={{display: 'flex', alignItems: 'center', gap: '0.3rem'}}><span style={{background: '#555', borderRadius: '50%', width: '20px', height: '20px', display: 'flex', alignItems: 'center', justifyContent: 'center'}}>GF</span> Gluten free</span>
+            <span style={{display: 'flex', alignItems: 'center', gap: '0.3rem'}}><span style={{background: '#555', borderRadius: '50%', width: '20px', height: '20px', display: 'flex', alignItems: 'center', justifyContent: 'center'}}>SB</span> Soya Beans</span>
+            <span style={{display: 'flex', alignItems: 'center', gap: '0.3rem'}}><span style={{background: '#555', borderRadius: '50%', width: '20px', height: '20px', display: 'flex', alignItems: 'center', justifyContent: 'center'}}>OV</span> Option for Vegan</span>
+          </div>
         </div>
 
         {/* Category Tabs */}
