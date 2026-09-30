@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react';
 
 export default function Header() {
   const [activeTab, setActiveTab] = useState('home');
+  const [cateringOpen, setCateringOpen] = useState(false);
 
   useEffect(() => {
     // On load, handle hash if present, then remove it cleanly from URL
@@ -44,14 +45,7 @@ export default function Header() {
 
   return (
     <>
-      <style>{`
-        .catering-dropdown {
-          display: none;
-        }
-        .catering-group:hover .catering-dropdown {
-          display: flex;
-        }
-      `}</style>
+
       <header style={{ 
         display: 'flex', 
         justifyContent: 'space-between', 
@@ -96,32 +90,35 @@ export default function Header() {
               <Link href="/#contact" onClick={(e) => handleNavClick(e, 'contact')} style={{ textDecoration: 'none', color: activeTab === 'contact' ? '#fff' : '#ccc', fontWeight: 'bold', transition: 'color 0.2s' }} onMouseOver={e => e.currentTarget.style.color = '#fff'} onMouseOut={e => { if (activeTab !== 'contact') e.currentTarget.style.color = '#ccc'; }}>Contact</Link>
             </li>
             
-            <li style={{ position: 'relative', cursor: 'pointer', paddingBottom: '7px' }} className="catering-group">
+            <li style={{ position: 'relative', cursor: 'pointer', paddingBottom: '7px' }} onMouseEnter={() => setCateringOpen(true)} onMouseLeave={() => setCateringOpen(false)}>
               <span style={{ textDecoration: 'none', color: '#ccc', fontWeight: 'bold', transition: 'color 0.2s' }} onMouseOver={e => e.currentTarget.style.color = '#fff'} onMouseOut={e => e.currentTarget.style.color = '#ccc'}>
                 Catering <span style={{ fontSize: '0.8em' }}>▼</span>
               </span>
-              <ul className="catering-dropdown" style={{
-                position: 'absolute',
-                top: '100%',
-                left: '50%',
-                transform: 'translateX(-50%)',
-                backgroundColor: '#fff',
-                boxShadow: '0 8px 16px rgba(0,0,0,0.15)',
-                borderRadius: '8px',
-                listStyle: 'none',
-                padding: '0.5rem 0',
-                margin: '0.5rem 0 0 0',
-                minWidth: '220px',
-                flexDirection: 'column',
-                color: '#333'
-              }}>
-                <li>
-                  <Link href="/live-dosa-catering" style={{ textDecoration: 'none', color: '#333', fontWeight: '500', display: 'block', padding: '0.8rem 1.5rem', transition: 'background-color 0.2s' }} onMouseOver={e => e.currentTarget.style.backgroundColor = '#f5f5f5'} onMouseOut={e => e.currentTarget.style.backgroundColor = 'transparent'}>Live Dosa Catering</Link>
-                </li>
-                <li>
-                  <Link href="/outdoor-catering" style={{ textDecoration: 'none', color: '#333', fontWeight: '500', display: 'block', padding: '0.8rem 1.5rem', transition: 'background-color 0.2s' }} onMouseOver={e => e.currentTarget.style.backgroundColor = '#f5f5f5'} onMouseOut={e => e.currentTarget.style.backgroundColor = 'transparent'}>Outdoor Catering</Link>
-                </li>
-              </ul>
+              {cateringOpen && (
+                <ul style={{
+                  position: 'absolute',
+                  top: '100%',
+                  left: '50%',
+                  transform: 'translateX(-50%)',
+                  backgroundColor: '#fff',
+                  boxShadow: '0 8px 16px rgba(0,0,0,0.15)',
+                  borderRadius: '8px',
+                  listStyle: 'none',
+                  padding: '0.75rem 0',
+                  margin: '0',
+                  minWidth: '220px',
+                  display: 'flex',
+                  flexDirection: 'column',
+                  color: '#333'
+                }}>
+                  <li>
+                    <Link href="/live-dosa-catering" onClick={() => setCateringOpen(false)} style={{ textDecoration: 'none', color: '#333', fontWeight: '500', display: 'block', padding: '0.8rem 1.5rem', transition: 'background-color 0.2s' }} onMouseOver={e => e.currentTarget.style.backgroundColor = '#f5f5f5'} onMouseOut={e => e.currentTarget.style.backgroundColor = 'transparent'}>Live Dosa Catering</Link>
+                  </li>
+                  <li>
+                    <Link href="/outdoor-catering" onClick={() => setCateringOpen(false)} style={{ textDecoration: 'none', color: '#333', fontWeight: '500', display: 'block', padding: '0.8rem 1.5rem', transition: 'background-color 0.2s' }} onMouseOver={e => e.currentTarget.style.backgroundColor = '#f5f5f5'} onMouseOut={e => e.currentTarget.style.backgroundColor = 'transparent'}>Outdoor Catering</Link>
+                  </li>
+                </ul>
+              )}
             </li>
           </ul>
         </nav>
