@@ -31,15 +31,6 @@ export default function FAQ() {
     <section style={{ padding: '6rem 2rem', backgroundColor: '#fdfbf7' }}>
       <div style={{ maxWidth: '1200px', margin: '0 auto' }}>
         
-        <div style={{ textAlign: 'center', maxWidth: '800px', margin: '0 auto 4rem auto' }}>
-          <h2 style={{ fontSize: '2.8rem', fontWeight: 800, color: '#111', marginBottom: '1.5rem' }}>
-            Frequently Asked Questions
-          </h2>
-          <p style={{ fontSize: '1.1rem', color: '#4b5563', lineHeight: 1.6 }}>
-            Veg Chennai SriLalitha brings the authentic taste of Chennai to London with home-style vegetarian cuisine served in a warm, fine-dining atmosphere. Our chefs from Chennai prepare traditional recipes with fresh ingredients and authentic techniques.
-          </p>
-        </div>
-
         <div style={{ display: 'flex', flexWrap: 'wrap', gap: '4rem', alignItems: 'flex-start' }}>
           {/* Left Image */}
           <div style={{ flex: '1 1 400px' }}>
@@ -77,7 +68,7 @@ export default function FAQ() {
                   }}
                 >
                   {faq.q}
-                  <span style={{ fontSize: '1.5rem', lineHeight: 0, fontWeight: 300 }}>
+                  <span style={{ fontSize: '1.5rem', lineHeight: 0, fontWeight: 700, color: '#111' }}>
                     {openIndex === idx ? '−' : '+'}
                   </span>
                 </button>

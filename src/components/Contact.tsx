@@ -62,7 +62,7 @@ export default function Contact() {
         <div style={{ flex: '1 1 500px', minHeight: '500px', borderRadius: '12px', overflow: 'hidden', boxShadow: '0 4px 20px rgba(0,0,0,0.05)' }}>
           <iframe 
             loading="lazy" 
-            src="https://maps.google.com/maps?q=srilatha%2094%2C%20sycamore%20Road%2C%20Amersham%2C%20HP6%205EN.&t=m&z=14&output=embed&iwloc=near" 
+            src="https://maps.google.com/maps?q=srilatha%2094%2C%20sycamore%20Road%2C%20Amersham%2C%20HP6%205EN.&t=m&z=12&output=embed&iwloc=near" 
             title="srilatha 94, sycamore Road, Amersham, HP6 5EN." 
             aria-label="srilatha 94, sycamore Road, Amersham, HP6 5EN."
             width="100%"
