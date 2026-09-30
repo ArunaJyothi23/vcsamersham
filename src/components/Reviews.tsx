@@ -1,5 +1,17 @@
+'use client';
+import { useEffect, useRef } from 'react';
+
 export default function Reviews() {
+  const scrollRef = useRef<HTMLDivElement>(null);
+
   const reviews = [
+    {
+      author: "Nachural",
+      avatarImg: "https://images.unsplash.com/photo-1614730321146-b6fa6a46bcb4?w=100&h=100&fit=crop",
+      time: "4 months ago",
+      rating: 3,
+      text: "Really need to change the white plastic tray. I would also advise using the bain-marie for sambhar and rasam. Taste and"
+    },
     {
       author: "Shohini Chaudhuri",
       avatarLetter: "S",
@@ -40,39 +52,65 @@ export default function Reviews() {
     }
   ];
 
+  useEffect(() => {
+    const interval = setInterval(() => {
+      if (scrollRef.current) {
+        const { scrollLeft, scrollWidth, clientWidth } = scrollRef.current;
+        if (scrollLeft + clientWidth >= scrollWidth - 10) {
+          scrollRef.current.scrollTo({ left: 0, behavior: 'smooth' });
+        } else {
+          scrollRef.current.scrollBy({ left: 340, behavior: 'smooth' });
+        }
+      }
+    }, 4000);
+
+    return () => clearInterval(interval);
+  }, []);
+
+  const scrollLeftBtn = () => {
+    if (scrollRef.current) scrollRef.current.scrollBy({ left: -340, behavior: 'smooth' });
+  };
+
+  const scrollRightBtn = () => {
+    if (scrollRef.current) scrollRef.current.scrollBy({ left: 340, behavior: 'smooth' });
+  };
+
   return (
-    <section id="reviews" style={{ padding: '5rem 2rem', backgroundColor: '#f9fafb', textAlign: 'center' }}>
+    <section id="reviews" style={{ padding: '5rem 2rem', backgroundColor: '#fdfbf7', textAlign: 'center' }}>
       <div style={{ maxWidth: '1200px', margin: '0 auto' }}>
         <h2 style={{ fontSize: '2.5rem', fontWeight: 'bold', color: '#111', marginBottom: '3rem' }}>
           Google reviews
         </h2>
 
         <div style={{ position: 'relative' }}>
-          {/* Left Arrow Mock */}
-          <div style={{ position: 'absolute', left: '-20px', top: '50%', transform: 'translateY(-50%)', width: '40px', height: '40px', backgroundColor: '#fff', borderRadius: '50%', boxShadow: '0 2px 10px rgba(0,0,0,0.1)', display: 'flex', justifyContent: 'center', alignItems: 'center', zIndex: 10, cursor: 'pointer', color: '#666' }}>
+          {/* Left Arrow */}
+          <div onClick={scrollLeftBtn} style={{ position: 'absolute', left: '-20px', top: '50%', transform: 'translateY(-50%)', width: '40px', height: '40px', backgroundColor: '#fff', borderRadius: '50%', boxShadow: '0 2px 10px rgba(0,0,0,0.1)', display: 'flex', justifyContent: 'center', alignItems: 'center', zIndex: 10, cursor: 'pointer', color: '#666' }}>
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg>
           </div>
 
-          {/* Right Arrow Mock */}
-          <div style={{ position: 'absolute', right: '-20px', top: '50%', transform: 'translateY(-50%)', width: '40px', height: '40px', backgroundColor: '#fff', borderRadius: '50%', boxShadow: '0 2px 10px rgba(0,0,0,0.1)', display: 'flex', justifyContent: 'center', alignItems: 'center', zIndex: 10, cursor: 'pointer', color: '#666' }}>
+          {/* Right Arrow */}
+          <div onClick={scrollRightBtn} style={{ position: 'absolute', right: '-20px', top: '50%', transform: 'translateY(-50%)', width: '40px', height: '40px', backgroundColor: '#fff', borderRadius: '50%', boxShadow: '0 2px 10px rgba(0,0,0,0.1)', display: 'flex', justifyContent: 'center', alignItems: 'center', zIndex: 10, cursor: 'pointer', color: '#666' }}>
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
           </div>
 
-          <div style={{ 
-            display: 'flex', 
-            gap: '1.5rem',
-            overflowX: 'auto',
-            paddingBottom: '2rem',
-            scrollbarWidth: 'none',
-            scrollSnapType: 'x mandatory',
-            padding: '1rem'
-          }}>
+          <div 
+            ref={scrollRef}
+            style={{ 
+              display: 'flex', 
+              gap: '1.5rem',
+              overflowX: 'auto',
+              paddingBottom: '2rem',
+              scrollbarWidth: 'none',
+              scrollSnapType: 'x mandatory',
+              padding: '1rem'
+            }}
+          >
             {/* Summary Card */}
             <div style={{ 
               minWidth: '320px',
               backgroundColor: '#fff',
               borderRadius: '8px',
-              padding: '1.5rem',
+              padding: '2rem 1.5rem',
               textAlign: 'left',
               boxShadow: '0 2px 10px rgba(0,0,0,0.05)',
               display: 'flex',
@@ -95,13 +133,13 @@ export default function Reviews() {
               <p style={{ margin: '0 0 1rem 0', color: '#666', fontSize: '0.9rem' }}>
                 Based on 645 reviews
               </p>
-              <p style={{ margin: '0 0 1rem 0', color: '#666', fontSize: '0.85rem' }}>
+              <p style={{ margin: '0 0 1.5rem 0', color: '#666', fontSize: '0.85rem' }}>
                 powered by <span style={{ fontWeight: 'bold', color: '#111' }}>Google</span>
               </p>
               <a href="https://search.google.com/local/reviews?placeid=ChIJlQn9sipndkgR9CoUH8Wmwzs" target="_blank" rel="noreferrer" style={{
                 backgroundColor: '#4285f4',
                 color: '#fff',
-                padding: '0.5rem 1.2rem',
+                padding: '0.6rem 1.2rem',
                 borderRadius: '20px',
                 textDecoration: 'none',
                 fontWeight: '600',
@@ -121,7 +159,7 @@ export default function Reviews() {
                 maxWidth: '320px',
                 backgroundColor: '#fff',
                 borderRadius: '8px',
-                padding: '1.5rem',
+                padding: '2rem 1.5rem',
                 textAlign: 'left',
                 boxShadow: '0 2px 10px rgba(0,0,0,0.05)',
                 position: 'relative',
@@ -148,17 +186,17 @@ export default function Reviews() {
                 </div>
                 <div style={{ color: '#e7711b', fontSize: '1.2rem', marginBottom: '1rem', letterSpacing: '2px' }}>
                   {Array(5).fill(0).map((_, i) => (
-                    <span key={i} style={{ opacity: i < rev.rating ? 1 : 0.3 }}>★</span>
+                    <span key={i} style={{ opacity: i < rev.rating ? 1 : 0.25 }}>★</span>
                   ))}
                 </div>
-                <p style={{ margin: 0, color: '#444', fontSize: '0.95rem', lineHeight: 1.5 }}>{rev.text}</p>
+                <p style={{ margin: 0, color: '#444', fontSize: '0.95rem', lineHeight: 1.6 }}>{rev.text}</p>
               </div>
             ))}
           </div>
 
           {/* Dots Mock */}
           <div style={{ display: 'flex', justifyContent: 'center', gap: '0.5rem', marginTop: '1rem' }}>
-            <div style={{ width: '8px', height: '8px', borderRadius: '50%', backgroundColor: '#d39e7e' }}></div>
+            <div style={{ width: '8px', height: '8px', borderRadius: '50%', backgroundColor: '#f59e0b' }}></div>
             <div style={{ width: '8px', height: '8px', borderRadius: '50%', backgroundColor: '#e5e7eb' }}></div>
             <div style={{ width: '8px', height: '8px', borderRadius: '50%', backgroundColor: '#e5e7eb' }}></div>
           </div>
