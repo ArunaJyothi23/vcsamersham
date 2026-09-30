@@ -18,8 +18,8 @@ export default function Home() {
       <Catering />
       <WhyChooseUs />
       <FAQ />
-      <Reviews />
       <Contact />
+      <Reviews />
     </>
   );
 }
