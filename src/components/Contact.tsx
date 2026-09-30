@@ -1,7 +1,7 @@
 export default function Contact() {
   return (
     <section id="contact" style={{ padding: '6rem 2rem', backgroundColor: '#fff' }}>
-      <div style={{ maxWidth: '1200px', margin: '0 auto', display: 'flex', flexWrap: 'wrap', gap: '4rem' }}>
+      <div style={{ maxWidth: '90%', margin: '0 auto', display: 'flex', flexWrap: 'wrap', gap: '4rem' }}>
         
         {/* Contact Details Column */}
         <div style={{ flex: '1 1 400px', display: 'flex', flexDirection: 'column' }}>

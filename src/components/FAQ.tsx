@@ -29,7 +29,7 @@ export default function FAQ() {
 
   return (
     <section style={{ padding: '6rem 2rem', backgroundColor: '#fdfbf7' }}>
-      <div style={{ maxWidth: '1200px', margin: '0 auto' }}>
+      <div style={{ maxWidth: '90%', margin: '0 auto' }}>
         
         <div style={{ display: 'flex', flexWrap: 'wrap', gap: '4rem', alignItems: 'flex-start' }}>
           {/* Left Image */}
