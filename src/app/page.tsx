@@ -3,8 +3,8 @@ import AboutSection from '../components/AboutSection';
 import Highlights from '../components/Highlights';
 import TopFood from '../components/TopFood';
 import Menu from '../components/Menu';
-import Catering from '../components/Catering';
 import OrderOnline from '../components/OrderOnline';
+import Catering from '../components/Catering';
 import WhyChooseUs from '../components/WhyChooseUs';
 import FAQ from '../components/FAQ';
 import Contact from '../components/Contact';
@@ -17,8 +17,8 @@ export default function Home() {
       <Highlights />
       <TopFood />
       <Menu />
-      <Catering />
       <OrderOnline />
+      <Catering />
       <WhyChooseUs />
       <FAQ />
       <Contact />
