@@ -1,0 +1,852 @@
+{
+  "categories": [
+    "Super Staters",
+    "Dosa Corner",
+    "Any Timers",
+    "Tiffins",
+    "Rice & Noodles",
+    "Breads and Curries",
+    "Desserts/Beverges/Others"
+  ],
+  "menuData": {
+    "Super Staters": [
+      {
+        "title": "VEGETABLE SPRING ROLL (3 pieces)   (OJ | OV | M)",
+        "price": "£4.99",
+        "desc": "Fried rice paper wrapper filled with sauteed crispy chopped vegetables"
+      },
+      {
+        "title": "CRISPY BHAJIA V OJ",
+        "price": "£5.99",
+        "desc": "Thin sliced potatoes dipped in gram flour with spices and deep fried"
+      },
+      {
+        "title": "CHILLI GARLIC MOGO V OJ",
+        "price": "£7.99",
+        "desc": "Cassava chips dipped in batter and deep fried, mixed with special gravy \ngarnished with onions and capsicum."
+      },
+      {
+        "title": "PLAIN CHIPS/FRENCH FRIES V GF OJ",
+        "price": "£3.99",
+        "desc": "Fried thin potato chips seasoned with salt"
+      },
+      {
+        "title": "CRISPY VEGETABLES V OJ",
+        "price": "£7.99",
+        "desc": "Fried seasonal vegetables dipped in batter and deep fried."
+      },
+      {
+        "title": "CHILLI GOBI V OJ",
+        "price": "£8.99",
+        "desc": "Fried cauliflower florets dipped in gravy mixed and garnished \nwith onions and capsicum."
+      },
+      {
+        "title": "TANDOORI SOYA TIKKA M SB",
+        "price": "£8.99",
+        "desc": "Marinated soya chunks cooked in Tandoori Oven"
+      },
+      {
+        "title": "TANDOORI PANEER TIKKA M",
+        "price": "£8.99",
+        "desc": "Marinated Cottage Cheese cooked in Tandoori Oven"
+      },
+      {
+        "title": "BHINDI KURKURE V OJ",
+        "price": "£8.99",
+        "desc": "Thin Ladies finger pieces Dipped in batter and deep fried."
+      },
+      {
+        "title": "GOBI MANCHURIAN V",
+        "price": "£8.99",
+        "desc": "Cauliflower is dipped in batter and deep fried, mixed with \nspecial gravy garnished with onions and capsicum."
+      },
+      {
+        "title": "MUSHROOM MANCHURIAN V",
+        "price": "£8.99",
+        "desc": "Mushroom is dipped in batter and deep fried, mixed with \nspecial gravy garnished with onions and capsicum."
+      },
+      {
+        "title": "PANEER MANCHURIAN M",
+        "price": "£9.99",
+        "desc": "Cottage cheese is dipped in batter and deep fried, mixed \nwith special gravy garnished with onions and capsicum."
+      },
+      {
+        "title": "CHILLI PANEER M OJ",
+        "price": "£9.99",
+        "desc": "Fried cottage cheese, dipped in gravy, garnished with onions \ncapsicums and chillies."
+      },
+      {
+        "title": "CHILLI PANEER M OJ",
+        "price": "£9.99",
+        "desc": "Fried cottage cheese, dipped in gravy, garnished with onions \ncapsicums and chillies."
+      },
+      {
+        "title": "CHILLI SOYA V SB OJ",
+        "price": "£9.99",
+        "desc": "Fried soya chunks, dipped in gravy, garnished with onions \ncapsicums and chillies."
+      },
+      {
+        "title": "PANEER - 65 M OJ",
+        "price": "£8.99",
+        "desc": "Cottage cheese dipped in batter and deep fried"
+      },
+      {
+        "title": "BROCOLLI 65",
+        "price": "£8.99",
+        "desc": "Brocolli dipped in batter and deep fried"
+      },
+      {
+        "title": "GOBI - 65 V OJ",
+        "price": "£7.99",
+        "desc": "Cauliflower florets dipped in batter and deep fried"
+      },
+      {
+        "title": "GOBI MALLIGAE V OJ",
+        "price": "£8.99",
+        "desc": "Cauliflower is dipped in special green batter and deep fried."
+      },
+      {
+        "title": "CHILLI BROCOLLI V OJ",
+        "price": "£9.99",
+        "desc": "Fried brocolli florets dipped in gravy mixed and garnished \nwith onions and capsicum."
+      },
+      {
+        "title": "CHILLI MUSHROOM V OJ",
+        "price": "£8.99",
+        "desc": "Fried mushroom dipped in gravy mixed and garnished with \nonions and capsicum."
+      },
+      {
+        "title": "SAMOSA (3 Pieces)",
+        "price": "£5.99",
+        "desc": "Fried triangular shaped pastry filled with spicy vegetables."
+      },
+      {
+        "title": "CRISPY PALAK V OJ",
+        "price": "£6.99",
+        "desc": "Fresh Spinach leaves dipped in batter and deep fried"
+      },
+      {
+        "title": "BABY CORN 65 V OJ",
+        "price": "£7.99",
+        "desc": "Baby corn dipped in batter and fried, like pakoras."
+      },
+      {
+        "title": "BABY CORN MANCHURIAN V",
+        "price": "£5.99",
+        "desc": "Baby corn dipped in batter, fried, mixed with special gravy \ngarnished with onions and capsicum."
+      },
+      {
+        "title": "SOUTHINDIAN BAJJI (5pieces) V OJ",
+        "price": "£7.99",
+        "desc": "Chilli / potato / onion pieces dipped in batter and fried."
+      },
+      {
+        "title": "PLAIN PAPPAD V OJ",
+        "price": "£1.49",
+        "desc": "Fried thin Indian wafers"
+      },
+      {
+        "title": "MASALA PAPPAD V OJ",
+        "price": "£2.49",
+        "desc": "Fried thin Indian wafers topped with chopped onions, \nchopped tomatoes and spices."
+      },
+      {
+        "title": "DHAL VADA V GF",
+        "price": "£6.99",
+        "desc": "Fried masala vada made of chana dal, spices and herbs"
+      },
+      {
+        "title": "PANEER BAJJI M OJ",
+        "price": "£8.99",
+        "desc": "Cottage cheese slices dipped in batter and fried like bhajias."
+      },
+      {
+        "title": "MASALA CHIPS OJ V",
+        "price": "£2.49",
+        "desc": "Fried thinly sliced potatoes, mixed with onions, capsicum and \nsoya sauce"
+      },
+      {
+        "title": "MASALA MOGO V OJ SE",
+        "price": "£6.99",
+        "desc": "Mogo is dipped in spicy podi powder and batter and deep fried"
+      },
+      {
+        "title": "PLAIN MOGO V OJ",
+        "price": "£3.99",
+        "desc": "Fried cassava chips seasoned with salt"
+      }
+    ],
+    "Dosa Corner": [
+      {
+        "title": "PLAIN DOSA  (OJ | OV | M)",
+        "price": "£6.99",
+        "desc": "Thin crispy rice & lentil crepe."
+      },
+      {
+        "title": "MASALA DOSA OJ OV M",
+        "price": "£8.49",
+        "desc": "Thin crispy rice & lentil crepe stuffed with spice potatoes \nand onions."
+      },
+      {
+        "title": "ONION DOSA OJ OV M",
+        "price": "£7.99",
+        "desc": "Thin crispy rice & lentil crepe stuffed with onions."
+      },
+      {
+        "title": "CHEESE DOSA OJ M",
+        "price": "£8.99",
+        "desc": "Thin crispy rice & lentil crepe sprinkled with cheese."
+      },
+      {
+        "title": "PODI DOSA OV OJ M SE",
+        "price": "£7.99",
+        "desc": "Thin crispy rice & lentil crepe sprinkled with spicy powder."
+      },
+      {
+        "title": "RAVA DOSA OV OJ M",
+        "price": "£4.99",
+        "desc": "Thin & crispy rice crepe from Semolina,Refined Flour,Rice \nFlour and Spices"
+      },
+      {
+        "title": "ONION RAVA DOSA OV M",
+        "price": "£8.49",
+        "desc": "Thin & crispy rice crepe from Semolina,Refined Flour,Rice \nFlour and Spices spread with chopped Onions"
+      },
+      {
+        "title": "PAPER ROAST OV OJ M",
+        "price": "£7.99",
+        "desc": "Paper thin rice and lentil crepe."
+      },
+      {
+        "title": "MYSORE DOSA OV M",
+        "price": "£7.49",
+        "desc": "Spicy paste made with different Indian spices applied over \nthe Dosa."
+      },
+      {
+        "title": "MYSORE MASALA DOSA OV M",
+        "price": "£6.99",
+        "desc": "Spicy paste made with different Indian spices applied over \nthe Dosa with Vegetable Masala"
+      },
+      {
+        "title": "PEAS MASALA DOSA OV N M",
+        "price": "£8.99",
+        "desc": "Thin crispy rice & lentil crepe stuffed with masala made with \nGreen Peas"
+      },
+      {
+        "title": "CAULIFLOWER MASALA DOSA OV M N",
+        "price": "£8.49",
+        "desc": "Rice crepe stuffed with Cauliflower masala."
+      },
+      {
+        "title": "PANEER MASALA DOSA M N",
+        "price": "£8.49",
+        "desc": "Thin rice crepe Stuffed with cottage cheese masala."
+      },
+      {
+        "title": "MIX VEG MASALA DOSA OV M N",
+        "price": "£8.99",
+        "desc": "Rice crepe stuffed with spicy mixed vegetable masala"
+      },
+      {
+        "title": "MUSHROOM MASALA DOSA OV M N",
+        "price": "£8.49",
+        "desc": "Thin rice and lentil crepe stuffed with masala mixture made \nof mushrooms"
+      },
+      {
+        "title": "CHOCOLATE DOSANOJD",
+        "price": "£6.49",
+        "desc": "Chocolate paste applied on the Dosa with ghee"
+      },
+      {
+        "title": "PIZZA D0SA (Plain) OJD",
+        "price": "£9.99",
+        "desc": "thin rice & lentil crepe topped with onion \ncapsicum and cheese"
+      },
+      {
+        "title": "CHEESE SPRING DOSA (Plain) OJD",
+        "price": "£9.99",
+        "desc": "Thin rice & lentil crepe stuffed with carrot, capsicum, onion, \ncabbage and cheese"
+      },
+      {
+        "title": "GUNPOWDER DOSA (Plain)",
+        "price": "£7.99",
+        "desc": "Fried gram dhall powder sprinkled on Dosa OV D"
+      },
+      {
+        "title": "GHEE OR BUTTER DOSA (Plain) OJ",
+        "price": "£7.99",
+        "desc": "Thin crispy rice & lentil crepe with butter or ghee spread all \nover the dosa."
+      },
+      {
+        "title": "GARLIC DOSA OV M",
+        "price": "£7.99",
+        "desc": "Spicy Garlic Paste with spices applied over the Dosa."
+      },
+      {
+        "title": "DOSA COMBO N M SE",
+        "price": "£10.99",
+        "desc": "Choice of any three mini dosas from the above dosas \n(Except Ravadosa)"
+      },
+      {
+        "title": "JUMBO MASALA DOSA OV OJ",
+        "price": "£21.99",
+        "desc": "Thin crispy rice & lentil crepe with mild spice potatoes and \nonions."
+      }
+    ],
+    "Any Timers": [
+      {
+        "title": "MEDHU VADA (2 pieces) OV OJ M",
+        "price": "£4.99",
+        "desc": "Fried lentil doughnuts served with varieties of chutneys and \nsambar."
+      },
+      {
+        "title": "VADA DIPPED IN SAMBAR (2 pieces) OV OJ M",
+        "price": "£5.99",
+        "desc": "Fried lentil doughnut, dipped in sambar, served with varieties \nof chutneys."
+      },
+      {
+        "title": "VADA DIPPED IN RASAM (2 pieces) V",
+        "price": "£5.99",
+        "desc": "Fried lentil doughnut, dipped in rasam, served with varieties \nof chutneys"
+      },
+      {
+        "title": "CURD VADAI (2 pieces ) GF OJ M",
+        "price": "£5.99",
+        "desc": "Lentil doughnut immersed in South Indian curd/yoghurt, \ngarnished with tamarind sauce and sev."
+      },
+      {
+        "title": "RAVA KICHADI M",
+        "price": "£7.99",
+        "desc": "Roasted sooji cooked with onions, tomatoes, carrots, green \nchillies, green peas, sautéed with flavoured herbs, served \nwith varieties of chutneys and sambar"
+      },
+      {
+        "title": "UPMA OJ M",
+        "price": "£6.99",
+        "desc": "Roasted sooji cooked with South Indian spices, served with \nvarieties of chutneys and sambar"
+      },
+      {
+        "title": "GHEE PONGAL N OJ M",
+        "price": "£7.99",
+        "desc": "Steamed raw rice and smashed moong lentils, sautéed with \nghee, black pepper, jeera and lentils,  garnished with cashew \nnuts. Served with varieties of chutneys and sambar"
+      },
+      {
+        "title": "CHENNAI SPL RASAM V GF",
+        "price": "£3.99",
+        "desc": "Spicy soup made of Indian spices"
+      },
+      {
+        "title": "TOMATO SOUP M",
+        "price": "£6.99",
+        "desc": "Blended skinless tomatoes, garnished with croutons"
+      }
+    ],
+    "Tiffins": [
+      {
+        "title": "Plain Uthappam   OV OJD",
+        "price": "£6.99",
+        "desc": "Thick rice & lentil pancake."
+      },
+      {
+        "title": "Onion Uthappam   OV D",
+        "price": "E7.49",
+        "desc": "Thick rice & lentil pancake topped with onions."
+      },
+      {
+        "title": "Veg Uthappam   OV OJ D",
+        "price": "£7.99",
+        "desc": "Thick rice & lentil pancake topped with onions and capsicum."
+      },
+      {
+        "title": "Tomato Uthappam OV OJD",
+        "price": "£9.99",
+        "desc": "Thick rice & lentil pancake topped with tomatoes, onions, capsicum."
+      },
+      {
+        "title": "Pizza Uthappam   OJD",
+        "price": "£8.99",
+        "desc": "Thick rice & lentil pancake spread with pizza sauce, topped with onions, green chillies, capsicum and cheese."
+      },
+      {
+        "title": "Podi Uthappam OJ OV D",
+        "price": "£7.99",
+        "desc": "Thick rice & lentil pancake sprinkled with spicy powder."
+      },
+      {
+        "title": "Madurai Sandwich Uthappam  OV ND",
+        "price": "£9.99",
+        "desc": "Uthappams sandwiched with masala made of mixed vegetables, coconut, cashews and spices."
+      },
+      {
+        "title": "PODI UTHAPPAM OJ OV D",
+        "price": "£5.49",
+        "desc": "Thick rice & lentil pancake sprinkled with spicy powder."
+      },
+      {
+        "title": "MIXED VEG SANDWICH UTHAPPAM OVD",
+        "price": "£8.49",
+        "desc": "stuffed with mixed veg.masala"
+      },
+      {
+        "title": "PANEER MASALA SANDWICHUTHAPPAM OV D",
+        "price": "£9.99",
+        "desc": "stuffed with paneer masala"
+      },
+      {
+        "title": "MYSORE MASALA SANDWICHUTHAPPAM OV D",
+        "price": "£9.99",
+        "desc": "stuffed with mysore masala"
+      },
+      {
+        "title": "NELLORE ERRA(RED) KAARAM (SPICY) DOSA OV M",
+        "price": "£8.99",
+        "desc": "Thin rice and lentil crepe spread with special chutney made of dry red \nchilies, garlic, roasted gram and spices."
+      },
+      {
+        "title": "GUNTUR SPECIAL DOSA PLAIN OV OJ M",
+        "price": "£8.99",
+        "desc": "Rice Crepe sprinkled with Coriander seed powder based spice mix."
+      },
+      {
+        "title": "Andhra Special Pesarattu Plain OV OJ M",
+        "price": "£8.99",
+        "desc": "Whole green gram crepe."
+      },
+      {
+        "title": "HYDERABAD SPECIAL DOSA PLAIN OV P M",
+        "price": "£7.99",
+        "desc": "Rice Crepe sprinkled with peanut powder based spice mix."
+      },
+      {
+        "title": "KARANATAKA SPECIAL DOSA OV OJ M",
+        "price": "£7.99",
+        "desc": "Rice Crepe sprinkled with lentil powder based spice mix."
+      },
+      {
+        "title": "KAARAIKKUDI DOSA PLAIN OV OJ M P",
+        "price": "£7.99",
+        "desc": "Thin rice and lentil crepe spread with special tamarind based chutney \nallover the dosa."
+      },
+      {
+        "title": "MALLI DOSA PLAIN OV OJ M",
+        "price": "£7.99",
+        "desc": "Rice Crepe spread with special coriander chutney"
+      },
+      {
+        "title": "Schezwan Dosa Plain  OVD",
+        "price": "£7.99",
+        "desc": "Schezwan sauce applied over the dosa."
+      },
+      {
+        "title": "Malli Dosa Plain   OV M",
+        "price": "£6.49",
+        "desc": "Rice crepe spread with special coriander chutney."
+      },
+      {
+        "title": "Pav Bhaji Dosa  D",
+        "price": "£9.99",
+        "desc": "Thin rice & lentil crepe spread with Bhaji viz. mixture of vegetables & spices"
+      },
+      {
+        "title": "Chilli Chips Cheese Dosa   D",
+        "price": "£9.99",
+        "desc": "Thin rice & lentil crepe spread with crunchy potato chips, chilli and cheese."
+      },
+      {
+        "title": "Veg. SriLalitha Special Dosa   OJ D",
+        "price": "£98.99",
+        "desc": "A unique combination of veg mayonnaise, capsicum, paneer, white pepper and lettuce."
+      }
+    ],
+    "Rice & Noodles": [
+      {
+        "title": "NORTH INDIAN THALI N M P SE",
+        "price": "£12.49",
+        "desc": "Naan/Roti, Variety rice, Plain rice, Paneer Subji, Vegetable Subji, Dhall, Raitha, Pickle, Pappad & Sweet"
+      },
+      {
+        "title": "SAMBAR RICE OV M OJ  WITH PAPPAD",
+        "price": "£4.99",
+        "desc": "Steamed rice with lentils, mixed vegetables, spices, herbs and ghee"
+      },
+      {
+        "title": "LEMON RICE N V OJ",
+        "price": "£7.99",
+        "desc": "Steamed rice with lemon, spices and nuts"
+      },
+      {
+        "title": "JEERA RICE M N OJ",
+        "price": "£6.99",
+        "desc": "Steamed rice with Cumin seeds, Cashew and Ghee"
+      },
+      {
+        "title": "COCONUT RICE V N OJ",
+        "price": "£799",
+        "desc": "Steamed rice with grated coconut and Nuts"
+      },
+      {
+        "title": "Tamarind Rice (served with pappad)  V | N | OJ",
+        "price": "£4.99",
+        "desc": "Steamed rice with tamarind sauce, spices and peanut"
+      },
+      {
+        "title": "CURD RICE WITH PICKLE OJ N M GF",
+        "price": "£7.99",
+        "desc": "Steamed rice mixed with curd/yogurt, curry leaves and green chilies"
+      },
+      {
+        "title": "VEG BIRIYANI GF M N",
+        "price": "£9.99",
+        "desc": "Steamed Basmati rice cooked with mixed vegetables and Indian spices."
+      },
+      {
+        "title": "VEG PULAO N GF OJ OV M",
+        "price": "£8.99",
+        "desc": "Steamed Basmati rice cooked with vegetables and mild Indian spices."
+      },
+      {
+        "title": "VEG FRIED RICE V OJ",
+        "price": "£8.99",
+        "desc": "Steamed Basmati rice sauteed with shredded vegetables."
+      },
+      {
+        "title": "Mushroom Fried Rice  V | OJ",
+        "price": "£8.99",
+        "desc": "Fluffy rice sautéed with onions, capsicum and mushroom."
+      },
+      {
+        "title": "Schezuan Fried Rice  V | OJ",
+        "price": "£8.99",
+        "desc": "Fluffy rice sautéed in a hot schezwan sauce with mixed vegetables."
+      },
+      {
+        "title": "PLAIN RICE V GF",
+        "price": "£3.99",
+        "desc": "Steamed Basmati rice."
+      },
+      {
+        "title": "VEG NOODLES V OJ   /   HAKKA NOODLES V OJ    /    SCHEZWAN NOODLES V",
+        "price": "£8.99",
+        "desc": "Cooked noodles with mix vegetables and mild species"
+      },
+      {
+        "title": "VEG NOODLES V OJ   /   HAKKA NOODLES V OJ    /    SCHEZWAN NOODLES V",
+        "price": "£8.99",
+        "desc": "Cooked noodles with mix vegetables and mild species"
+      },
+      {
+        "title": "PANEER RICE BOWL N M",
+        "price": "£12.99",
+        "desc": "Steamed Basmati rice served with Paneer curry, dhall, gobi 65 and salad"
+      },
+      {
+        "title": "RAJMA RICE BOWL N M",
+        "price": "£12.99",
+        "desc": "Steamed Basmati rice served with Mixveg curry, dhall, paneer 65 and salad"
+      }
+    ],
+    "Breads and Curries": [
+      {
+        "title": "TAWA ROTI / TAWA CHAPATI (1 piece) V",
+        "price": "£2.99",
+        "desc": "Flatbread made from wheat flour"
+      },
+      {
+        "title": "BUTTER TAWA ROTI (1 piece) M",
+        "price": "£3.49",
+        "desc": "Flatbread made from wheat flour with butter applied over roti"
+      },
+      {
+        "title": "TAWA ALOO PARATHA (1 piece) V OJ",
+        "price": "£5.99",
+        "desc": "Flatbread made from wheat flour stuffed with potato mixed with spices."
+      },
+      {
+        "title": "TAWA VEG PARATHA (1 piece) V OJ",
+        "price": "£5.99",
+        "desc": "Flatbread made from wheat flour stuffed with mixed vegetable and spices"
+      },
+      {
+        "title": "CHOLE BHATURE M N",
+        "price": "£8.99",
+        "desc": "Deep fried bread made of maida served with Chana masala."
+      },
+      {
+        "title": "POORI MASALA WITH CURRY (3 Pieces) V N",
+        "price": "£7.99",
+        "desc": "Deep fried bread made from whole wheat flour served with little potato \nstuff and chana masala."
+      },
+      {
+        "title": "SOUTH INDIAN PAROTTA (2Pcs) WITH KURMA AND RAITHA N M",
+        "price": "£7.99",
+        "desc": "Multi layered Maida bread served with mix vegetable kurma"
+      },
+      {
+        "title": "PLAIN NAAN M",
+        "price": "£2.99",
+        "desc": "Maida flour Indian flatbread"
+      },
+      {
+        "title": "BUTTER NAAN M",
+        "price": "£3.49",
+        "desc": "Maida flour Indian flatbread topped with butter"
+      },
+      {
+        "title": "GARLIC NAAN M",
+        "price": "£3.49",
+        "desc": "Maida flour Indian flatbread topped with chopped garlic and \ncoriander"
+      },
+      {
+        "title": "TANDOORI ROTI V",
+        "price": "£2.99",
+        "desc": "Thin wheat flour Indian flatbread, cooked in the tandoor"
+      },
+      {
+        "title": "TANDOORI BUTTER ROTI M",
+        "price": "£3.49",
+        "desc": "Thin wheat flour Indian flatbread, cooked in the tandoor \ntopped with butter"
+      },
+      {
+        "title": "EXTRA BATHURA (1 piece) V M",
+        "price": "£3.99",
+        "desc": "A big and fat fried bread made from maida"
+      },
+      {
+        "title": "EXTRA POORI (1 piece) V",
+        "price": "£6.99",
+        "desc": "A deep-fat fried bread made from whole wheat flour."
+      },
+      {
+        "title": "TADKA DHAL OJ M",
+        "price": "£8.99",
+        "desc": "Lentils cooked with north indian spices"
+      },
+      {
+        "title": "DHAL MAKHANI N M",
+        "price": "£8.99",
+        "desc": "Black lentils cooked with north indian spices"
+      },
+      {
+        "title": "Rajma Masala   N DOJ",
+        "price": "£8.99",
+        "desc": "Steamed rajma cooked with onion paste and north Indian spices."
+      },
+      {
+        "title": "Aloo/Mutter Palak   N D OJ",
+        "price": "£8.99",
+        "desc": "Potato/Mutter cooked with peas or spinach cooked with peas."
+      },
+      {
+        "title": "Channa Masala    VNOJ",
+        "price": "£8.99",
+        "desc": "Steamed chick peas cooked with onion paste & North Indian spices."
+      },
+      {
+        "title": "Gobi/Mutter/Aloo Masala   VNOJ",
+        "price": "£8.99",
+        "desc": "Cauliflower/Mutter/Potato cooked with onion paste & North Indian spices."
+      },
+      {
+        "title": "Paneer Butter Masala N DOJ",
+        "price": "£9.99",
+        "desc": "Cottage cheese cooked with rich butter gravy."
+      },
+      {
+        "title": "Aloo Gobi Masala VNOJ",
+        "price": "£8.99",
+        "desc": "Steamed potato sautéed with onions and North Indian spices."
+      },
+      {
+        "title": "Aloo Fry  VOJ",
+        "price": "£8.99",
+        "desc": "Steamed potato sautéed with onions and pepper fry."
+      },
+      {
+        "title": "Kadai Vegetable    VNOJ",
+        "price": "£8.99",
+        "desc": "Vegetable cooked with onion paste and North Indian spices."
+      },
+      {
+        "title": "Mix Veg Curry    VN oJ",
+        "price": "£8.99",
+        "desc": "Boiled vegetables mixed with Indian spices cooked with onion paste."
+      },
+      {
+        "title": "Mix Veg Kurma   N DOJ",
+        "price": "£8.99",
+        "desc": "Steamed vegetables cooked with rich gravy."
+      },
+      {
+        "title": "Paneer Kurma  N D 0J",
+        "price": "£9.99",
+        "desc": "Cottage cheese cooked with rich gravy."
+      },
+      {
+        "title": "Aloo/Paneer Palak   N D OJ",
+        "price": "£9.99",
+        "desc": "Potato/Cottage cheese cooked with spinach and north Indian spices."
+      },
+      {
+        "title": "Kadai Paneer  NDOJ",
+        "price": "£8.99",
+        "desc": "Cottage cheese & vegetables cooked with north Indian spices."
+      },
+      {
+        "title": "Kadai Paneer  NDOJ",
+        "price": "£8.99",
+        "desc": "Cottage cheese & vegetables cooked with north Indian spices."
+      },
+      {
+        "title": "SOYA CHETTINAD N SB",
+        "price": "£9.99",
+        "desc": "Soya chunk cooked with special chettinad gravy"
+      }
+    ],
+    "Desserts/Beverges/Others": [
+      {
+        "title": "Gulab Jamoon (2 pcs) M",
+        "price": "£4.99",
+        "desc": ""
+      },
+      {
+        "title": "Gulab Jamoon With Vanilla Icecream (1 Pcs | 1 Scoop)  M",
+        "price": "£5.99",
+        "desc": ""
+      },
+      {
+        "title": "CARROT HALWA (1Pcs & Scoop) N",
+        "price": "£4.99",
+        "desc": ""
+      },
+      {
+        "title": "CARROT HALWA WITH VANILAICE CREAM  (1Pcs & Scoop) D",
+        "price": "£4.9898",
+        "desc": ""
+      },
+      {
+        "title": "RASMALAI (2Pcs) DN",
+        "price": "£4.99",
+        "desc": ""
+      },
+      {
+        "title": "SWEET OF THE DAY",
+        "price": "£4.99",
+        "desc": ""
+      },
+      {
+        "title": "Ice Cream (3 Scoops)",
+        "price": "£4.99",
+        "desc": "Vanilla / Strawberry / Chocolate."
+      },
+      {
+        "title": "MATKA KULFI D N",
+        "price": "£6.99",
+        "desc": ""
+      },
+      {
+        "title": "SIZZLER CHOCOLATE BROWNIE WITH ICE CREAM M N",
+        "price": "£8.99",
+        "desc": ""
+      },
+      {
+        "title": "Milk Shake with Icecream  M",
+        "price": "£5.99",
+        "desc": "Ice cream mixed with little milk and sugar."
+      },
+      {
+        "title": "Ginger Ale",
+        "price": "£3.99",
+        "desc": "Carbonated soft drink flavored with ginger."
+      },
+      {
+        "title": "Rose Milk D",
+        "price": "£4.99",
+        "desc": "Cold milk sweetened with sugar and flavored with rose essence."
+      },
+      {
+        "title": "Lassi (Sweet/Salt)",
+        "price": "£4.99",
+        "desc": "Blended curd/yogurt with Salt/Sweet."
+      },
+      {
+        "title": "Lassi Jug (Sweet/Salt)",
+        "price": "£17.99",
+        "desc": "Blended curd/yogurt with Salt/Sweet."
+      },
+      {
+        "title": "Mango Lassi",
+        "price": "£5.99",
+        "desc": "Mango pulp blended with curd/yogurt."
+      },
+      {
+        "title": "Mango Lassi Jug D",
+        "price": "£18.99",
+        "desc": "Mango pulp blended with curd/yogurt – Jug."
+      },
+      {
+        "title": "Special Butter Milk   M",
+        "price": "£4.99",
+        "desc": "Blended curd/yogurt mixed well with water added with green chilli and salt."
+      },
+      {
+        "title": "Special Butter Milk Jug   M",
+        "price": "£17.99",
+        "desc": "Blended curd/yogurt mixed well with water added with green chilli and salt – Jug."
+      },
+      {
+        "title": "Passion Fruit Juice",
+        "price": "£5.99",
+        "desc": ""
+      },
+      {
+        "title": "Passion Fruit Juice Jug",
+        "price": "£17.99",
+        "desc": ""
+      },
+      {
+        "title": "GREEN TEA",
+        "price": "£2.99",
+        "desc": ""
+      },
+      {
+        "title": "HOT CHOCOLATE (Milk) D",
+        "price": "£2.99",
+        "desc": ""
+      },
+      {
+        "title": "Fruit Juice",
+        "price": "£3.99",
+        "desc": "Apple / Orange / Mango"
+      },
+      {
+        "title": "Fruit Juice Jug",
+        "price": "£15.99",
+        "desc": "Apple / Orange / Mango"
+      },
+      {
+        "title": "Tea",
+        "price": "£2.99",
+        "desc": "Traditionally brewed tea decoction with boiled milk and sugar."
+      },
+      {
+        "title": "Soft Drinks",
+        "price": "£2.49",
+        "desc": "Coke / Diet Coke / Fanta / 7up / Ginger Beer"
+      },
+      {
+        "title": "MASALA TEA D",
+        "price": "£2.99",
+        "desc": ""
+      },
+      {
+        "title": "MILK(D)",
+        "price": "£1.99",
+        "desc": ""
+      },
+      {
+        "title": "VIRGIN COLADA",
+        "price": "£6.99",
+        "desc": ""
+      }
+    ]
+  }
+}
