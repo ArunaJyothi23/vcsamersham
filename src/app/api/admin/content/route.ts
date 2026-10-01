@@ -54,11 +54,15 @@ export async function POST(request: NextRequest) {
 
     if (type === 'menu') {
       saveResult = await saveMenuData(data);
-      revalidatePath('/');
-      revalidatePath('/admin');
+      try {
+        revalidatePath('/', 'layout');
+        revalidatePath('/');
+        revalidatePath('/admin');
+      } catch {}
       return NextResponse.json({
         success: true,
         cloud: saveResult.cloud,
+        version: Date.now(),
         message: saveResult.cloud
           ? 'Menu synchronized with Firebase Cloud & saved!'
           : 'Menu saved locally!',
@@ -66,11 +70,17 @@ export async function POST(request: NextRequest) {
     } else {
       // Default to updating site content
       saveResult = await saveSiteContent(data);
-      revalidatePath('/');
-      revalidatePath('/admin');
+      try {
+        revalidatePath('/', 'layout');
+        revalidatePath('/');
+        revalidatePath('/outdoor-catering');
+        revalidatePath('/live-dosa-catering');
+        revalidatePath('/admin');
+      } catch {}
       return NextResponse.json({
         success: true,
         cloud: saveResult.cloud,
+        version: Date.now(),
         message: saveResult.cloud
           ? 'Site content synchronized with Firebase Cloud & saved!'
           : 'Site content saved locally!',

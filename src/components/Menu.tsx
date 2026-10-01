@@ -22,7 +22,7 @@ export default function Menu({ menuConfig }: MenuProps) {
       id="menu" 
       style={{ 
         backgroundColor: '#FDF6F0', 
-        padding: 'clamp(3.5rem, 6vw, 5rem) clamp(1rem, 4vw, 2rem)', 
+        padding: 'clamp(1.75rem, 3vw, 2.5rem) 1.5rem', 
         position: 'relative',
         scrollMarginTop: '85px',
       }}
@@ -48,11 +48,12 @@ export default function Menu({ menuConfig }: MenuProps) {
             Culinary Heritage
           </span>
           <h2 style={{ 
-            fontSize: 'clamp(2rem, 4.5vw, 2.8rem)', 
-            fontWeight: 800, 
+            fontFamily: "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen-Sans, Ubuntu, Cantarell, 'Helvetica Neue', sans-serif",
+            fontSize: '30px', 
+            fontWeight: 600, 
             textAlign: 'center', 
-            color: '#1A1A1A', 
-            letterSpacing: '-0.02em',
+            color: '#1e293b', 
+            lineHeight: '1.3em',
             margin: 0
           }}>
             Our Menu
@@ -155,9 +156,9 @@ export default function Menu({ menuConfig }: MenuProps) {
         {(() => {
           const spotlightMap: Record<string, { title: string; subtitle: string; img: string; tag: string }> = {
             "Dosa Corner": {
-              title: "Signature Crispy Dosas",
+              title: "Signature Crispy Long Dosas",
               subtitle: "Stone-ground fermented lentil batter roasted golden on traditional hot tawa with pure ghee.",
-              img: "/images/3d/masala-dosa-3d.jpg",
+              img: "/images/long-dosa-feast.png",
               tag: "Tawa Masterpiece",
             },
             "Breads and Curries": {
@@ -181,7 +182,7 @@ export default function Menu({ menuConfig }: MenuProps) {
             "Any Timers": {
               title: "South Indian Comfort Classics",
               subtitle: "Traditional light bites and snacks served with fresh coconut and tomato chutneys.",
-              img: "/images/3d/masala-dosa-3d.jpg",
+              img: "/images/long-dosa-feast.png",
               tag: "All-Day Favourites",
             },
             "Rice & Noodles": {

@@ -9,7 +9,9 @@ export default function AdminDashboard() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [loginError, setLoginError] = useState('');
   
-  const [activeTab, setActiveTab] = useState<'hero' | 'general' | 'topFood' | 'about' | 'faqs' | 'reviews' | 'menu'>('hero');
+  const [activeTab, setActiveTab] = useState<'hero' | 'general' | 'topFood' | 'about' | 'catering' | 'outdoorCatering' | 'liveDosa' | 'whyUs' | 'menu' | 'reviews' | 'faqs' | 'headerFooter' | 'forms' | 'seo' | 'delivery' | 'legal'>('hero');
+  const [activeSeoPage, setActiveSeoPage] = useState<string>('home');
+  const [activeLegalTab, setActiveLegalTab] = useState<'privacyPolicy' | 'cookiesPolicy' | 'disclaimer'>('privacyPolicy');
   const [siteData, setSiteData] = useState<any>(null);
   const [menuData, setMenuData] = useState<any>(null);
   const [selectedMenuCategory, setSelectedMenuCategory] = useState<string>('');
@@ -339,6 +341,255 @@ export default function AdminDashboard() {
     setSiteData((prev: any) => ({
       ...prev,
       testimonials: { ...prev.testimonials, items: updated }
+    }));
+  };
+
+  const updateHeader = (field: string, val: any) => {
+    setSiteData((prev: any) => ({
+      ...prev,
+      header: { ...(prev.header || {}), [field]: val }
+    }));
+  };
+
+  const updateFooter = (field: string, val: any) => {
+    setSiteData((prev: any) => ({
+      ...prev,
+      footer: { ...(prev.footer || {}), [field]: val }
+    }));
+  };
+
+  const updateCatering = (field: string, val: any) => {
+    setSiteData((prev: any) => ({
+      ...prev,
+      catering: { ...(prev.catering || {}), [field]: val }
+    }));
+  };
+
+  const updateCateringFeature = (idx: number, field: string, val: string) => {
+    const features = [...(siteData.catering?.features || [])];
+    if (features[idx]) {
+      features[idx] = { ...features[idx], [field]: val };
+      updateCatering('features', features);
+    }
+  };
+
+  const updateWhyUs = (field: string, val: any) => {
+    setSiteData((prev: any) => ({
+      ...prev,
+      whyChooseUs: { ...(prev.whyChooseUs || {}), [field]: val }
+    }));
+  };
+
+  const updateWhyUsCard = (idx: number, field: string, val: string) => {
+    const cards = [...(siteData.whyChooseUs?.cards || [])];
+    if (cards[idx]) {
+      cards[idx] = { ...cards[idx], [field]: val };
+      updateWhyUs('cards', cards);
+    }
+  };
+
+  const updateSeo = (pageKey: string, field: string, val: string) => {
+    setSiteData((prev: any) => ({
+      ...prev,
+      seo: {
+        ...(prev.seo || {}),
+        [pageKey]: {
+          ...(prev.seo?.[pageKey] || {}),
+          [field]: val
+        }
+      }
+    }));
+  };
+
+  // Custom Form Field Box helpers
+  const addCustomFormField = () => {
+    const newField = {
+      id: 'field_' + Date.now(),
+      label: 'New Custom Box / Question',
+      name: 'custom_' + Date.now(),
+      type: 'text',
+      placeholder: 'Enter details here...',
+      required: false,
+      formTarget: 'all',
+      enabled: true,
+    };
+    setSiteData((prev: any) => ({
+      ...prev,
+      customFormFields: [...(prev.customFormFields || []), newField]
+    }));
+    setStatusMessage({ type: 'success', text: '✓ New custom input box added! Edit its label and click Save All Changes.' });
+    setTimeout(() => setStatusMessage(null), 4000);
+  };
+
+  const updateCustomFormField = (idx: number, field: string, val: any) => {
+    const fields = [...(siteData.customFormFields || [])];
+    if (fields[idx]) {
+      fields[idx] = { ...fields[idx], [field]: val };
+      setSiteData((prev: any) => ({ ...prev, customFormFields: fields }));
+    }
+  };
+
+  const removeCustomFormField = (idx: number) => {
+    const updated = (siteData.customFormFields || []).filter((_: any, i: number) => i !== idx);
+    setSiteData((prev: any) => ({ ...prev, customFormFields: updated }));
+  };
+
+  // Outdoor Catering Helpers
+  const updateOutdoorCatering = (field: string, val: any) => {
+    setSiteData((prev: any) => ({
+      ...prev,
+      outdoorCatering: {
+        ...(prev.outdoorCatering || {}),
+        [field]: val
+      }
+    }));
+  };
+
+  const updateOutdoorOption = (idx: number, field: string, val: any) => {
+    const options = [...(siteData.outdoorCatering?.options || [])];
+    if (options[idx]) {
+      options[idx] = { ...options[idx], [field]: val };
+      updateOutdoorCatering('options', options);
+    }
+  };
+
+  const addOutdoorOption = () => {
+    const count = (siteData.outdoorCatering?.options || []).length + 1;
+    const newOption = {
+      id: 'opt_' + Date.now(),
+      tabTitle: `Option ${count}`,
+      name: `New Catering Package ${count}`,
+      price: 'Custom Pricing (min 30 pax)',
+      desc: 'Description of dishes, items, and varieties included in this package.',
+      whatWeBring: 'All equipment necessary for cooking, Bain Marie hot holding units, and disposable plates.',
+      whatWeNeed: 'Serving table, power point, and sheltered cooking space.',
+      upgrades: 'Gazebo (£70), Serving Waiter (£70), Crockery & Steel Cutlery (£3/pp)'
+    };
+    updateOutdoorCatering('options', [...(siteData.outdoorCatering?.options || []), newOption]);
+    setStatusMessage({ type: 'success', text: '✓ New Outdoor Catering package option added! Edit details and save.' });
+    setTimeout(() => setStatusMessage(null), 4000);
+  };
+
+  const removeOutdoorOption = (idx: number) => {
+    const options = (siteData.outdoorCatering?.options || []).filter((_: any, i: number) => i !== idx);
+    updateOutdoorCatering('options', options);
+  };
+
+  // Live Dosa Catering Helpers
+  const updateLiveDosa = (field: string, val: any) => {
+    setSiteData((prev: any) => ({
+      ...prev,
+      liveDosaCatering: {
+        ...(prev.liveDosaCatering || {}),
+        [field]: val
+      }
+    }));
+  };
+
+  const updateLiveDosaPricing = (field: string, val: any) => {
+    setSiteData((prev: any) => ({
+      ...prev,
+      liveDosaCatering: {
+        ...(prev.liveDosaCatering || {}),
+        pricing: {
+          ...(prev.liveDosaCatering?.pricing || {}),
+          [field]: val
+        }
+      }
+    }));
+  };
+
+  const updateLiveDosaMenuItem = (idx: number, field: string, val: string) => {
+    const items = [...(siteData.liveDosaCatering?.menuItems || [])];
+    if (items[idx]) {
+      items[idx] = { ...items[idx], [field]: val };
+      updateLiveDosa('menuItems', items);
+    }
+  };
+
+  const addLiveDosaMenuItem = () => {
+    const newItem = {
+      name: 'New Live Dosa Special (Live)',
+      desc: 'Freshly prepared crispy South Indian treat'
+    };
+    updateLiveDosa('menuItems', [...(siteData.liveDosaCatering?.menuItems || []), newItem]);
+    setStatusMessage({ type: 'success', text: '✓ New Live Dosa menu item added! Edit and click Save.' });
+    setTimeout(() => setStatusMessage(null), 4000);
+  };
+
+  const removeLiveDosaMenuItem = (idx: number) => {
+    const items = (siteData.liveDosaCatering?.menuItems || []).filter((_: any, i: number) => i !== idx);
+    updateLiveDosa('menuItems', items);
+  };
+
+  const updateLiveDosaInclusion = (idx: number, val: string) => {
+    const items = [...(siteData.liveDosaCatering?.includedItems || [])];
+    items[idx] = val;
+    updateLiveDosa('includedItems', items);
+  };
+
+  const addLiveDosaInclusion = () => {
+    updateLiveDosa('includedItems', [...(siteData.liveDosaCatering?.includedItems || []), 'New Included Service / Equipment']);
+  };
+
+  const removeLiveDosaInclusion = (idx: number) => {
+    const items = (siteData.liveDosaCatering?.includedItems || []).filter((_: any, i: number) => i !== idx);
+    updateLiveDosa('includedItems', items);
+  };
+
+  const updateLiveDosaUpgrade = (idx: number, field: string, val: string) => {
+    const items = [...(siteData.liveDosaCatering?.upgrades || [])];
+    if (items[idx]) {
+      items[idx] = { ...items[idx], [field]: val };
+      updateLiveDosa('upgrades', items);
+    }
+  };
+
+  const addLiveDosaUpgrade = () => {
+    const newUpgrade = { name: 'New Upgrade Option', price: '£50' };
+    updateLiveDosa('upgrades', [...(siteData.liveDosaCatering?.upgrades || []), newUpgrade]);
+  };
+
+  const removeLiveDosaUpgrade = (idx: number) => {
+    const items = (siteData.liveDosaCatering?.upgrades || []).filter((_: any, i: number) => i !== idx);
+    updateLiveDosa('upgrades', items);
+  };
+
+  // Delivery Platforms Helpers
+  const updateDelivery = (platform: string, field: string, val: any) => {
+    setSiteData((prev: any) => ({
+      ...prev,
+      deliveryPlatforms: {
+        ...(prev.deliveryPlatforms || {}),
+        [platform]: {
+          ...(prev.deliveryPlatforms?.[platform] || {}),
+          [field]: val
+        }
+      }
+    }));
+  };
+
+  const updateDeliveryGeneral = (field: string, val: string) => {
+    setSiteData((prev: any) => ({
+      ...prev,
+      deliveryPlatforms: {
+        ...(prev.deliveryPlatforms || {}),
+        [field]: val
+      }
+    }));
+  };
+
+  // Legal Policies Helpers
+  const updateLegalPolicy = (policyKey: 'privacyPolicy' | 'cookiesPolicy' | 'disclaimer', field: string, val: string) => {
+    setSiteData((prev: any) => ({
+      ...prev,
+      legalPolicies: {
+        ...(prev.legalPolicies || {}),
+        [policyKey]: {
+          ...(prev.legalPolicies?.[policyKey] || {}),
+          [field]: val
+        }
+      }
     }));
   };
 
@@ -768,12 +1019,11 @@ export default function AdminDashboard() {
   }
 
   return (
-    <div style={{ minHeight: '100vh', backgroundColor: '#0C0A09', color: '#F5F5F4', fontFamily: 'system-ui, -apple-system, sans-serif' }}>
+    <div style={{ height: '100vh', maxHeight: '100vh', overflow: 'hidden', display: 'flex', flexDirection: 'column', backgroundColor: '#0C0A09', color: '#F5F5F4', fontFamily: 'system-ui, -apple-system, sans-serif' }}>
       
       {/* Top Header Bar */}
       <header style={{
-        position: 'sticky',
-        top: 0,
+        flexShrink: 0,
         zIndex: 50,
         backgroundColor: '#1C1917',
         borderBottom: '1px solid #292524',
@@ -877,32 +1127,45 @@ export default function AdminDashboard() {
         </div>
       </header>
 
-      {/* Main Studio Body */}
-      <div style={{ display: 'flex', minHeight: 'calc(100vh - 70px)' }}>
+      {/* Main Studio Body - Locked Viewport Height with Independent Scrolling */}
+      <div style={{ display: 'flex', flexGrow: 1, height: 'calc(100vh - 65px)', maxHeight: 'calc(100vh - 65px)', overflow: 'hidden' }}>
         
-        {/* Sidebar Tabs */}
+        {/* Sticky Sidebar with Independent Scroll */}
         <aside style={{
-          width: '260px',
+          width: '270px',
           flexShrink: 0,
+          height: '100%',
+          maxHeight: '100%',
+          overflowY: 'auto',
           backgroundColor: '#141210',
           borderRight: '1px solid #292524',
           padding: '1.5rem 1rem',
           display: 'flex',
           flexDirection: 'column',
-          gap: '0.4rem'
+          gap: '0.4rem',
+          boxSizing: 'border-box',
         }}>
           <div style={{ fontSize: '0.75rem', textTransform: 'uppercase', letterSpacing: '1px', color: '#78716C', padding: '0 0.75rem 0.5rem 0.75rem', fontWeight: 700 }}>
             Sections & Content
           </div>
 
           {[
-            { id: 'hero', label: 'Hero & 3D Carousel', icon: '🖼️' },
+            { id: 'hero', label: 'Hero & Banner', icon: '🖼️' },
             { id: 'general', label: 'Contact & Hours', icon: '📞' },
             { id: 'topFood', label: 'Top Food Highlights', icon: '⭐' },
             { id: 'menu', label: 'Dining Menu & Prices', icon: '🍲' },
             { id: 'about', label: 'About Story & Stats', icon: '📖' },
+            { id: 'catering', label: 'Catering Overview', icon: '🍽️' },
+            { id: 'outdoorCatering', label: 'Outdoor Catering Page', icon: '🍱' },
+            { id: 'liveDosa', label: 'Live Dosa Catering', icon: '🥞' },
+            { id: 'whyUs', label: 'Why Families Love Us', icon: '❤️' },
             { id: 'reviews', label: 'Google Reviews', icon: '💬' },
             { id: 'faqs', label: 'Questions & FAQs', icon: '❓' },
+            { id: 'headerFooter', label: 'Navbar & Footer', icon: '🧭' },
+            { id: 'forms', label: 'Form Fields & Boxes', icon: '📝' },
+            { id: 'delivery', label: 'Delivery & Ordering', icon: '🛵' },
+            { id: 'legal', label: 'Legal Policies & Pages', icon: '📜' },
+            { id: 'seo', label: 'SEO & Page Ranking', icon: '🚀' },
           ].map((tab) => {
             const isActive = activeTab === tab.id;
             return (
@@ -932,8 +1195,8 @@ export default function AdminDashboard() {
           })}
         </aside>
 
-        {/* Content Panel */}
-        <main style={{ flexGrow: 1, padding: '2rem 2.5rem', maxWidth: '1000px', overflowY: 'auto' }}>
+        {/* Content Panel with Internal Independent Scrolling */}
+        <main style={{ flexGrow: 1, height: '100%', maxHeight: '100%', overflowY: 'auto', padding: '2rem 2.5rem', boxSizing: 'border-box' }}>
 
           {/* TAB 1: HERO & 3D CAROUSEL */}
           {activeTab === 'hero' && (
@@ -1665,6 +1928,1746 @@ export default function AdminDashboard() {
                   </div>
                 ))}
               </div>
+            </div>
+          )}
+
+          {/* TAB 8: CATERING SERVICES */}
+          {activeTab === 'catering' && (
+            <div>
+              <div style={{ marginBottom: '2rem' }}>
+                <h2 style={{ fontSize: '1.75rem', fontWeight: 800, margin: '0 0 0.5rem 0' }}>Catering Services Content</h2>
+                <p style={{ color: '#A8A29E', fontSize: '0.95rem', margin: 0 }}>
+                  Customize the headline, service descriptions, and buttons for your event catering section.
+                </p>
+              </div>
+
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
+                <div style={{ backgroundColor: '#1C1917', padding: '1.5rem', borderRadius: '14px', border: '1px solid #292524' }}>
+                  <h3 style={{ fontSize: '1.1rem', fontWeight: 700, margin: '0 0 1rem 0', color: '#DE7843' }}>Header & Badges</h3>
+                  <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '1rem' }}>
+                    <div>
+                      <label style={{ display: 'block', fontSize: '0.85rem', fontWeight: 600, color: '#D6D3D1', marginBottom: '0.5rem' }}>Section Badge</label>
+                      <input
+                        type="text"
+                        value={siteData.catering?.badge || ''}
+                        onChange={(e) => updateCatering('badge', e.target.value)}
+                        style={{ width: '100%', padding: '0.75rem', borderRadius: '8px', backgroundColor: '#292524', border: '1px solid #44403C', color: '#fff', fontSize: '0.95rem' }}
+                      />
+                    </div>
+                    <div>
+                      <label style={{ display: 'block', fontSize: '0.85rem', fontWeight: 600, color: '#D6D3D1', marginBottom: '0.5rem' }}>Main Title</label>
+                      <input
+                        type="text"
+                        value={siteData.catering?.title || ''}
+                        onChange={(e) => updateCatering('title', e.target.value)}
+                        style={{ width: '100%', padding: '0.75rem', borderRadius: '8px', backgroundColor: '#292524', border: '1px solid #44403C', color: '#fff', fontSize: '0.95rem' }}
+                      />
+                    </div>
+                  </div>
+                  <div style={{ marginTop: '1rem' }}>
+                    <label style={{ display: 'block', fontSize: '0.85rem', fontWeight: 600, color: '#D6D3D1', marginBottom: '0.5rem' }}>Description Text</label>
+                    <textarea
+                      rows={3}
+                      value={siteData.catering?.description || ''}
+                      onChange={(e) => updateCatering('description', e.target.value)}
+                      style={{ width: '100%', padding: '0.75rem', borderRadius: '8px', backgroundColor: '#292524', border: '1px solid #44403C', color: '#fff', fontSize: '0.95rem', resize: 'vertical' }}
+                    />
+                  </div>
+                </div>
+
+                {/* Features List */}
+                <div style={{ backgroundColor: '#1C1917', padding: '1.5rem', borderRadius: '14px', border: '1px solid #292524' }}>
+                  <h3 style={{ fontSize: '1.1rem', fontWeight: 700, margin: '0 0 1rem 0', color: '#DE7843' }}>Catering Features</h3>
+                  <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+                    {(siteData.catering?.features || []).map((feat: any, idx: number) => (
+                      <div key={idx} style={{ backgroundColor: '#292524', padding: '1rem', borderRadius: '10px', border: '1px solid #44403C' }}>
+                        <div style={{ marginBottom: '0.75rem' }}>
+                          <label style={{ display: 'block', fontSize: '0.8rem', fontWeight: 600, color: '#A8A29E', marginBottom: '0.35rem' }}>Feature {idx + 1} Title</label>
+                          <input
+                            type="text"
+                            value={feat.title || ''}
+                            onChange={(e) => updateCateringFeature(idx, 'title', e.target.value)}
+                            style={{ width: '100%', padding: '0.6rem', borderRadius: '6px', backgroundColor: '#1C1917', border: '1px solid #57534E', color: '#fff', fontSize: '0.9rem' }}
+                          />
+                        </div>
+                        <div>
+                          <label style={{ display: 'block', fontSize: '0.8rem', fontWeight: 600, color: '#A8A29E', marginBottom: '0.35rem' }}>Feature {idx + 1} Description</label>
+                          <input
+                            type="text"
+                            value={feat.desc || ''}
+                            onChange={(e) => updateCateringFeature(idx, 'desc', e.target.value)}
+                            style={{ width: '100%', padding: '0.6rem', borderRadius: '6px', backgroundColor: '#1C1917', border: '1px solid #57534E', color: '#fff', fontSize: '0.9rem' }}
+                          />
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Catering Action Buttons */}
+                <div style={{ backgroundColor: '#1C1917', padding: '1.5rem', borderRadius: '14px', border: '1px solid #292524' }}>
+                  <h3 style={{ fontSize: '1.1rem', fontWeight: 700, margin: '0 0 1rem 0', color: '#DE7843' }}>Action Buttons</h3>
+                  <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '1rem' }}>
+                    <div>
+                      <label style={{ display: 'block', fontSize: '0.85rem', fontWeight: 600, color: '#D6D3D1', marginBottom: '0.5rem' }}>Outdoor Catering Button Text</label>
+                      <input
+                        type="text"
+                        value={siteData.catering?.outdoorButtonText || ''}
+                        onChange={(e) => updateCatering('outdoorButtonText', e.target.value)}
+                        style={{ width: '100%', padding: '0.75rem', borderRadius: '8px', backgroundColor: '#292524', border: '1px solid #44403C', color: '#fff', fontSize: '0.95rem' }}
+                      />
+                    </div>
+                    <div>
+                      <label style={{ display: 'block', fontSize: '0.85rem', fontWeight: 600, color: '#D6D3D1', marginBottom: '0.5rem' }}>Live Dosa Button Text</label>
+                      <input
+                        type="text"
+                        value={siteData.catering?.liveDosaButtonText || ''}
+                        onChange={(e) => updateCatering('liveDosaButtonText', e.target.value)}
+                        style={{ width: '100%', padding: '0.75rem', borderRadius: '8px', backgroundColor: '#292524', border: '1px solid #44403C', color: '#fff', fontSize: '0.95rem' }}
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          )}
+
+          {/* TAB: OUTDOOR CATERING COMPLETE PAGE MANAGER */}
+          {activeTab === 'outdoorCatering' && (
+            <div>
+              <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', marginBottom: '2rem', flexWrap: 'wrap', gap: '1rem' }}>
+                <div>
+                  <h2 style={{ fontSize: '1.75rem', fontWeight: 800, margin: '0 0 0.5rem 0' }}>Outdoor Catering Page Management 🍱</h2>
+                  <p style={{ color: '#A8A29E', fontSize: '0.95rem', margin: 0 }}>
+                    Manage the live Outdoor Catering page (/outdoor-catering), hero text, all 9 package options, dishes, and what we bring.
+                  </p>
+                </div>
+                <button
+                  type="button"
+                  onClick={addOutdoorOption}
+                  style={{
+                    padding: '0.75rem 1.4rem',
+                    borderRadius: '10px',
+                    backgroundColor: '#DE7843',
+                    color: '#fff',
+                    border: 'none',
+                    fontWeight: 700,
+                    fontSize: '0.92rem',
+                    cursor: 'pointer',
+                    boxShadow: '0 4px 14px rgba(222, 120, 67, 0.4)',
+                  }}
+                >
+                  + Add New Package / Option
+                </button>
+              </div>
+
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '2rem' }}>
+                {/* Hero & Intro Settings */}
+                <div style={{ backgroundColor: '#1C1917', padding: '1.75rem', borderRadius: '16px', border: '1px solid #292524' }}>
+                  <h3 style={{ fontSize: '1.15rem', fontWeight: 700, margin: '0 0 1.25rem 0', color: '#DE7843' }}>Hero &amp; Header Content</h3>
+                  <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '1.25rem' }}>
+                    <div>
+                      <label style={{ display: 'block', fontSize: '0.85rem', fontWeight: 600, color: '#D6D3D1', marginBottom: '0.45rem' }}>Top Eyebrow Badge</label>
+                      <input
+                        type="text"
+                        value={siteData.outdoorCatering?.badge || ''}
+                        onChange={(e) => updateOutdoorCatering('badge', e.target.value)}
+                        placeholder="e.g. 👑 Royal Heritage Catering • 21+ Years UK-Wide"
+                        style={{ width: '100%', padding: '0.75rem', borderRadius: '8px', backgroundColor: '#292524', border: '1px solid #44403C', color: '#fff', fontSize: '0.95rem' }}
+                      />
+                    </div>
+                    <div>
+                      <label style={{ display: 'block', fontSize: '0.85rem', fontWeight: 600, color: '#D6D3D1', marginBottom: '0.45rem' }}>Main Page Heading (H1)</label>
+                      <input
+                        type="text"
+                        value={siteData.outdoorCatering?.title || ''}
+                        onChange={(e) => updateOutdoorCatering('title', e.target.value)}
+                        placeholder="Authentic 100% Pure Vegetarian Catering"
+                        style={{ width: '100%', padding: '0.75rem', borderRadius: '8px', backgroundColor: '#292524', border: '1px solid #44403C', color: '#fff', fontSize: '0.95rem' }}
+                      />
+                    </div>
+                  </div>
+                  <div style={{ marginTop: '1.25rem' }}>
+                    <label style={{ display: 'block', fontSize: '0.85rem', fontWeight: 600, color: '#D6D3D1', marginBottom: '0.45rem' }}>Introductory Paragraph</label>
+                    <textarea
+                      rows={4}
+                      value={siteData.outdoorCatering?.intro || ''}
+                      onChange={(e) => updateOutdoorCatering('intro', e.target.value)}
+                      placeholder="Comprehensive overview of outdoor catering services..."
+                      style={{ width: '100%', padding: '0.75rem', borderRadius: '8px', backgroundColor: '#292524', border: '1px solid #44403C', color: '#fff', fontSize: '0.95rem', resize: 'vertical' }}
+                    />
+                  </div>
+                </div>
+
+                {/* Catering Package Options 1-9 Editor */}
+                <div>
+                  <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '1rem' }}>
+                    <h3 style={{ fontSize: '1.3rem', fontWeight: 800, margin: 0 }}>Catering Package Options ({siteData.outdoorCatering?.options?.length || 0})</h3>
+                    <span style={{ fontSize: '0.85rem', color: '#A8A29E' }}>All options render as live clickable tabs with instant price calculator</span>
+                  </div>
+
+                  <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
+                    {(siteData.outdoorCatering?.options || []).map((opt: any, idx: number) => (
+                      <div
+                        key={opt.id || idx}
+                        style={{
+                          backgroundColor: '#1C1917',
+                          borderRadius: '16px',
+                          border: '1px solid #38322E',
+                          padding: '1.75rem',
+                          display: 'flex',
+                          flexDirection: 'column',
+                          gap: '1.25rem',
+                        }}
+                      >
+                        {/* Option Header */}
+                        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: '0.75rem', paddingBottom: '1rem', borderBottom: '1px solid #292524' }}>
+                          <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
+                            <span style={{ backgroundColor: '#DE7843', color: '#fff', padding: '3px 10px', borderRadius: '8px', fontSize: '0.8rem', fontWeight: 800 }}>
+                              {opt.tabTitle || `Option ${idx + 1}`}
+                            </span>
+                            <span style={{ fontSize: '1.1rem', fontWeight: 700, color: '#FFFFFF' }}>
+                              {opt.name || 'Untitled Package'}
+                            </span>
+                          </div>
+                          <button
+                            type="button"
+                            onClick={() =>
+                              requestConfirm({
+                                title: `Delete ${opt.tabTitle || 'Option'}?`,
+                                message: `Are you sure you want to remove "${opt.name || opt.tabTitle}" from Outdoor Catering packages?`,
+                                confirmLabel: 'Delete Option',
+                                confirmColor: '#E11D48',
+                                onConfirm: () => removeOutdoorOption(idx),
+                              })
+                            }
+                            style={{ padding: '0.4rem 0.85rem', borderRadius: '8px', backgroundColor: 'rgba(239, 68, 68, 0.12)', color: '#F87171', border: '1px solid rgba(239, 68, 68, 0.3)', fontSize: '0.82rem', fontWeight: 600, cursor: 'pointer' }}
+                          >
+                            🗑️ Delete Option
+                          </button>
+                        </div>
+
+                        {/* Title & Pricing Inputs */}
+                        <div style={{ display: 'grid', gridTemplateColumns: '160px 1.4fr 1.6fr', gap: '1rem' }}>
+                          <div>
+                            <label style={{ display: 'block', fontSize: '0.82rem', fontWeight: 600, color: '#A8A29E', marginBottom: '0.35rem' }}>Tab Button Text</label>
+                            <input
+                              type="text"
+                              value={opt.tabTitle || ''}
+                              onChange={(e) => updateOutdoorOption(idx, 'tabTitle', e.target.value)}
+                              placeholder="e.g. Option 1"
+                              style={{ width: '100%', padding: '0.65rem', borderRadius: '8px', backgroundColor: '#292524', border: '1px solid #44403C', color: '#fff', fontSize: '0.9rem' }}
+                            />
+                          </div>
+                          <div>
+                            <label style={{ display: 'block', fontSize: '0.82rem', fontWeight: 600, color: '#A8A29E', marginBottom: '0.35rem' }}>Full Package Name</label>
+                            <input
+                              type="text"
+                              value={opt.name || ''}
+                              onChange={(e) => updateOutdoorOption(idx, 'name', e.target.value)}
+                              placeholder="e.g. Standard Live Dosa Station"
+                              style={{ width: '100%', padding: '0.65rem', borderRadius: '8px', backgroundColor: '#292524', border: '1px solid #44403C', color: '#fff', fontSize: '0.9rem' }}
+                            />
+                          </div>
+                          <div>
+                            <label style={{ display: 'block', fontSize: '0.82rem', fontWeight: 600, color: '#A8A29E', marginBottom: '0.35rem' }}>Pricing Terms &amp; Min Pax</label>
+                            <input
+                              type="text"
+                              value={opt.price || ''}
+                              onChange={(e) => updateOutdoorOption(idx, 'price', e.target.value)}
+                              placeholder="e.g. Weekdays: £11.00/pp (min 35 pax)..."
+                              style={{ width: '100%', padding: '0.65rem', borderRadius: '8px', backgroundColor: '#292524', border: '1px solid #44403C', color: '#DE7843', fontWeight: 700, fontSize: '0.9rem' }}
+                            />
+                          </div>
+                        </div>
+
+                        {/* Menu & Inclusions */}
+                        <div>
+                          <label style={{ display: 'block', fontSize: '0.82rem', fontWeight: 600, color: '#A8A29E', marginBottom: '0.35rem' }}>Dishes &amp; Food Menu Items</label>
+                          <textarea
+                            rows={3}
+                            value={opt.desc || ''}
+                            onChange={(e) => updateOutdoorOption(idx, 'desc', e.target.value)}
+                            placeholder="Detailed list of all curries, dosas, sweets, rice, and chutneys included..."
+                            style={{ width: '100%', padding: '0.65rem', borderRadius: '8px', backgroundColor: '#292524', border: '1px solid #44403C', color: '#fff', fontSize: '0.88rem', resize: 'vertical' }}
+                          />
+                        </div>
+
+                        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem' }}>
+                          <div>
+                            <label style={{ display: 'block', fontSize: '0.82rem', fontWeight: 600, color: '#A8A29E', marginBottom: '0.35rem' }}>What We Bring (Equipment &amp; Disposables)</label>
+                            <textarea
+                              rows={2}
+                              value={opt.whatWeBring || ''}
+                              onChange={(e) => updateOutdoorOption(idx, 'whatWeBring', e.target.value)}
+                              placeholder="Equipment, Bain Marie, 9-inch plates..."
+                              style={{ width: '100%', padding: '0.65rem', borderRadius: '8px', backgroundColor: '#292524', border: '1px solid #44403C', color: '#D6D3D1', fontSize: '0.85rem', resize: 'vertical' }}
+                            />
+                          </div>
+                          <div>
+                            <label style={{ display: 'block', fontSize: '0.82rem', fontWeight: 600, color: '#A8A29E', marginBottom: '0.35rem' }}>What We Need (From Venue / Host)</label>
+                            <textarea
+                              rows={2}
+                              value={opt.whatWeNeed || ''}
+                              onChange={(e) => updateOutdoorOption(idx, 'whatWeNeed', e.target.value)}
+                              placeholder="Serving tables, electricity point, shaded space..."
+                              style={{ width: '100%', padding: '0.65rem', borderRadius: '8px', backgroundColor: '#292524', border: '1px solid #44403C', color: '#D6D3D1', fontSize: '0.85rem', resize: 'vertical' }}
+                            />
+                          </div>
+                        </div>
+
+                        <div>
+                          <label style={{ display: 'block', fontSize: '0.82rem', fontWeight: 600, color: '#A8A29E', marginBottom: '0.35rem' }}>Available Upgrades &amp; Optional Add-ons</label>
+                          <input
+                            type="text"
+                            value={opt.upgrades || ''}
+                            onChange={(e) => updateOutdoorOption(idx, 'upgrades', e.target.value)}
+                            placeholder="Gazebo (£70), Serving Waiter (£70), Crockery (£3/pp)..."
+                            style={{ width: '100%', padding: '0.65rem', borderRadius: '8px', backgroundColor: '#292524', border: '1px solid #44403C', color: '#fff', fontSize: '0.88rem' }}
+                          />
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            </div>
+          )}
+
+          {/* TAB: LIVE DOSA CATERING COMPLETE PAGE MANAGER */}
+          {activeTab === 'liveDosa' && (
+            <div>
+              <div style={{ marginBottom: '2rem' }}>
+                <h2 style={{ fontSize: '1.75rem', fontWeight: 800, margin: '0 0 0.5rem 0' }}>Live Dosa Catering Management 🥞</h2>
+                <p style={{ color: '#A8A29E', fontSize: '0.95rem', margin: 0 }}>
+                  Customize the live dosa catering page (/live-dosa-catering), live menu items, pricing rules, equipment inclusions, and upgrades.
+                </p>
+              </div>
+
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '2rem' }}>
+                {/* Hero & Intro */}
+                <div style={{ backgroundColor: '#1C1917', padding: '1.75rem', borderRadius: '16px', border: '1px solid #292524' }}>
+                  <h3 style={{ fontSize: '1.15rem', fontWeight: 700, margin: '0 0 1.25rem 0', color: '#DE7843' }}>Header &amp; Headline</h3>
+                  <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '1.25rem' }}>
+                    <div>
+                      <label style={{ display: 'block', fontSize: '0.85rem', fontWeight: 600, color: '#D6D3D1', marginBottom: '0.45rem' }}>Top Eyebrow Badge</label>
+                      <input
+                        type="text"
+                        value={siteData.liveDosaCatering?.badge || ''}
+                        onChange={(e) => updateLiveDosa('badge', e.target.value)}
+                        placeholder="e.g. 🌿 100% Pure Vegetarian Live Catering"
+                        style={{ width: '100%', padding: '0.75rem', borderRadius: '8px', backgroundColor: '#292524', border: '1px solid #44403C', color: '#fff', fontSize: '0.95rem' }}
+                      />
+                    </div>
+                    <div>
+                      <label style={{ display: 'block', fontSize: '0.85rem', fontWeight: 600, color: '#D6D3D1', marginBottom: '0.45rem' }}>Main Page Heading (H1)</label>
+                      <input
+                        type="text"
+                        value={siteData.liveDosaCatering?.title || ''}
+                        onChange={(e) => updateLiveDosa('title', e.target.value)}
+                        placeholder="Live Dosa Catering Amersham"
+                        style={{ width: '100%', padding: '0.75rem', borderRadius: '8px', backgroundColor: '#292524', border: '1px solid #44403C', color: '#fff', fontSize: '0.95rem' }}
+                      />
+                    </div>
+                  </div>
+                  <div style={{ marginTop: '1.25rem' }}>
+                    <label style={{ display: 'block', fontSize: '0.85rem', fontWeight: 600, color: '#D6D3D1', marginBottom: '0.45rem' }}>Page Subtitle / Overview</label>
+                    <textarea
+                      rows={3}
+                      value={siteData.liveDosaCatering?.subtitle || ''}
+                      onChange={(e) => updateLiveDosa('subtitle', e.target.value)}
+                      placeholder="Theatrical live dosa and vada stations prepared fresh on the spot..."
+                      style={{ width: '100%', padding: '0.75rem', borderRadius: '8px', backgroundColor: '#292524', border: '1px solid #44403C', color: '#fff', fontSize: '0.95rem', resize: 'vertical' }}
+                    />
+                  </div>
+                </div>
+
+                {/* Live Dosa Pricing Structure */}
+                <div style={{ backgroundColor: '#1C1917', padding: '1.75rem', borderRadius: '16px', border: '1px solid #292524' }}>
+                  <h3 style={{ fontSize: '1.15rem', fontWeight: 700, margin: '0 0 1.25rem 0', color: '#DE7843' }}>💰 Live Dosa Pricing &amp; Minimums</h3>
+                  <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '1rem' }}>
+                    <div>
+                      <label style={{ display: 'block', fontSize: '0.82rem', fontWeight: 600, color: '#A8A29E', marginBottom: '0.35rem' }}>Weekday Price (£/pp)</label>
+                      <input
+                        type="text"
+                        value={siteData.liveDosaCatering?.pricing?.weekdayPrice || ''}
+                        onChange={(e) => updateLiveDosaPricing('weekdayPrice', e.target.value)}
+                        placeholder="£11.00"
+                        style={{ width: '100%', padding: '0.65rem', borderRadius: '8px', backgroundColor: '#292524', border: '1px solid #44403C', color: '#DE7843', fontWeight: 700, fontSize: '0.95rem' }}
+                      />
+                    </div>
+                    <div>
+                      <label style={{ display: 'block', fontSize: '0.82rem', fontWeight: 600, color: '#A8A29E', marginBottom: '0.35rem' }}>Min Weekday Pax</label>
+                      <input
+                        type="text"
+                        value={siteData.liveDosaCatering?.pricing?.minWeekdayPax || ''}
+                        onChange={(e) => updateLiveDosaPricing('minWeekdayPax', e.target.value)}
+                        placeholder="35"
+                        style={{ width: '100%', padding: '0.65rem', borderRadius: '8px', backgroundColor: '#292524', border: '1px solid #44403C', color: '#fff', fontSize: '0.95rem' }}
+                      />
+                    </div>
+                    <div>
+                      <label style={{ display: 'block', fontSize: '0.82rem', fontWeight: 600, color: '#A8A29E', marginBottom: '0.35rem' }}>Weekday Min Callout</label>
+                      <input
+                        type="text"
+                        value={siteData.liveDosaCatering?.pricing?.weekdayCallout || ''}
+                        onChange={(e) => updateLiveDosaPricing('weekdayCallout', e.target.value)}
+                        placeholder="£385"
+                        style={{ width: '100%', padding: '0.65rem', borderRadius: '8px', backgroundColor: '#292524', border: '1px solid #44403C', color: '#fff', fontSize: '0.95rem' }}
+                      />
+                    </div>
+                    <div>
+                      <label style={{ display: 'block', fontSize: '0.82rem', fontWeight: 600, color: '#A8A29E', marginBottom: '0.35rem' }}>Weekend Price (£/pp)</label>
+                      <input
+                        type="text"
+                        value={siteData.liveDosaCatering?.pricing?.weekendPrice || ''}
+                        onChange={(e) => updateLiveDosaPricing('weekendPrice', e.target.value)}
+                        placeholder="£12.00"
+                        style={{ width: '100%', padding: '0.65rem', borderRadius: '8px', backgroundColor: '#292524', border: '1px solid #44403C', color: '#DE7843', fontWeight: 700, fontSize: '0.95rem' }}
+                      />
+                    </div>
+                    <div>
+                      <label style={{ display: 'block', fontSize: '0.82rem', fontWeight: 600, color: '#A8A29E', marginBottom: '0.35rem' }}>Min Weekend Pax</label>
+                      <input
+                        type="text"
+                        value={siteData.liveDosaCatering?.pricing?.minWeekendPax || ''}
+                        onChange={(e) => updateLiveDosaPricing('minWeekendPax', e.target.value)}
+                        placeholder="40"
+                        style={{ width: '100%', padding: '0.65rem', borderRadius: '8px', backgroundColor: '#292524', border: '1px solid #44403C', color: '#fff', fontSize: '0.95rem' }}
+                      />
+                    </div>
+                    <div>
+                      <label style={{ display: 'block', fontSize: '0.82rem', fontWeight: 600, color: '#A8A29E', marginBottom: '0.35rem' }}>Weekend Min Callout</label>
+                      <input
+                        type="text"
+                        value={siteData.liveDosaCatering?.pricing?.weekendCallout || ''}
+                        onChange={(e) => updateLiveDosaPricing('weekendCallout', e.target.value)}
+                        placeholder="£480"
+                        style={{ width: '100%', padding: '0.65rem', borderRadius: '8px', backgroundColor: '#292524', border: '1px solid #44403C', color: '#fff', fontSize: '0.95rem' }}
+                      />
+                    </div>
+                  </div>
+                  <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem', marginTop: '1.25rem' }}>
+                    <div>
+                      <label style={{ display: 'block', fontSize: '0.82rem', fontWeight: 600, color: '#A8A29E', marginBottom: '0.35rem' }}>Cooking &amp; Serving Duration</label>
+                      <input
+                        type="text"
+                        value={siteData.liveDosaCatering?.pricing?.duration || ''}
+                        onChange={(e) => updateLiveDosaPricing('duration', e.target.value)}
+                        placeholder="2 Hours live cooking/serving + 30 mins setup"
+                        style={{ width: '100%', padding: '0.65rem', borderRadius: '8px', backgroundColor: '#292524', border: '1px solid #44403C', color: '#fff', fontSize: '0.9rem' }}
+                      />
+                    </div>
+                    <div>
+                      <label style={{ display: 'block', fontSize: '0.82rem', fontWeight: 600, color: '#A8A29E', marginBottom: '0.35rem' }}>Deposit &amp; Payment Terms</label>
+                      <input
+                        type="text"
+                        value={siteData.liveDosaCatering?.pricing?.deposit || ''}
+                        onChange={(e) => updateLiveDosaPricing('deposit', e.target.value)}
+                        placeholder="50% deposit required at booking, balance in cash after the event."
+                        style={{ width: '100%', padding: '0.65rem', borderRadius: '8px', backgroundColor: '#292524', border: '1px solid #44403C', color: '#fff', fontSize: '0.9rem' }}
+                      />
+                    </div>
+                  </div>
+                </div>
+
+                {/* Live Menu Items */}
+                <div style={{ backgroundColor: '#1C1917', padding: '1.75rem', borderRadius: '16px', border: '1px solid #292524' }}>
+                  <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '1.25rem' }}>
+                    <div>
+                      <h3 style={{ fontSize: '1.15rem', fontWeight: 700, margin: 0, color: '#DE7843' }}>Live Dosa Menu Dishes ({siteData.liveDosaCatering?.menuItems?.length || 0})</h3>
+                      <span style={{ fontSize: '0.85rem', color: '#A8A29E' }}>All items cooked fresh on-site in front of guests</span>
+                    </div>
+                    <button
+                      type="button"
+                      onClick={addLiveDosaMenuItem}
+                      style={{ padding: '0.5rem 1rem', borderRadius: '8px', backgroundColor: '#DE7843', color: '#fff', border: 'none', fontWeight: 700, fontSize: '0.85rem', cursor: 'pointer' }}
+                    >
+                      + Add Menu Item
+                    </button>
+                  </div>
+
+                  <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '1rem' }}>
+                    {(siteData.liveDosaCatering?.menuItems || []).map((item: any, idx: number) => (
+                      <div key={idx} style={{ backgroundColor: '#292524', padding: '1rem', borderRadius: '10px', border: '1px solid #44403C', display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
+                        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '0.5rem' }}>
+                          <input
+                            type="text"
+                            value={item.name}
+                            onChange={(e) => updateLiveDosaMenuItem(idx, 'name', e.target.value)}
+                            placeholder="Dish Name"
+                            style={{ fontWeight: 700, width: '100%', padding: '0.45rem', borderRadius: '6px', backgroundColor: '#1C1917', border: '1px solid #57534E', color: '#fff', fontSize: '0.9rem' }}
+                          />
+                          <button
+                            type="button"
+                            onClick={() =>
+                              requestConfirm({
+                                title: 'Remove Live Dish',
+                                message: `Are you sure you want to remove "${item.name}" from Live Dosa menu?`,
+                                confirmLabel: 'Delete',
+                                confirmColor: '#E11D48',
+                                onConfirm: () => removeLiveDosaMenuItem(idx),
+                              })
+                            }
+                            style={{ padding: '0.4rem 0.6rem', borderRadius: '6px', backgroundColor: 'rgba(239, 68, 68, 0.15)', color: '#F87171', border: '1px solid rgba(239, 68, 68, 0.3)', cursor: 'pointer' }}
+                          >
+                            ✕
+                          </button>
+                        </div>
+                        <input
+                          type="text"
+                          value={item.desc}
+                          onChange={(e) => updateLiveDosaMenuItem(idx, 'desc', e.target.value)}
+                          placeholder="Dish Description"
+                          style={{ width: '100%', padding: '0.4rem', borderRadius: '6px', backgroundColor: '#1C1917', border: '1px solid #57534E', color: '#D6D3D1', fontSize: '0.82rem' }}
+                        />
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Included Equipment & Service */}
+                <div style={{ backgroundColor: '#1C1917', padding: '1.75rem', borderRadius: '16px', border: '1px solid #292524' }}>
+                  <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '1.25rem' }}>
+                    <div>
+                      <h3 style={{ fontSize: '1.15rem', fontWeight: 700, margin: 0, color: '#DE7843' }}>Included Service &amp; Equipment Checklist</h3>
+                      <span style={{ fontSize: '0.85rem', color: '#A8A29E' }}>Points displayed under &ldquo;What is Included in the Price&rdquo;</span>
+                    </div>
+                    <button
+                      type="button"
+                      onClick={addLiveDosaInclusion}
+                      style={{ padding: '0.5rem 1rem', borderRadius: '8px', backgroundColor: '#DE7843', color: '#fff', border: 'none', fontWeight: 700, fontSize: '0.85rem', cursor: 'pointer' }}
+                    >
+                      + Add Inclusion
+                    </button>
+                  </div>
+
+                  <div style={{ display: 'flex', flexDirection: 'column', gap: '0.65rem' }}>
+                    {(siteData.liveDosaCatering?.includedItems || []).map((inc: string, idx: number) => (
+                      <div key={idx} style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
+                        <span style={{ color: '#DE7843', fontWeight: 800 }}>✓</span>
+                        <input
+                          type="text"
+                          value={inc}
+                          onChange={(e) => updateLiveDosaInclusion(idx, e.target.value)}
+                          style={{ flex: 1, padding: '0.55rem 0.75rem', borderRadius: '8px', backgroundColor: '#292524', border: '1px solid #44403C', color: '#fff', fontSize: '0.9rem' }}
+                        />
+                        <button
+                          type="button"
+                          onClick={() => removeLiveDosaInclusion(idx)}
+                          style={{ padding: '0.45rem 0.65rem', borderRadius: '6px', backgroundColor: 'rgba(239, 68, 68, 0.15)', color: '#F87171', border: '1px solid rgba(239, 68, 68, 0.3)', cursor: 'pointer' }}
+                        >
+                          ✕
+                        </button>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Available Upgrades */}
+                <div style={{ backgroundColor: '#1C1917', padding: '1.75rem', borderRadius: '16px', border: '1px solid #292524' }}>
+                  <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '1.25rem' }}>
+                    <div>
+                      <h3 style={{ fontSize: '1.15rem', fontWeight: 700, margin: 0, color: '#DE7843' }}>Optional Upgrades &amp; Enhancements</h3>
+                      <span style={{ fontSize: '0.85rem', color: '#A8A29E' }}>Gazebos, serving staff, ceramic crockery hire, extra hours</span>
+                    </div>
+                    <button
+                      type="button"
+                      onClick={addLiveDosaUpgrade}
+                      style={{ padding: '0.5rem 1rem', borderRadius: '8px', backgroundColor: '#DE7843', color: '#fff', border: 'none', fontWeight: 700, fontSize: '0.85rem', cursor: 'pointer' }}
+                    >
+                      + Add Upgrade
+                    </button>
+                  </div>
+
+                  <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))', gap: '0.85rem' }}>
+                    {(siteData.liveDosaCatering?.upgrades || []).map((upg: any, idx: number) => (
+                      <div key={idx} style={{ backgroundColor: '#292524', padding: '0.85rem', borderRadius: '10px', border: '1px solid #44403C', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                        <input
+                          type="text"
+                          value={upg.name}
+                          onChange={(e) => updateLiveDosaUpgrade(idx, 'name', e.target.value)}
+                          placeholder="Upgrade Name"
+                          style={{ flex: 1.5, padding: '0.4rem', borderRadius: '6px', backgroundColor: '#1C1917', border: '1px solid #57534E', color: '#fff', fontSize: '0.88rem' }}
+                        />
+                        <input
+                          type="text"
+                          value={upg.price}
+                          onChange={(e) => updateLiveDosaUpgrade(idx, 'price', e.target.value)}
+                          placeholder="Price"
+                          style={{ width: '85px', padding: '0.4rem', borderRadius: '6px', backgroundColor: '#1C1917', border: '1px solid #57534E', color: '#DE7843', fontWeight: 700, fontSize: '0.88rem' }}
+                        />
+                        <button
+                          type="button"
+                          onClick={() => removeLiveDosaUpgrade(idx)}
+                          style={{ padding: '0.4rem 0.55rem', borderRadius: '6px', backgroundColor: 'rgba(239, 68, 68, 0.15)', color: '#F87171', border: '1px solid rgba(239, 68, 68, 0.3)', cursor: 'pointer' }}
+                        >
+                          ✕
+                        </button>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            </div>
+          )}
+
+          {/* TAB 9: WHY FAMILIES LOVE US */}
+          {activeTab === 'whyUs' && (
+            <div>
+              <div style={{ marginBottom: '2rem' }}>
+                <h2 style={{ fontSize: '1.75rem', fontWeight: 800, margin: '0 0 0.5rem 0' }}>Why Families Love Us</h2>
+                <p style={{ color: '#A8A29E', fontSize: '0.95rem', margin: 0 }}>
+                  Manage the 4 trust pillar cards that highlight your culinary authenticity.
+                </p>
+              </div>
+
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
+                <div style={{ backgroundColor: '#1C1917', padding: '1.5rem', borderRadius: '14px', border: '1px solid #292524' }}>
+                  <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '1rem' }}>
+                    <div>
+                      <label style={{ display: 'block', fontSize: '0.85rem', fontWeight: 600, color: '#D6D3D1', marginBottom: '0.5rem' }}>Section Badge</label>
+                      <input
+                        type="text"
+                        value={siteData.whyChooseUs?.badge || ''}
+                        onChange={(e) => updateWhyUs('badge', e.target.value)}
+                        style={{ width: '100%', padding: '0.75rem', borderRadius: '8px', backgroundColor: '#292524', border: '1px solid #44403C', color: '#fff', fontSize: '0.95rem' }}
+                      />
+                    </div>
+                    <div>
+                      <label style={{ display: 'block', fontSize: '0.85rem', fontWeight: 600, color: '#D6D3D1', marginBottom: '0.5rem' }}>Section Title</label>
+                      <input
+                        type="text"
+                        value={siteData.whyChooseUs?.title || ''}
+                        onChange={(e) => updateWhyUs('title', e.target.value)}
+                        style={{ width: '100%', padding: '0.75rem', borderRadius: '8px', backgroundColor: '#292524', border: '1px solid #44403C', color: '#fff', fontSize: '0.95rem' }}
+                      />
+                    </div>
+                  </div>
+                </div>
+
+                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '1.25rem' }}>
+                  {(siteData.whyChooseUs?.cards || []).map((card: any, idx: number) => (
+                    <div key={idx} style={{ backgroundColor: '#1C1917', padding: '1.5rem', borderRadius: '14px', border: '1px solid #292524' }}>
+                      <span style={{ fontSize: '0.78rem', color: '#DE7843', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '1px' }}>Card {idx + 1}</span>
+                      <div style={{ marginTop: '0.75rem', marginBottom: '1rem' }}>
+                        <label style={{ display: 'block', fontSize: '0.85rem', fontWeight: 600, color: '#D6D3D1', marginBottom: '0.4rem' }}>Title</label>
+                        <input
+                          type="text"
+                          value={card.title || ''}
+                          onChange={(e) => updateWhyUsCard(idx, 'title', e.target.value)}
+                          style={{ width: '100%', padding: '0.65rem', borderRadius: '8px', backgroundColor: '#292524', border: '1px solid #44403C', color: '#fff', fontSize: '0.95rem' }}
+                        />
+                      </div>
+                      <div>
+                        <label style={{ display: 'block', fontSize: '0.85rem', fontWeight: 600, color: '#D6D3D1', marginBottom: '0.4rem' }}>Description</label>
+                        <textarea
+                          rows={3}
+                          value={card.desc || ''}
+                          onChange={(e) => updateWhyUsCard(idx, 'desc', e.target.value)}
+                          style={{ width: '100%', padding: '0.65rem', borderRadius: '8px', backgroundColor: '#292524', border: '1px solid #44403C', color: '#fff', fontSize: '0.9rem', resize: 'vertical' }}
+                        />
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+          )}
+
+          {/* TAB 10: NAVBAR & FOOTER */}
+          {activeTab === 'headerFooter' && (
+            <div>
+              <div style={{ marginBottom: '2rem' }}>
+                <h2 style={{ fontSize: '1.75rem', fontWeight: 800, margin: '0 0 0.5rem 0' }}>Navbar & Footer Settings</h2>
+                <p style={{ color: '#A8A29E', fontSize: '0.95rem', margin: 0 }}>
+                  Customize your navigation bar, announcement banner, contact phone, and footer details.
+                </p>
+              </div>
+
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
+                {/* Navbar Settings */}
+                <div style={{ backgroundColor: '#1C1917', padding: '1.5rem', borderRadius: '14px', border: '1px solid #292524' }}>
+                  <h3 style={{ fontSize: '1.1rem', fontWeight: 700, margin: '0 0 1rem 0', color: '#DE7843' }}>Navigation Bar</h3>
+                  <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '1rem' }}>
+                    <div>
+                      <label style={{ display: 'block', fontSize: '0.85rem', fontWeight: 600, color: '#D6D3D1', marginBottom: '0.5rem' }}>Announcement Bar Text</label>
+                      <input
+                        type="text"
+                        value={siteData.header?.announcement || ''}
+                        onChange={(e) => updateHeader('announcement', e.target.value)}
+                        style={{ width: '100%', padding: '0.75rem', borderRadius: '8px', backgroundColor: '#292524', border: '1px solid #44403C', color: '#fff', fontSize: '0.95rem' }}
+                      />
+                    </div>
+                    <div>
+                      <label style={{ display: 'block', fontSize: '0.85rem', fontWeight: 600, color: '#D6D3D1', marginBottom: '0.5rem' }}>Order Button Text</label>
+                      <input
+                        type="text"
+                        value={siteData.header?.orderButtonText || 'Order Online'}
+                        onChange={(e) => updateHeader('orderButtonText', e.target.value)}
+                        style={{ width: '100%', padding: '0.75rem', borderRadius: '8px', backgroundColor: '#292524', border: '1px solid #44403C', color: '#fff', fontSize: '0.95rem' }}
+                      />
+                    </div>
+                    <div>
+                      <label style={{ display: 'block', fontSize: '0.85rem', fontWeight: 600, color: '#D6D3D1', marginBottom: '0.5rem' }}>Order Button Link URL</label>
+                      <input
+                        type="text"
+                        value={siteData.header?.orderButtonLink || '/#order'}
+                        onChange={(e) => updateHeader('orderButtonLink', e.target.value)}
+                        style={{ width: '100%', padding: '0.75rem', borderRadius: '8px', backgroundColor: '#292524', border: '1px solid #44403C', color: '#fff', fontSize: '0.95rem' }}
+                      />
+                    </div>
+                    <div>
+                      <label style={{ display: 'block', fontSize: '0.85rem', fontWeight: 600, color: '#D6D3D1', marginBottom: '0.5rem' }}>Header Contact Phone</label>
+                      <input
+                        type="text"
+                        value={siteData.header?.phone || siteData.restaurant?.phone || ''}
+                        onChange={(e) => updateHeader('phone', e.target.value)}
+                        style={{ width: '100%', padding: '0.75rem', borderRadius: '8px', backgroundColor: '#292524', border: '1px solid #44403C', color: '#fff', fontSize: '0.95rem' }}
+                      />
+                    </div>
+                  </div>
+                </div>
+
+                {/* Footer Settings */}
+                <div style={{ backgroundColor: '#1C1917', padding: '1.5rem', borderRadius: '14px', border: '1px solid #292524' }}>
+                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.25rem', flexWrap: 'wrap', gap: '0.75rem' }}>
+                    <div>
+                      <h3 style={{ fontSize: '1.15rem', fontWeight: 700, margin: 0, color: '#DE7843' }}>Footer Settings (All 4 Columns)</h3>
+                      <p style={{ margin: '0.25rem 0 0 0', fontSize: '0.82rem', color: '#A8A29E' }}>Customize everything shown in the website footer at the bottom of every page.</p>
+                    </div>
+                  </div>
+
+                  <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
+                    {/* Column 1: Logo & Tagline */}
+                    <div style={{ backgroundColor: '#292524', padding: '1.25rem', borderRadius: '10px', border: '1px solid #44403C' }}>
+                      <span style={{ fontSize: '0.78rem', color: '#DE7843', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.5px' }}>Column 1: Logo & About</span>
+                      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '1rem', marginTop: '0.75rem' }}>
+                        <div>
+                          <label style={{ display: 'block', fontSize: '0.85rem', fontWeight: 600, color: '#D6D3D1', marginBottom: '0.5rem' }}>Footer Logo Image</label>
+                          <div style={{ display: 'flex', gap: '0.5rem', alignItems: 'center' }}>
+                            <input
+                              type="text"
+                              value={siteData.footer?.logoUrl || siteData.restaurant?.logoUrl || ''}
+                              onChange={(e) => updateFooter('logoUrl', e.target.value)}
+                              placeholder="/images/migrated/vcsr-logo.webp"
+                              style={{ flex: 1, padding: '0.65rem', borderRadius: '8px', backgroundColor: '#1C1917', border: '1px solid #57534E', color: '#fff', fontSize: '0.9rem' }}
+                            />
+                            <label style={{ padding: '0.65rem 1rem', borderRadius: '8px', backgroundColor: 'rgba(222, 120, 67, 0.15)', color: '#DE7843', border: '1px solid rgba(222, 120, 67, 0.4)', fontSize: '0.82rem', fontWeight: 700, cursor: 'pointer', whiteSpace: 'nowrap' }}>
+                              📁 Upload
+                              <input
+                                type="file"
+                                accept="image/*"
+                                style={{ display: 'none' }}
+                                onChange={(e) => handleImageUpload(e, (url) => updateFooter('logoUrl', url), 'footer-logo')}
+                              />
+                            </label>
+                          </div>
+                        </div>
+                        <div>
+                          <label style={{ display: 'block', fontSize: '0.85rem', fontWeight: 600, color: '#D6D3D1', marginBottom: '0.5rem' }}>About / Heritage Tagline</label>
+                          <textarea
+                            rows={2}
+                            value={siteData.footer?.tagline || ''}
+                            onChange={(e) => updateFooter('tagline', e.target.value)}
+                            placeholder="Authentic South Indian vegetarian cuisine, served with heart in Amersham."
+                            style={{ width: '100%', padding: '0.65rem', borderRadius: '8px', backgroundColor: '#1C1917', border: '1px solid #57534E', color: '#fff', fontSize: '0.9rem', resize: 'vertical' }}
+                          />
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Column 2: Quick Links Info */}
+                    <div style={{ backgroundColor: '#292524', padding: '1.25rem', borderRadius: '10px', border: '1px solid #44403C' }}>
+                      <span style={{ fontSize: '0.78rem', color: '#DE7843', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.5px' }}>Column 2: Quick Links</span>
+                      <p style={{ margin: '0.5rem 0 0 0', fontSize: '0.85rem', color: '#D6D3D1' }}>
+                        Direct navigation links to: <strong>Menu</strong> (<code>/#menu</code>), <strong>Outdoor Catering</strong> (<code>/outdoor-catering</code>), <strong>Live Dosa Catering</strong> (<code>/live-dosa-catering</code>), and <strong>Contact</strong> (<code>/#contact</code>).
+                      </p>
+                    </div>
+
+                    {/* Column 3: Contact Details */}
+                    <div style={{ backgroundColor: '#292524', padding: '1.25rem', borderRadius: '10px', border: '1px solid #44403C' }}>
+                      <span style={{ fontSize: '0.78rem', color: '#DE7843', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.5px' }}>Column 3: Contact Details</span>
+                      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))', gap: '1rem', marginTop: '0.75rem' }}>
+                        <div>
+                          <label style={{ display: 'block', fontSize: '0.85rem', fontWeight: 600, color: '#D6D3D1', marginBottom: '0.4rem' }}>Physical Address</label>
+                          <input
+                            type="text"
+                            value={siteData.footer?.address || siteData.restaurant?.address || ''}
+                            onChange={(e) => {
+                              updateFooter('address', e.target.value);
+                              updateRestaurant('address', e.target.value);
+                            }}
+                            placeholder="94, Sycamore Road, Amersham, HP6 5EN"
+                            style={{ width: '100%', padding: '0.65rem', borderRadius: '8px', backgroundColor: '#1C1917', border: '1px solid #57534E', color: '#fff', fontSize: '0.9rem' }}
+                          />
+                        </div>
+                        <div>
+                          <label style={{ display: 'block', fontSize: '0.85rem', fontWeight: 600, color: '#D6D3D1', marginBottom: '0.4rem' }}>Phone Number</label>
+                          <input
+                            type="text"
+                            value={siteData.footer?.phone || siteData.restaurant?.phone || ''}
+                            onChange={(e) => {
+                              updateFooter('phone', e.target.value);
+                              updateRestaurant('phone', e.target.value);
+                            }}
+                            placeholder="0149 497 2550"
+                            style={{ width: '100%', padding: '0.65rem', borderRadius: '8px', backgroundColor: '#1C1917', border: '1px solid #57534E', color: '#fff', fontSize: '0.9rem' }}
+                          />
+                        </div>
+                        <div>
+                          <label style={{ display: 'block', fontSize: '0.85rem', fontWeight: 600, color: '#D6D3D1', marginBottom: '0.4rem' }}>Email Address</label>
+                          <input
+                            type="email"
+                            value={siteData.footer?.email || siteData.restaurant?.email || ''}
+                            onChange={(e) => {
+                              updateFooter('email', e.target.value);
+                              updateRestaurant('email', e.target.value);
+                            }}
+                            placeholder="vcsramersham@gmail.com"
+                            style={{ width: '100%', padding: '0.65rem', borderRadius: '8px', backgroundColor: '#1C1917', border: '1px solid #57534E', color: '#fff', fontSize: '0.9rem' }}
+                          />
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Column 4: Social Media & Legal Links */}
+                    <div style={{ backgroundColor: '#292524', padding: '1.25rem', borderRadius: '10px', border: '1px solid #44403C' }}>
+                      <span style={{ fontSize: '0.78rem', color: '#DE7843', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.5px' }}>Column 4: Social Profiles, Legal & Copyright</span>
+                      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))', gap: '1rem', marginTop: '0.75rem' }}>
+                        <div>
+                          <label style={{ display: 'block', fontSize: '0.85rem', fontWeight: 600, color: '#D6D3D1', marginBottom: '0.4rem' }}>Instagram Profile URL</label>
+                          <input
+                            type="text"
+                            value={siteData.footer?.instagram || siteData.restaurant?.instagram || ''}
+                            onChange={(e) => {
+                              updateFooter('instagram', e.target.value);
+                              updateRestaurant('instagram', e.target.value);
+                            }}
+                            placeholder="https://instagram.com/..."
+                            style={{ width: '100%', padding: '0.65rem', borderRadius: '8px', backgroundColor: '#1C1917', border: '1px solid #57534E', color: '#fff', fontSize: '0.9rem' }}
+                          />
+                        </div>
+                        <div>
+                          <label style={{ display: 'block', fontSize: '0.85rem', fontWeight: 600, color: '#D6D3D1', marginBottom: '0.4rem' }}>Facebook Profile URL</label>
+                          <input
+                            type="text"
+                            value={siteData.footer?.facebook || siteData.restaurant?.facebook || ''}
+                            onChange={(e) => {
+                              updateFooter('facebook', e.target.value);
+                              updateRestaurant('facebook', e.target.value);
+                            }}
+                            placeholder="https://facebook.com/..."
+                            style={{ width: '100%', padding: '0.65rem', borderRadius: '8px', backgroundColor: '#1C1917', border: '1px solid #57534E', color: '#fff', fontSize: '0.9rem' }}
+                          />
+                        </div>
+                        <div style={{ gridColumn: '1 / -1' }}>
+                          <label style={{ display: 'block', fontSize: '0.85rem', fontWeight: 600, color: '#D6D3D1', marginBottom: '0.4rem' }}>Copyright Notice</label>
+                          <input
+                            type="text"
+                            value={siteData.footer?.copyright || ''}
+                            onChange={(e) => updateFooter('copyright', e.target.value)}
+                            placeholder="© 2026 Veg Chennai SriLalitha Amersham . All rights reserved."
+                            style={{ width: '100%', padding: '0.65rem', borderRadius: '8px', backgroundColor: '#1C1917', border: '1px solid #57534E', color: '#fff', fontSize: '0.9rem' }}
+                          />
+                        </div>
+                      </div>
+
+                      <div style={{ marginTop: '1rem', paddingTop: '1rem', borderTop: '1px solid #44403C', display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: '0.5rem' }}>
+                        <span style={{ fontSize: '0.85rem', color: '#A8A29E' }}>
+                          Need to edit the text for Privacy Policy, Cookies Policy, or Disclaimer?
+                        </span>
+                        <button
+                          type="button"
+                          onClick={() => setActiveTab('legal')}
+                          style={{
+                            padding: '0.5rem 1rem',
+                            borderRadius: '8px',
+                            backgroundColor: 'rgba(222, 120, 67, 0.2)',
+                            color: '#DE7843',
+                            border: '1px solid #DE7843',
+                            fontSize: '0.85rem',
+                            fontWeight: 700,
+                            cursor: 'pointer'
+                          }}
+                        >
+                          Go to Legal Policies Tab 📜 →
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          )}
+
+          {/* TAB 11: SEO & PAGE RANKING */}
+          {activeTab === 'seo' && (
+            <div>
+              <div style={{ marginBottom: '2rem' }}>
+                <h2 style={{ fontSize: '1.75rem', fontWeight: 800, margin: '0 0 0.5rem 0' }}>SEO, Keyword Ranking & Meta Data</h2>
+                <p style={{ color: '#A8A29E', fontSize: '0.95rem', margin: 0 }}>
+                  Manage search engine titles, Google ranking keywords, meta descriptions, and H1 tags across all pages.
+                </p>
+              </div>
+
+              {/* Page Selector Tabs */}
+              <div style={{ display: 'flex', gap: '0.5rem', flexWrap: 'wrap', marginBottom: '2rem' }}>
+                {[
+                  { key: 'home', label: '🏠 Home Page' },
+                  { key: 'menu', label: '🍲 Menu Page' },
+                  { key: 'outdoorCatering', label: '🥘 Outdoor Catering' },
+                  { key: 'liveDosaCatering', label: '🥞 Live Dosa' },
+                  { key: 'contact', label: '📍 Contact & Location' },
+                  { key: 'privacyPolicy', label: '🔒 Privacy Policy' },
+                  { key: 'cookiesPolicy', label: '🍪 Cookies Policy' },
+                  { key: 'disclaimer', label: '⚠️ Disclaimer' },
+                ].map((pg) => {
+                  const isCur = activeSeoPage === pg.key;
+                  return (
+                    <button
+                      key={pg.key}
+                      type="button"
+                      onClick={() => setActiveSeoPage(pg.key)}
+                      style={{
+                        padding: '0.65rem 1.25rem',
+                        borderRadius: '10px',
+                        backgroundColor: isCur ? '#DE7843' : '#292524',
+                        color: isCur ? '#fff' : '#D6D3D1',
+                        border: isCur ? '1px solid #DE7843' : '1px solid #44403C',
+                        fontWeight: 700,
+                        fontSize: '0.9rem',
+                        cursor: 'pointer',
+                        transition: 'all 0.2s',
+                      }}
+                    >
+                      {pg.label}
+                    </button>
+                  );
+                })}
+              </div>
+
+              {/* Active SEO Form */}
+              {(() => {
+                const seoData = siteData.seo?.[activeSeoPage] || {};
+                const titleLen = (seoData.title || '').length;
+                const descLen = (seoData.description || '').length;
+
+                return (
+                  <div style={{ display: 'flex', flexDirection: 'column', gap: '1.75rem' }}>
+                    {/* Live Google Search Preview Card */}
+                    <div style={{ backgroundColor: '#1C1917', padding: '1.5rem', borderRadius: '14px', border: '1px solid #292524' }}>
+                      <span style={{ fontSize: '0.78rem', color: '#DE7843', fontWeight: 800, textTransform: 'uppercase', letterSpacing: '1px' }}>
+                        Google SERP Live Preview
+                      </span>
+                      <div style={{ marginTop: '0.85rem', backgroundColor: '#FFFFFF', padding: '1.25rem 1.5rem', borderRadius: '12px', border: '1px solid #E5E7EB' }}>
+                        <div style={{ fontSize: '0.8rem', color: '#202124', marginBottom: '2px', display: 'flex', alignItems: 'center', gap: '6px' }}>
+                          <span style={{ color: '#202124', fontWeight: 600 }}>Veg Chennai SriLalitha</span>
+                          <span style={{ color: '#5f6368' }}>› {seoData.url || '/'}</span>
+                        </div>
+                        <h4 style={{ margin: '0 0 4px 0', fontSize: '1.15rem', color: '#1a0dab', fontWeight: 500, lineHeight: 1.3 }}>
+                          {seoData.title || 'South Indian Vegetarian Restaurant Amersham | 100% Pure Veg'}
+                        </h4>
+                        <p style={{ margin: 0, fontSize: '0.88rem', color: '#4d5156', lineHeight: 1.45 }}>
+                          {seoData.description || 'Top-rated South-Indian Vegetarian Dining in Amersham. Authentic Dosas, Thalis, & Catering Services.'}
+                        </p>
+                      </div>
+                    </div>
+
+                    {/* SEO Inputs */}
+                    <div style={{ backgroundColor: '#1C1917', padding: '1.75rem', borderRadius: '14px', border: '1px solid #292524', display: 'flex', flexDirection: 'column', gap: '1.25rem' }}>
+                      {/* Meta Title */}
+                      <div>
+                        <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '0.5rem' }}>
+                          <label style={{ fontSize: '0.88rem', fontWeight: 700, color: '#D6D3D1' }}>Page Meta Title (Browser &amp; Google Title)</label>
+                          <span style={{ fontSize: '0.8rem', color: titleLen > 65 ? '#EF4444' : '#10B981', fontWeight: 600 }}>
+                            {titleLen} / 60 characters
+                          </span>
+                        </div>
+                        <input
+                          type="text"
+                          value={seoData.title || ''}
+                          onChange={(e) => updateSeo(activeSeoPage, 'title', e.target.value)}
+                          placeholder="Primary Google Title Tag"
+                          style={{ width: '100%', padding: '0.75rem', borderRadius: '8px', backgroundColor: '#292524', border: '1px solid #44403C', color: '#fff', fontSize: '0.95rem' }}
+                        />
+                      </div>
+
+                      {/* Meta Description */}
+                      <div>
+                        <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '0.5rem' }}>
+                          <label style={{ fontSize: '0.88rem', fontWeight: 700, color: '#D6D3D1' }}>Meta Description (Search Snippet)</label>
+                          <span style={{ fontSize: '0.8rem', color: descLen > 165 ? '#EF4444' : '#10B981', fontWeight: 600 }}>
+                            {descLen} / 160 characters
+                          </span>
+                        </div>
+                        <textarea
+                          rows={3}
+                          value={seoData.description || ''}
+                          onChange={(e) => updateSeo(activeSeoPage, 'description', e.target.value)}
+                          placeholder="Brief description that convinces visitors on Google to click your site."
+                          style={{ width: '100%', padding: '0.75rem', borderRadius: '8px', backgroundColor: '#292524', border: '1px solid #44403C', color: '#fff', fontSize: '0.95rem', resize: 'vertical' }}
+                        />
+                      </div>
+
+                      {/* Ranking Keywords */}
+                      <div>
+                        <label style={{ display: 'block', fontSize: '0.88rem', fontWeight: 700, color: '#D6D3D1', marginBottom: '0.5rem' }}>
+                          🎯 Target Google Ranking Keywords (Comma-separated)
+                        </label>
+                        <input
+                          type="text"
+                          value={seoData.keywords || ''}
+                          onChange={(e) => updateSeo(activeSeoPage, 'keywords', e.target.value)}
+                          placeholder="e.g. South Indian Restaurant Amersham, Dosa Amersham, Indian Food Buckinghamshire"
+                          style={{ width: '100%', padding: '0.75rem', borderRadius: '8px', backgroundColor: '#292524', border: '1px solid #44403C', color: '#fff', fontSize: '0.95rem' }}
+                        />
+                        <span style={{ display: 'block', marginTop: '0.35rem', fontSize: '0.78rem', color: '#78716C' }}>
+                          These keywords optimize search engines and meta crawler bots for high ranking in local Amersham &amp; Buckinghamshire searches.
+                        </span>
+                      </div>
+
+                      {/* Primary Page H1 Tag */}
+                      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '1rem' }}>
+                        <div>
+                          <label style={{ display: 'block', fontSize: '0.88rem', fontWeight: 700, color: '#D6D3D1', marginBottom: '0.5rem' }}>
+                            Primary Page H1 Tag
+                          </label>
+                          <input
+                            type="text"
+                            value={seoData.h1 || ''}
+                            onChange={(e) => updateSeo(activeSeoPage, 'h1', e.target.value)}
+                            placeholder="Main H1 headline tag"
+                            style={{ width: '100%', padding: '0.75rem', borderRadius: '8px', backgroundColor: '#292524', border: '1px solid #44403C', color: '#fff', fontSize: '0.95rem' }}
+                          />
+                        </div>
+
+                        <div>
+                          <label style={{ display: 'block', fontSize: '0.88rem', fontWeight: 700, color: '#D6D3D1', marginBottom: '0.5rem' }}>
+                            Canonical URL
+                          </label>
+                          <input
+                            type="text"
+                            value={seoData.canonical || ''}
+                            onChange={(e) => updateSeo(activeSeoPage, 'canonical', e.target.value)}
+                            placeholder="https://vcsamersham.co.uk/..."
+                            style={{ width: '100%', padding: '0.75rem', borderRadius: '8px', backgroundColor: '#292524', border: '1px solid #44403C', color: '#fff', fontSize: '0.95rem' }}
+                          />
+                        </div>
+                      </div>
+
+                      {/* OG Share Image */}
+                      <div>
+                        <label style={{ display: 'block', fontSize: '0.88rem', fontWeight: 700, color: '#D6D3D1', marginBottom: '0.5rem' }}>
+                          Social Share Image (OG Image)
+                        </label>
+                        <div style={{ display: 'flex', gap: '0.75rem', alignItems: 'center' }}>
+                          <input
+                            type="text"
+                            value={seoData.ogImage || ''}
+                            onChange={(e) => updateSeo(activeSeoPage, 'ogImage', e.target.value)}
+                            placeholder="/images/..."
+                            style={{ flex: 1, padding: '0.75rem', borderRadius: '8px', backgroundColor: '#292524', border: '1px solid #44403C', color: '#fff', fontSize: '0.95rem' }}
+                          />
+                          <label
+                            style={{
+                              padding: '0.75rem 1.25rem',
+                              borderRadius: '8px',
+                              backgroundColor: 'rgba(222, 120, 67, 0.15)',
+                              color: '#DE7843',
+                              border: '1px solid rgba(222, 120, 67, 0.4)',
+                              fontSize: '0.85rem',
+                              fontWeight: 700,
+                              cursor: 'pointer',
+                              whiteSpace: 'nowrap',
+                            }}
+                          >
+                            📁 Upload OG Image
+                            <input
+                              type="file"
+                              accept="image/*"
+                              style={{ display: 'none' }}
+                              onChange={(e) => handleImageUpload(e, (url) => updateSeo(activeSeoPage, 'ogImage', url), `seo-${activeSeoPage}`)}
+                            />
+                          </label>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                );
+              })()}
+            </div>
+          )}
+
+          {/* TAB 12: CUSTOM FORM FIELDS & INPUT BOXES */}
+          {activeTab === 'forms' && (
+            <div>
+              <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', marginBottom: '2rem', flexWrap: 'wrap', gap: '1rem' }}>
+                <div>
+                  <h2 style={{ fontSize: '1.75rem', fontWeight: 800, margin: '0 0 0.5rem 0' }}>Enquiry &amp; Catering Form Fields 📝</h2>
+                  <p style={{ color: '#A8A29E', fontSize: '0.95rem', margin: 0 }}>
+                    Add new input boxes, question fields, or dropdowns to live forms. Any box you add here appears immediately on the live website.
+                  </p>
+                </div>
+                <button
+                  type="button"
+                  onClick={addCustomFormField}
+                  style={{
+                    display: 'inline-flex',
+                    alignItems: 'center',
+                    gap: '0.5rem',
+                    padding: '0.75rem 1.4rem',
+                    borderRadius: '10px',
+                    backgroundColor: '#DE7843',
+                    color: '#fff',
+                    border: 'none',
+                    fontWeight: 700,
+                    fontSize: '0.92rem',
+                    cursor: 'pointer',
+                    boxShadow: '0 4px 14px rgba(222, 120, 67, 0.4)',
+                  }}
+                >
+                  <span>+</span>
+                  <span>Add New Input Box / Field</span>
+                </button>
+              </div>
+
+              {/* Notice Banner */}
+              <div
+                style={{
+                  backgroundColor: 'rgba(222, 120, 67, 0.1)',
+                  border: '1px solid rgba(222, 120, 67, 0.3)',
+                  borderRadius: '12px',
+                  padding: '1rem 1.25rem',
+                  marginBottom: '2rem',
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '0.85rem',
+                }}
+              >
+                <span style={{ fontSize: '1.4rem' }}>💡</span>
+                <span style={{ fontSize: '0.9rem', color: '#FDE6C2', lineHeight: 1.5 }}>
+                  <strong>Live Reflection:</strong> When you add an input box (e.g. &ldquo;Special Dietary Notes&rdquo;, &ldquo;Venue Postcode&rdquo;, or &ldquo;Preferred Time&rdquo;), it will automatically render on the corresponding live forms and collect answers from visitors.
+                </span>
+              </div>
+
+              {/* List of Custom Form Field Boxes */}
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
+                {(!siteData.customFormFields || siteData.customFormFields.length === 0) ? (
+                  <div
+                    style={{
+                      backgroundColor: '#1C1917',
+                      border: '1px dashed #44403C',
+                      borderRadius: '16px',
+                      padding: '3rem 2rem',
+                      textAlign: 'center',
+                      color: '#A8A29E',
+                    }}
+                  >
+                    <div style={{ fontSize: '2.5rem', marginBottom: '1rem' }}>📝</div>
+                    <h3 style={{ margin: '0 0 0.5rem 0', color: '#FFFFFF', fontSize: '1.2rem' }}>No custom boxes added yet</h3>
+                    <p style={{ margin: '0 0 1.5rem 0', fontSize: '0.9rem' }}>Click the button below to add your first custom input field to the live forms.</p>
+                    <button
+                      type="button"
+                      onClick={addCustomFormField}
+                      style={{
+                        padding: '0.75rem 1.5rem',
+                        borderRadius: '10px',
+                        backgroundColor: '#DE7843',
+                        color: '#fff',
+                        border: 'none',
+                        fontWeight: 700,
+                        cursor: 'pointer',
+                      }}
+                    >
+                      + Add New Input Box
+                    </button>
+                  </div>
+                ) : (
+                  siteData.customFormFields.map((field: any, idx: number) => {
+                    const isEnabled = field.enabled !== false;
+
+                    return (
+                      <div
+                        key={field.id || idx}
+                        style={{
+                          backgroundColor: '#1C1917',
+                          borderRadius: '16px',
+                          border: isEnabled ? '1px solid #38322E' : '1px solid #292524',
+                          padding: '1.5rem',
+                          boxShadow: '0 4px 16px rgba(0, 0, 0, 0.25)',
+                          display: 'flex',
+                          flexDirection: 'column',
+                          gap: '1.25rem',
+                          opacity: isEnabled ? 1 : 0.65,
+                        }}
+                      >
+                        {/* Top Bar of Field Card */}
+                        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: '0.75rem' }}>
+                          <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
+                            <span
+                              style={{
+                                width: '28px',
+                                height: '28px',
+                                borderRadius: '50%',
+                                backgroundColor: '#292524',
+                                border: '1px solid #44403C',
+                                display: 'flex',
+                                alignItems: 'center',
+                                justifyContent: 'center',
+                                fontSize: '0.82rem',
+                                fontWeight: 800,
+                                color: '#DE7843',
+                              }}
+                            >
+                              {idx + 1}
+                            </span>
+                            <span style={{ fontWeight: 800, fontSize: '1.05rem', color: '#FFFFFF' }}>
+                              {field.label || 'Untitled Box'}
+                            </span>
+                            <span
+                              style={{
+                                padding: '3px 10px',
+                                borderRadius: '12px',
+                                fontSize: '0.75rem',
+                                fontWeight: 700,
+                                backgroundColor: isEnabled ? 'rgba(34, 197, 94, 0.15)' : 'rgba(120, 113, 108, 0.2)',
+                                color: isEnabled ? '#4ADE80' : '#A8A29E',
+                                border: isEnabled ? '1px solid rgba(34, 197, 94, 0.4)' : '1px solid rgba(120, 113, 108, 0.4)',
+                              }}
+                            >
+                              {isEnabled ? '✓ Active on Live Form' : 'Hidden'}
+                            </span>
+                          </div>
+
+                          <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
+                            {/* Enable/Disable Toggle */}
+                            <button
+                              type="button"
+                              onClick={() => updateCustomFormField(idx, 'enabled', !isEnabled)}
+                              style={{
+                                padding: '0.4rem 0.85rem',
+                                borderRadius: '8px',
+                                backgroundColor: isEnabled ? 'rgba(34, 197, 94, 0.15)' : '#292524',
+                                color: isEnabled ? '#4ADE80' : '#A8A29E',
+                                border: '1px solid #44403C',
+                                fontSize: '0.82rem',
+                                fontWeight: 600,
+                                cursor: 'pointer',
+                              }}
+                            >
+                              {isEnabled ? 'Disable' : 'Enable'}
+                            </button>
+
+                            {/* Delete Button with Confirmation */}
+                            <button
+                              type="button"
+                              onClick={() =>
+                                requestConfirm({
+                                  title: 'Delete Form Box?',
+                                  message: `Are you sure you want to remove the "${field.label || 'Custom Box'}" input from all forms?`,
+                                  confirmLabel: 'Delete Box',
+                                  confirmColor: '#E11D48',
+                                  onConfirm: () => removeCustomFormField(idx),
+                                })
+                              }
+                              style={{
+                                padding: '0.4rem 0.85rem',
+                                borderRadius: '8px',
+                                backgroundColor: 'rgba(239, 68, 68, 0.12)',
+                                color: '#F87171',
+                                border: '1px solid rgba(239, 68, 68, 0.3)',
+                                fontSize: '0.82rem',
+                                fontWeight: 600,
+                                cursor: 'pointer',
+                              }}
+                            >
+                              🗑️ Delete
+                            </button>
+                          </div>
+                        </div>
+
+                        {/* Settings Grid */}
+                        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))', gap: '1rem' }}>
+                          {/* Label / Question Title */}
+                          <div>
+                            <label style={{ display: 'block', fontSize: '0.85rem', fontWeight: 700, color: '#D6D3D1', marginBottom: '0.4rem' }}>
+                              Field Label / Box Title *
+                            </label>
+                            <input
+                              type="text"
+                              value={field.label || ''}
+                              onChange={(e) => updateCustomFormField(idx, 'label', e.target.value)}
+                              placeholder="e.g. Dietary Requirements &amp; Allergens"
+                              style={{ width: '100%', padding: '0.75rem', borderRadius: '8px', backgroundColor: '#292524', border: '1px solid #44403C', color: '#fff', fontSize: '0.95rem' }}
+                            />
+                          </div>
+
+                          {/* Placeholder Text */}
+                          <div>
+                            <label style={{ display: 'block', fontSize: '0.85rem', fontWeight: 700, color: '#D6D3D1', marginBottom: '0.4rem' }}>
+                              Placeholder Text
+                            </label>
+                            <input
+                              type="text"
+                              value={field.placeholder || ''}
+                              onChange={(e) => updateCustomFormField(idx, 'placeholder', e.target.value)}
+                              placeholder="e.g. Enter special requirements (Jain, Vegan, etc.)"
+                              style={{ width: '100%', padding: '0.75rem', borderRadius: '8px', backgroundColor: '#292524', border: '1px solid #44403C', color: '#fff', fontSize: '0.95rem' }}
+                            />
+                          </div>
+
+                          {/* Input Type */}
+                          <div>
+                            <label style={{ display: 'block', fontSize: '0.85rem', fontWeight: 700, color: '#D6D3D1', marginBottom: '0.4rem' }}>
+                              Input Box Type
+                            </label>
+                            <select
+                              value={field.type || 'text'}
+                              onChange={(e) => updateCustomFormField(idx, 'type', e.target.value)}
+                              style={{ width: '100%', padding: '0.75rem', borderRadius: '8px', backgroundColor: '#292524', border: '1px solid #44403C', color: '#fff', fontSize: '0.95rem' }}
+                            >
+                              <option value="text">Single-line Text Box</option>
+                              <option value="textarea">Multi-line Text Area</option>
+                              <option value="number">Number Box (e.g. Pax, Budget)</option>
+                              <option value="date">Date Picker Box</option>
+                              <option value="tel">Phone / Mobile Number</option>
+                              <option value="email">Email Address Box</option>
+                            </select>
+                          </div>
+
+                          {/* Form Target Placement */}
+                          <div>
+                            <label style={{ display: 'block', fontSize: '0.85rem', fontWeight: 700, color: '#D6D3D1', marginBottom: '0.4rem' }}>
+                              Display on Forms
+                            </label>
+                            <select
+                              value={field.formTarget || 'all'}
+                              onChange={(e) => updateCustomFormField(idx, 'formTarget', e.target.value)}
+                              style={{ width: '100%', padding: '0.75rem', borderRadius: '8px', backgroundColor: '#292524', border: '1px solid #44403C', color: '#fff', fontSize: '0.95rem' }}
+                            >
+                              <option value="all">All Forms (Catering + Contact)</option>
+                              <option value="catering">All Catering Forms (Outdoor + Live Dosa)</option>
+                              <option value="outdoorCatering">Outdoor Catering Form Only</option>
+                              <option value="liveDosa">Live Dosa Catering Form Only</option>
+                              <option value="contact">Contact Form Only</option>
+                            </select>
+                          </div>
+                        </div>
+
+                        {/* Bottom Options: Mandatory Toggle & Live Preview */}
+                        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: '1rem', paddingTop: '0.5rem', borderTop: '1px solid #292524' }}>
+                          <label style={{ display: 'inline-flex', alignItems: 'center', gap: '0.6rem', cursor: 'pointer', fontSize: '0.88rem', color: '#D6D3D1', fontWeight: 600 }}>
+                            <input
+                              type="checkbox"
+                              checked={!!field.required}
+                              onChange={(e) => updateCustomFormField(idx, 'required', e.target.checked)}
+                              style={{ width: '16px', height: '16px', accentColor: '#DE7843' }}
+                            />
+                            <span>Make this a required / mandatory field (*)</span>
+                          </label>
+
+                          {/* Live Box Preview */}
+                          <div style={{ fontSize: '0.82rem', color: '#A8A29E' }}>
+                            Preview: <span style={{ color: '#FDE6C2', fontStyle: 'italic' }}>&ldquo;{field.label || 'Label'}&rdquo; ({field.type || 'text'}) {field.required ? '*' : ''}</span>
+                          </div>
+                        </div>
+                      </div>
+                    );
+                  })
+                )}
+              </div>
+            </div>
+          )}
+
+          {/* TAB 13: DELIVERY PLATFORMS & ONLINE ORDERING */}
+          {activeTab === 'delivery' && (
+            <div>
+              <div style={{ marginBottom: '2rem' }}>
+                <h2 style={{ fontSize: '1.75rem', fontWeight: 800, margin: '0 0 0.5rem 0' }}>Delivery Partners &amp; Online Ordering 🛵</h2>
+                <p style={{ color: '#A8A29E', fontSize: '0.95rem', margin: 0 }}>
+                  Manage URLs and status for external delivery platforms (Just Eat, Deliveroo, Uber Eats) and direct phone takeaway collection.
+                </p>
+              </div>
+
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '1.75rem' }}>
+                {/* General Delivery Note & Phone */}
+                <div style={{ backgroundColor: '#1C1917', padding: '1.75rem', borderRadius: '16px', border: '1px solid #292524' }}>
+                  <h3 style={{ fontSize: '1.15rem', fontWeight: 700, margin: '0 0 1.25rem 0', color: '#DE7843' }}>Takeaway Phone &amp; Customer Note</h3>
+                  <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '1.25rem' }}>
+                    <div>
+                      <label style={{ display: 'block', fontSize: '0.85rem', fontWeight: 600, color: '#D6D3D1', marginBottom: '0.45rem' }}>Direct Order Phone Number</label>
+                      <input
+                        type="text"
+                        value={siteData.deliveryPlatforms?.orderPhone || siteData.restaurant?.phone || ''}
+                        onChange={(e) => updateDeliveryGeneral('orderPhone', e.target.value)}
+                        placeholder="0149 497 2550"
+                        style={{ width: '100%', padding: '0.75rem', borderRadius: '8px', backgroundColor: '#292524', border: '1px solid #44403C', color: '#fff', fontSize: '0.95rem' }}
+                      />
+                    </div>
+                    <div>
+                      <label style={{ display: 'block', fontSize: '0.85rem', fontWeight: 600, color: '#D6D3D1', marginBottom: '0.45rem' }}>Ordering Instructions Note</label>
+                      <input
+                        type="text"
+                        value={siteData.deliveryPlatforms?.deliveryNote || ''}
+                        onChange={(e) => updateDeliveryGeneral('deliveryNote', e.target.value)}
+                        placeholder="Order online for fast doorstep delivery or call us directly for collection takeaway."
+                        style={{ width: '100%', padding: '0.75rem', borderRadius: '8px', backgroundColor: '#292524', border: '1px solid #44403C', color: '#fff', fontSize: '0.95rem' }}
+                      />
+                    </div>
+                  </div>
+                </div>
+
+                {/* 3 Major Delivery Partners */}
+                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: '1.25rem' }}>
+                  {/* Just Eat */}
+                  <div style={{ backgroundColor: '#1C1917', padding: '1.5rem', borderRadius: '14px', border: '1px solid #292524', display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+                    <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+                      <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
+                        <span style={{ fontSize: '1.5rem' }}>🍔</span>
+                        <span style={{ fontWeight: 800, fontSize: '1.1rem', color: '#FFFFFF' }}>Just Eat</span>
+                      </div>
+                      <label style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem', cursor: 'pointer', fontSize: '0.82rem', color: '#D6D3D1', fontWeight: 600 }}>
+                        <input
+                          type="checkbox"
+                          checked={siteData.deliveryPlatforms?.justEat?.enabled !== false}
+                          onChange={(e) => updateDelivery('justEat', 'enabled', e.target.checked)}
+                          style={{ width: '16px', height: '16px', accentColor: '#DE7843' }}
+                        />
+                        <span>Active</span>
+                      </label>
+                    </div>
+                    <div>
+                      <label style={{ display: 'block', fontSize: '0.82rem', fontWeight: 600, color: '#A8A29E', marginBottom: '0.35rem' }}>Just Eat Restaurant Link URL</label>
+                      <input
+                        type="text"
+                        value={siteData.deliveryPlatforms?.justEat?.url || ''}
+                        onChange={(e) => updateDelivery('justEat', 'url', e.target.value)}
+                        placeholder="https://www.just-eat.co.uk/..."
+                        style={{ width: '100%', padding: '0.65rem', borderRadius: '8px', backgroundColor: '#292524', border: '1px solid #44403C', color: '#fff', fontSize: '0.9rem' }}
+                      />
+                    </div>
+                  </div>
+
+                  {/* Deliveroo */}
+                  <div style={{ backgroundColor: '#1C1917', padding: '1.5rem', borderRadius: '14px', border: '1px solid #292524', display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+                    <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+                      <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
+                        <span style={{ fontSize: '1.5rem' }}>🦘</span>
+                        <span style={{ fontWeight: 800, fontSize: '1.1rem', color: '#FFFFFF' }}>Deliveroo</span>
+                      </div>
+                      <label style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem', cursor: 'pointer', fontSize: '0.82rem', color: '#D6D3D1', fontWeight: 600 }}>
+                        <input
+                          type="checkbox"
+                          checked={siteData.deliveryPlatforms?.deliveroo?.enabled !== false}
+                          onChange={(e) => updateDelivery('deliveroo', 'enabled', e.target.checked)}
+                          style={{ width: '16px', height: '16px', accentColor: '#DE7843' }}
+                        />
+                        <span>Active</span>
+                      </label>
+                    </div>
+                    <div>
+                      <label style={{ display: 'block', fontSize: '0.82rem', fontWeight: 600, color: '#A8A29E', marginBottom: '0.35rem' }}>Deliveroo Restaurant Link URL</label>
+                      <input
+                        type="text"
+                        value={siteData.deliveryPlatforms?.deliveroo?.url || ''}
+                        onChange={(e) => updateDelivery('deliveroo', 'url', e.target.value)}
+                        placeholder="https://deliveroo.co.uk/..."
+                        style={{ width: '100%', padding: '0.65rem', borderRadius: '8px', backgroundColor: '#292524', border: '1px solid #44403C', color: '#fff', fontSize: '0.9rem' }}
+                      />
+                    </div>
+                  </div>
+
+                  {/* Uber Eats */}
+                  <div style={{ backgroundColor: '#1C1917', padding: '1.5rem', borderRadius: '14px', border: '1px solid #292524', display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+                    <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+                      <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
+                        <span style={{ fontSize: '1.5rem' }}>🟢</span>
+                        <span style={{ fontWeight: 800, fontSize: '1.1rem', color: '#FFFFFF' }}>Uber Eats</span>
+                      </div>
+                      <label style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem', cursor: 'pointer', fontSize: '0.82rem', color: '#D6D3D1', fontWeight: 600 }}>
+                        <input
+                          type="checkbox"
+                          checked={siteData.deliveryPlatforms?.uberEats?.enabled !== false}
+                          onChange={(e) => updateDelivery('uberEats', 'enabled', e.target.checked)}
+                          style={{ width: '16px', height: '16px', accentColor: '#DE7843' }}
+                        />
+                        <span>Active</span>
+                      </label>
+                    </div>
+                    <div>
+                      <label style={{ display: 'block', fontSize: '0.82rem', fontWeight: 600, color: '#A8A29E', marginBottom: '0.35rem' }}>Uber Eats Restaurant Link URL</label>
+                      <input
+                        type="text"
+                        value={siteData.deliveryPlatforms?.uberEats?.url || ''}
+                        onChange={(e) => updateDelivery('uberEats', 'url', e.target.value)}
+                        placeholder="https://www.ubereats.com/..."
+                        style={{ width: '100%', padding: '0.65rem', borderRadius: '8px', backgroundColor: '#292524', border: '1px solid #44403C', color: '#fff', fontSize: '0.9rem' }}
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          )}
+
+          {/* TAB 14: LEGAL POLICIES & PAGES */}
+          {activeTab === 'legal' && (
+            <div>
+              <div style={{ marginBottom: '2rem' }}>
+                <h2 style={{ fontSize: '1.75rem', fontWeight: 800, margin: '0 0 0.5rem 0' }}>Legal Policies &amp; Compliance Pages 📜</h2>
+                <p style={{ color: '#A8A29E', fontSize: '0.95rem', margin: 0 }}>
+                  Customize live policy pages (/privacy-policy, /cookies-policy, and /disclaimer) dynamically.
+                </p>
+              </div>
+
+              {/* Policy Selector Pills */}
+              <div style={{ display: 'flex', gap: '0.65rem', flexWrap: 'wrap', marginBottom: '2rem' }}>
+                {[
+                  { key: 'privacyPolicy', label: '🔒 Privacy Policy (/privacy-policy)' },
+                  { key: 'cookiesPolicy', label: '🍪 Cookies Policy (/cookies-policy)' },
+                  { key: 'disclaimer', label: '⚠️ Disclaimer (/disclaimer)' },
+                ].map((p) => {
+                  const isCur = activeLegalTab === p.key;
+                  return (
+                    <button
+                      key={p.key}
+                      type="button"
+                      onClick={() => setActiveLegalTab(p.key as any)}
+                      style={{
+                        padding: '0.65rem 1.25rem',
+                        borderRadius: '10px',
+                        backgroundColor: isCur ? '#DE7843' : '#292524',
+                        color: isCur ? '#fff' : '#D6D3D1',
+                        border: isCur ? '1px solid #DE7843' : '1px solid #44403C',
+                        fontWeight: 700,
+                        fontSize: '0.9rem',
+                        cursor: 'pointer',
+                        transition: 'all 0.2s',
+                      }}
+                    >
+                      {p.label}
+                    </button>
+                  );
+                })}
+              </div>
+
+              {/* PRIVACY POLICY FORM */}
+              {activeLegalTab === 'privacyPolicy' && (
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem', backgroundColor: '#1C1917', padding: '1.75rem', borderRadius: '16px', border: '1px solid #292524' }}>
+                  <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '1.25rem' }}>
+                    <div>
+                      <label style={{ display: 'block', fontSize: '0.85rem', fontWeight: 600, color: '#D6D3D1', marginBottom: '0.45rem' }}>Page Heading Title</label>
+                      <input
+                        type="text"
+                        value={siteData.legalPolicies?.privacyPolicy?.title || 'Privacy Policy'}
+                        onChange={(e) => updateLegalPolicy('privacyPolicy', 'title', e.target.value)}
+                        style={{ width: '100%', padding: '0.75rem', borderRadius: '8px', backgroundColor: '#292524', border: '1px solid #44403C', color: '#fff', fontSize: '0.95rem' }}
+                      />
+                    </div>
+                    <div>
+                      <label style={{ display: 'block', fontSize: '0.85rem', fontWeight: 600, color: '#D6D3D1', marginBottom: '0.45rem' }}>Effective Date</label>
+                      <input
+                        type="text"
+                        value={siteData.legalPolicies?.privacyPolicy?.effectiveDate || '01/01/2027'}
+                        onChange={(e) => updateLegalPolicy('privacyPolicy', 'effectiveDate', e.target.value)}
+                        style={{ width: '100%', padding: '0.75rem', borderRadius: '8px', backgroundColor: '#292524', border: '1px solid #44403C', color: '#fff', fontSize: '0.95rem' }}
+                      />
+                    </div>
+                  </div>
+
+                  <div>
+                    <label style={{ display: 'block', fontSize: '0.85rem', fontWeight: 600, color: '#D6D3D1', marginBottom: '0.45rem' }}>Introductory Summary</label>
+                    <textarea
+                      rows={3}
+                      value={siteData.legalPolicies?.privacyPolicy?.intro || ''}
+                      onChange={(e) => updateLegalPolicy('privacyPolicy', 'intro', e.target.value)}
+                      style={{ width: '100%', padding: '0.75rem', borderRadius: '8px', backgroundColor: '#292524', border: '1px solid #44403C', color: '#fff', fontSize: '0.9rem', resize: 'vertical' }}
+                    />
+                  </div>
+
+                  <div>
+                    <label style={{ display: 'block', fontSize: '0.85rem', fontWeight: 600, color: '#D6D3D1', marginBottom: '0.45rem' }}>Information We Collect</label>
+                    <textarea
+                      rows={2}
+                      value={siteData.legalPolicies?.privacyPolicy?.infoCollected || ''}
+                      onChange={(e) => updateLegalPolicy('privacyPolicy', 'infoCollected', e.target.value)}
+                      style={{ width: '100%', padding: '0.75rem', borderRadius: '8px', backgroundColor: '#292524', border: '1px solid #44403C', color: '#fff', fontSize: '0.9rem', resize: 'vertical' }}
+                    />
+                  </div>
+
+                  <div>
+                    <label style={{ display: 'block', fontSize: '0.85rem', fontWeight: 600, color: '#D6D3D1', marginBottom: '0.45rem' }}>How We Use Your Information</label>
+                    <textarea
+                      rows={2}
+                      value={siteData.legalPolicies?.privacyPolicy?.howWeUse || ''}
+                      onChange={(e) => updateLegalPolicy('privacyPolicy', 'howWeUse', e.target.value)}
+                      style={{ width: '100%', padding: '0.75rem', borderRadius: '8px', backgroundColor: '#292524', border: '1px solid #44403C', color: '#fff', fontSize: '0.9rem', resize: 'vertical' }}
+                    />
+                  </div>
+
+                  <div>
+                    <label style={{ display: 'block', fontSize: '0.85rem', fontWeight: 600, color: '#D6D3D1', marginBottom: '0.45rem' }}>Data Sharing &amp; Third Parties</label>
+                    <textarea
+                      rows={2}
+                      value={siteData.legalPolicies?.privacyPolicy?.sharing || ''}
+                      onChange={(e) => updateLegalPolicy('privacyPolicy', 'sharing', e.target.value)}
+                      style={{ width: '100%', padding: '0.75rem', borderRadius: '8px', backgroundColor: '#292524', border: '1px solid #44403C', color: '#fff', fontSize: '0.9rem', resize: 'vertical' }}
+                    />
+                  </div>
+
+                  <div>
+                    <label style={{ display: 'block', fontSize: '0.85rem', fontWeight: 600, color: '#D6D3D1', marginBottom: '0.45rem' }}>Data Security</label>
+                    <textarea
+                      rows={2}
+                      value={siteData.legalPolicies?.privacyPolicy?.security || ''}
+                      onChange={(e) => updateLegalPolicy('privacyPolicy', 'security', e.target.value)}
+                      style={{ width: '100%', padding: '0.75rem', borderRadius: '8px', backgroundColor: '#292524', border: '1px solid #44403C', color: '#fff', fontSize: '0.9rem', resize: 'vertical' }}
+                    />
+                  </div>
+
+                  <div>
+                    <label style={{ display: 'block', fontSize: '0.85rem', fontWeight: 600, color: '#D6D3D1', marginBottom: '0.45rem' }}>Cookies &amp; Tracking Notice</label>
+                    <textarea
+                      rows={2}
+                      value={siteData.legalPolicies?.privacyPolicy?.cookies || ''}
+                      onChange={(e) => updateLegalPolicy('privacyPolicy', 'cookies', e.target.value)}
+                      style={{ width: '100%', padding: '0.75rem', borderRadius: '8px', backgroundColor: '#292524', border: '1px solid #44403C', color: '#fff', fontSize: '0.9rem', resize: 'vertical' }}
+                    />
+                  </div>
+
+                  <div>
+                    <label style={{ display: 'block', fontSize: '0.85rem', fontWeight: 600, color: '#D6D3D1', marginBottom: '0.45rem' }}>Customer Rights Clause</label>
+                    <textarea
+                      rows={2}
+                      value={siteData.legalPolicies?.privacyPolicy?.rights || ''}
+                      onChange={(e) => updateLegalPolicy('privacyPolicy', 'rights', e.target.value)}
+                      style={{ width: '100%', padding: '0.75rem', borderRadius: '8px', backgroundColor: '#292524', border: '1px solid #44403C', color: '#fff', fontSize: '0.9rem', resize: 'vertical' }}
+                    />
+                  </div>
+                </div>
+              )}
+
+              {/* COOKIES POLICY FORM */}
+              {activeLegalTab === 'cookiesPolicy' && (
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem', backgroundColor: '#1C1917', padding: '1.75rem', borderRadius: '16px', border: '1px solid #292524' }}>
+                  <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '1.25rem' }}>
+                    <div>
+                      <label style={{ display: 'block', fontSize: '0.85rem', fontWeight: 600, color: '#D6D3D1', marginBottom: '0.45rem' }}>Page Heading Title</label>
+                      <input
+                        type="text"
+                        value={siteData.legalPolicies?.cookiesPolicy?.title || 'Cookie Policy'}
+                        onChange={(e) => updateLegalPolicy('cookiesPolicy', 'title', e.target.value)}
+                        style={{ width: '100%', padding: '0.75rem', borderRadius: '8px', backgroundColor: '#292524', border: '1px solid #44403C', color: '#fff', fontSize: '0.95rem' }}
+                      />
+                    </div>
+                    <div>
+                      <label style={{ display: 'block', fontSize: '0.85rem', fontWeight: 600, color: '#D6D3D1', marginBottom: '0.45rem' }}>Effective Date</label>
+                      <input
+                        type="text"
+                        value={siteData.legalPolicies?.cookiesPolicy?.effectiveDate || '01/01/2027'}
+                        onChange={(e) => updateLegalPolicy('cookiesPolicy', 'effectiveDate', e.target.value)}
+                        style={{ width: '100%', padding: '0.75rem', borderRadius: '8px', backgroundColor: '#292524', border: '1px solid #44403C', color: '#fff', fontSize: '0.95rem' }}
+                      />
+                    </div>
+                  </div>
+
+                  <div>
+                    <label style={{ display: 'block', fontSize: '0.85rem', fontWeight: 600, color: '#D6D3D1', marginBottom: '0.45rem' }}>What Are Cookies?</label>
+                    <textarea
+                      rows={2}
+                      value={siteData.legalPolicies?.cookiesPolicy?.whatAreCookies || ''}
+                      onChange={(e) => updateLegalPolicy('cookiesPolicy', 'whatAreCookies', e.target.value)}
+                      style={{ width: '100%', padding: '0.75rem', borderRadius: '8px', backgroundColor: '#292524', border: '1px solid #44403C', color: '#fff', fontSize: '0.9rem', resize: 'vertical' }}
+                    />
+                  </div>
+
+                  <div>
+                    <label style={{ display: 'block', fontSize: '0.85rem', fontWeight: 600, color: '#D6D3D1', marginBottom: '0.45rem' }}>How We Use Cookies</label>
+                    <textarea
+                      rows={2}
+                      value={siteData.legalPolicies?.cookiesPolicy?.howWeUse || ''}
+                      onChange={(e) => updateLegalPolicy('cookiesPolicy', 'howWeUse', e.target.value)}
+                      style={{ width: '100%', padding: '0.75rem', borderRadius: '8px', backgroundColor: '#292524', border: '1px solid #44403C', color: '#fff', fontSize: '0.9rem', resize: 'vertical' }}
+                    />
+                  </div>
+
+                  <div>
+                    <label style={{ display: 'block', fontSize: '0.85rem', fontWeight: 600, color: '#D6D3D1', marginBottom: '0.45rem' }}>Managing Cookies In Browser</label>
+                    <textarea
+                      rows={2}
+                      value={siteData.legalPolicies?.cookiesPolicy?.managing || ''}
+                      onChange={(e) => updateLegalPolicy('cookiesPolicy', 'managing', e.target.value)}
+                      style={{ width: '100%', padding: '0.75rem', borderRadius: '8px', backgroundColor: '#292524', border: '1px solid #44403C', color: '#fff', fontSize: '0.9rem', resize: 'vertical' }}
+                    />
+                  </div>
+                </div>
+              )}
+
+              {/* DISCLAIMER FORM */}
+              {activeLegalTab === 'disclaimer' && (
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem', backgroundColor: '#1C1917', padding: '1.75rem', borderRadius: '16px', border: '1px solid #292524' }}>
+                  <div>
+                    <label style={{ display: 'block', fontSize: '0.85rem', fontWeight: 600, color: '#D6D3D1', marginBottom: '0.45rem' }}>Page Heading Title</label>
+                    <input
+                      type="text"
+                      value={siteData.legalPolicies?.disclaimer?.title || 'Disclaimer'}
+                      onChange={(e) => updateLegalPolicy('disclaimer', 'title', e.target.value)}
+                      style={{ width: '100%', padding: '0.75rem', borderRadius: '8px', backgroundColor: '#292524', border: '1px solid #44403C', color: '#fff', fontSize: '0.95rem' }}
+                    />
+                  </div>
+
+                  <div>
+                    <label style={{ display: 'block', fontSize: '0.85rem', fontWeight: 600, color: '#D6D3D1', marginBottom: '0.45rem' }}>Food Safety &amp; Allergen Disclaimer</label>
+                    <textarea
+                      rows={3}
+                      value={siteData.legalPolicies?.disclaimer?.foodSafety || ''}
+                      onChange={(e) => updateLegalPolicy('disclaimer', 'foodSafety', e.target.value)}
+                      style={{ width: '100%', padding: '0.75rem', borderRadius: '8px', backgroundColor: '#292524', border: '1px solid #44403C', color: '#fff', fontSize: '0.9rem', resize: 'vertical' }}
+                    />
+                  </div>
+
+                  <div>
+                    <label style={{ display: 'block', fontSize: '0.85rem', fontWeight: 600, color: '#D6D3D1', marginBottom: '0.45rem' }}>Accuracy of Information</label>
+                    <textarea
+                      rows={2}
+                      value={siteData.legalPolicies?.disclaimer?.accuracy || ''}
+                      onChange={(e) => updateLegalPolicy('disclaimer', 'accuracy', e.target.value)}
+                      style={{ width: '100%', padding: '0.75rem', borderRadius: '8px', backgroundColor: '#292524', border: '1px solid #44403C', color: '#fff', fontSize: '0.9rem', resize: 'vertical' }}
+                    />
+                  </div>
+
+                  <div>
+                    <label style={{ display: 'block', fontSize: '0.85rem', fontWeight: 600, color: '#D6D3D1', marginBottom: '0.45rem' }}>Limitation of Liability</label>
+                    <textarea
+                      rows={2}
+                      value={siteData.legalPolicies?.disclaimer?.liability || ''}
+                      onChange={(e) => updateLegalPolicy('disclaimer', 'liability', e.target.value)}
+                      style={{ width: '100%', padding: '0.75rem', borderRadius: '8px', backgroundColor: '#292524', border: '1px solid #44403C', color: '#fff', fontSize: '0.9rem', resize: 'vertical' }}
+                    />
+                  </div>
+
+                  <div>
+                    <label style={{ display: 'block', fontSize: '0.85rem', fontWeight: 600, color: '#D6D3D1', marginBottom: '0.45rem' }}>Preparation &amp; Delivery Times</label>
+                    <textarea
+                      rows={2}
+                      value={siteData.legalPolicies?.disclaimer?.timings || ''}
+                      onChange={(e) => updateLegalPolicy('disclaimer', 'timings', e.target.value)}
+                      style={{ width: '100%', padding: '0.75rem', borderRadius: '8px', backgroundColor: '#292524', border: '1px solid #44403C', color: '#fff', fontSize: '0.9rem', resize: 'vertical' }}
+                    />
+                  </div>
+
+                  <div>
+                    <label style={{ display: 'block', fontSize: '0.85rem', fontWeight: 600, color: '#D6D3D1', marginBottom: '0.45rem' }}>Food Photography &amp; Images Disclaimer</label>
+                    <textarea
+                      rows={2}
+                      value={siteData.legalPolicies?.disclaimer?.foodImages || ''}
+                      onChange={(e) => updateLegalPolicy('disclaimer', 'foodImages', e.target.value)}
+                      style={{ width: '100%', padding: '0.75rem', borderRadius: '8px', backgroundColor: '#292524', border: '1px solid #44403C', color: '#fff', fontSize: '0.9rem', resize: 'vertical' }}
+                    />
+                  </div>
+                </div>
+              )}
             </div>
           )}
 

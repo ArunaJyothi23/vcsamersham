@@ -2,7 +2,7 @@ import fs from 'fs/promises';
 import path from 'path';
 
 const PROJECT_ID = process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID || 'vcs-amersham';
-const API_KEY = process.env.NEXT_PUBLIC_FIREBASE_API_KEY || '';
+const API_KEY = process.env.NEXT_PUBLIC_FIREBASE_API_KEY || 'AIzaSyCd6EskMn3ED4SJ2FeeiWwOtYP1nXaKxeU';
 const STORAGE_BUCKET = process.env.NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET || 'vcs-amersham.firebasestorage.app';
 
 const LOCAL_SITE_PATH = path.join(process.cwd(), 'src', 'data', 'site_content.json');
@@ -10,10 +10,87 @@ const LOCAL_MENU_PATH = path.join(process.cwd(), 'src', 'data', 'menu.json');
 
 const FIRESTORE_BASE = `https://firestore.googleapis.com/v1/projects/${PROJECT_ID}/databases/(default)/documents`;
 
+// In-memory cache with short TTL (3s) for near-instant Admin Studio reflection
+let cachedSiteContent: { data: any; timestamp: number } | null = null;
+let cachedMenuData: { data: any; timestamp: number } | null = null;
+const CACHE_TTL = 3000; // 3 seconds
+
+let lastGlobalVersion = Date.now();
+
+export function invalidateCache() {
+  cachedSiteContent = null;
+  cachedMenuData = null;
+  lastGlobalVersion = Date.now();
+}
+
 /**
- * Fetch site content: checks Firebase Firestore first, falls back to local JSON
+ * Returns latest content timestamp for live tab synchronization
+ */
+export async function getContentVersion(): Promise<number> {
+  let cloudVersion = 0;
+  if (API_KEY && PROJECT_ID) {
+    try {
+      const url = `${FIRESTORE_BASE}/content/site?key=${API_KEY}&mask.fieldPaths=updatedAt`;
+      const res = await fetch(url, { cache: 'no-store' });
+      if (res.ok) {
+        const json = await res.json();
+        if (json?.updateTime) {
+          cloudVersion = Date.parse(json.updateTime);
+        }
+      }
+    } catch {
+      // Fallback silently
+    }
+  }
+
+  let fileVersion = 0;
+  try {
+    const stat = await fs.stat(LOCAL_SITE_PATH);
+    fileVersion = stat.mtimeMs;
+  } catch {}
+
+  return Math.max(cloudVersion, fileVersion, lastGlobalVersion);
+}
+
+function deepMerge(target: any, source: any): any {
+  if (!source) return target;
+  if (!target) return source;
+  if (typeof target !== 'object' || typeof source !== 'object' || Array.isArray(target) || Array.isArray(source)) {
+    return source !== undefined ? source : target;
+  }
+  const output = { ...target };
+  for (const key of Object.keys(source)) {
+    if (source[key] !== undefined && source[key] !== null) {
+      if (typeof source[key] === 'object' && !Array.isArray(source[key])) {
+        output[key] = deepMerge(target[key] || {}, source[key]);
+      } else {
+        output[key] = source[key];
+      }
+    }
+  }
+  return output;
+}
+
+/**
+ * Fetch site content: checks memory cache, then Cloud Firestore (source of truth for Admin edits), merged with local defaults
  */
 export async function getSiteContent(): Promise<any> {
+  const now = Date.now();
+  if (cachedSiteContent && now - cachedSiteContent.timestamp < CACHE_TTL) {
+    return cachedSiteContent.data;
+  }
+
+  // Load default base content
+  let defaultData: any = {};
+  try {
+    const raw = await fs.readFile(LOCAL_SITE_PATH, 'utf-8');
+    defaultData = JSON.parse(raw);
+  } catch {
+    const fallback = await import('../data/site_content.json');
+    defaultData = fallback.default || fallback;
+  }
+
+  // 1. Fetch from Firebase Cloud Firestore FIRST so Admin Studio edits always reflect on the live site
   if (API_KEY && PROJECT_ID) {
     try {
       const url = `${FIRESTORE_BASE}/content/site?key=${API_KEY}`;
@@ -21,38 +98,32 @@ export async function getSiteContent(): Promise<any> {
       if (res.ok) {
         const json = await res.json();
         if (json?.fields?.data?.stringValue) {
-          return JSON.parse(json.fields.data.stringValue);
+          const parsed = JSON.parse(json.fields.data.stringValue);
+          const merged = deepMerge(defaultData, parsed);
+          cachedSiteContent = { data: merged, timestamp: now };
+          return merged;
         }
       }
     } catch (err) {
-      console.warn('Firebase Firestore read failed, falling back to local file:', err);
+      console.warn('Firebase Firestore read failed, falling back to local store:', err);
     }
   }
 
-  // Fallback to local JSON file
-  try {
-    const raw = await fs.readFile(LOCAL_SITE_PATH, 'utf-8');
-    return JSON.parse(raw);
-  } catch (err) {
-    const fallback = await import('../data/site_content.json');
-    return fallback.default || fallback;
-  }
+  // 2. Fall back to local JSON file if offline or Firestore temporarily unavailable
+  cachedSiteContent = { data: defaultData, timestamp: now };
+  return defaultData;
 }
 
 /**
- * Save site content: writes to BOTH Firebase Firestore AND local JSON file
+ * Save site content: writes to Firebase Firestore and local store, clearing cache immediately
  */
 export async function saveSiteContent(data: any): Promise<{ success: boolean; cloud: boolean; error?: string }> {
   let cloudSuccess = false;
 
-  // 1. Always update local JSON as backup
-  try {
-    await fs.writeFile(LOCAL_SITE_PATH, JSON.stringify(data, null, 2), 'utf-8');
-  } catch (err: any) {
-    console.error('Local JSON save error:', err);
-  }
+  // Invalidate memory cache immediately
+  invalidateCache();
 
-  // 2. Save to Cloud Firestore
+  // 1. Save to Cloud Firestore as primary database
   if (API_KEY && PROJECT_ID) {
     try {
       const url = `${FIRESTORE_BASE}/content/site?key=${API_KEY}`;
@@ -77,13 +148,29 @@ export async function saveSiteContent(data: any): Promise<{ success: boolean; cl
     }
   }
 
+  // 2. Also update local JSON file if filesystem is writable
+  try {
+    await fs.writeFile(LOCAL_SITE_PATH, JSON.stringify(data, null, 2), 'utf-8');
+  } catch (err: any) {
+    // Expected on read-only serverless platforms like Vercel
+  }
+
+  lastGlobalVersion = Date.now();
+  cachedSiteContent = { data, timestamp: Date.now() };
+
   return { success: true, cloud: cloudSuccess };
 }
 
 /**
- * Fetch menu data: checks Firebase Firestore first, falls back to local JSON
+ * Fetch menu data: checks memory cache, then Cloud Firestore, then local store
  */
 export async function getMenuData(): Promise<any> {
+  const now = Date.now();
+  if (cachedMenuData && now - cachedMenuData.timestamp < CACHE_TTL) {
+    return cachedMenuData.data;
+  }
+
+  // 1. Fetch from Firebase Cloud Firestore FIRST
   if (API_KEY && PROJECT_ID) {
     try {
       const url = `${FIRESTORE_BASE}/content/menu?key=${API_KEY}`;
@@ -91,33 +178,42 @@ export async function getMenuData(): Promise<any> {
       if (res.ok) {
         const json = await res.json();
         if (json?.fields?.data?.stringValue) {
-          return JSON.parse(json.fields.data.stringValue);
+          const parsed = JSON.parse(json.fields.data.stringValue);
+          cachedMenuData = { data: parsed, timestamp: now };
+          return parsed;
         }
       }
     } catch (err) {
-      console.warn('Firebase Firestore menu read failed, falling back to local file:', err);
+      console.warn('Firebase Firestore menu read failed:', err);
     }
   }
 
+  // 2. Fall back to local JSON file
   try {
     const raw = await fs.readFile(LOCAL_MENU_PATH, 'utf-8');
-    return JSON.parse(raw);
-  } catch (err) {
-    const fallback = await import('../data/menu.json');
-    return fallback.default || fallback;
+    const parsed = JSON.parse(raw);
+    cachedMenuData = { data: parsed, timestamp: now };
+    return parsed;
+  } catch {
+    // Continue to import fallback
   }
+
+  const fallback = await import('../data/menu.json');
+  return fallback.default || fallback;
 }
 
 /**
- * Save menu data: writes to BOTH Firebase Firestore AND local JSON file
+ * Save menu data: writes to memory cache, local JSON, and Firebase Firestore
  */
 export async function saveMenuData(data: any): Promise<{ success: boolean; cloud: boolean; error?: string }> {
   let cloudSuccess = false;
 
+  invalidateCache();
+
   try {
     await fs.writeFile(LOCAL_MENU_PATH, JSON.stringify(data, null, 2), 'utf-8');
   } catch (err: any) {
-    console.error('Local JSON menu save error:', err);
+    // Expected on read-only serverless platforms
   }
 
   if (API_KEY && PROJECT_ID) {
@@ -143,6 +239,9 @@ export async function saveMenuData(data: any): Promise<{ success: boolean; cloud
       console.warn('Firebase Firestore menu save error:', err);
     }
   }
+
+  lastGlobalVersion = Date.now();
+  cachedMenuData = { data, timestamp: Date.now() };
 
   return { success: true, cloud: cloudSuccess };
 }

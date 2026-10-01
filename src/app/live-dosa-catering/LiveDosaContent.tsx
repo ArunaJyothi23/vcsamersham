@@ -82,15 +82,40 @@ function MapPinIcon() {
   );
 }
 
-export default function LiveDosaContent() {
+interface LiveDosaContentProps {
+  siteContent?: any;
+}
+
+export default function LiveDosaContent({ siteContent }: LiveDosaContentProps) {
   const [form, setForm] = useState({
     name: '', email: '', phone: '', dateOfEvent: '', noOfPax: '', message: ''
   });
+  const [customFieldsData, setCustomFieldsData] = useState<Record<string, string>>({});
   const [submitting, setSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+  const customFields = (siteContent?.customFormFields || []).filter(
+    (f: any) => f.enabled !== false && (f.formTarget === 'all' || f.formTarget === 'catering' || f.formTarget === 'liveDosa')
+  );
+
+  const liveMenuItems = siteContent?.liveDosaCatering?.menuItems?.length
+    ? siteContent.liveDosaCatering.menuItems
+    : menuItems;
+
+  const liveInclusions = siteContent?.liveDosaCatering?.includedItems?.length
+    ? siteContent.liveDosaCatering.includedItems
+    : includedItems;
+
+  const heroBadge = siteContent?.liveDosaCatering?.badge || '🌿 100% Pure Vegetarian Live Catering';
+  const heroTitle = siteContent?.liveDosaCatering?.title || 'Live Dosa Catering Amersham';
+  const heroSubtitle = siteContent?.liveDosaCatering?.subtitle || 'Theatrical live dosa and vada stations prepared fresh on the spot by authentic Chennai chefs for weddings, birthdays, and corporate celebrations. Crisp dosas, soft idlis, and crunchy vadas served steaming hot straight from the tawa with aromatic sambar and traditional chutneys.';
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     setForm({ ...form, [e.target.name]: e.target.value });
+  };
+
+  const handleCustomFieldChange = (name: string, value: string) => {
+    setCustomFieldsData(prev => ({ ...prev, [name]: value }));
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -101,6 +126,7 @@ export default function LiveDosaContent() {
     setSubmitted(true);
     setTimeout(() => setSubmitted(false), 3000);
     setForm({ name: '', email: '', phone: '', dateOfEvent: '', noOfPax: '', message: '' });
+    setCustomFieldsData({});
   };
 
   const formFieldStyle: React.CSSProperties = {
@@ -217,7 +243,7 @@ export default function LiveDosaContent() {
                   marginBottom: '1rem',
                 }}
               >
-                🌿 100% Pure Vegetarian Live Catering
+                {heroBadge}
               </span>
 
               <h1
@@ -230,7 +256,7 @@ export default function LiveDosaContent() {
                   letterSpacing: '-0.02em',
                 }}
               >
-                Live Dosa Catering Amersham
+                {heroTitle}
               </h1>
 
               <p
@@ -241,7 +267,7 @@ export default function LiveDosaContent() {
                   marginBottom: '2rem',
                 }}
               >
-                Theatrical live dosa and vada stations prepared fresh on the spot by authentic Chennai chefs for weddings, birthdays, and corporate celebrations. Crisp dosas, soft idlis, and crunchy vadas served steaming hot straight from the tawa with aromatic sambar and traditional chutneys.
+                {heroSubtitle}
               </p>
 
               {/* Stat / Highlight Badges: Perfect 3-Column Balance on Mobile and Desktop */}
@@ -476,7 +502,7 @@ export default function LiveDosaContent() {
 
           {/* 3D Menu Grid */}
           <div className="live-dosa-menu-grid">
-            {menuItems.map((item, idx) => (
+            {liveMenuItems.map((item: any, idx: number) => (
               <div 
                 key={idx} 
                 className="tactile-card"
@@ -543,7 +569,7 @@ export default function LiveDosaContent() {
             </div>
 
             <div className="live-dosa-included-grid">
-              {includedItems.map((item, idx) => (
+              {liveInclusions.map((item: string, idx: number) => (
                 <div 
                   key={idx} 
                   className="tactile-card"
@@ -650,8 +676,8 @@ export default function LiveDosaContent() {
                   </div>
                   <div>
                     <strong style={{ display: 'block', fontSize: '0.85rem', color: '#888888', textTransform: 'uppercase', letterSpacing: '0.5px' }}>Call Us</strong>
-                    <a href="tel:+01494972550" style={{ color: '#1A1A1A', fontSize: '16px', fontWeight: 700, textDecoration: 'none' }}>
-                      +0149 497 2550
+                    <a href={`tel:${siteContent?.restaurant?.phoneRaw || siteContent?.restaurant?.phone || '+01494972550'}`} style={{ color: '#1A1A1A', fontSize: '16px', fontWeight: 700, textDecoration: 'none' }}>
+                      {siteContent?.restaurant?.phone || '+0149 497 2550'}
                     </a>
                   </div>
                 </div>
@@ -676,7 +702,7 @@ export default function LiveDosaContent() {
                   <div>
                     <strong style={{ display: 'block', fontSize: '0.85rem', color: '#888888', textTransform: 'uppercase', letterSpacing: '0.5px' }}>Location</strong>
                     <span style={{ color: '#1A1A1A', fontSize: '15px', fontWeight: 500 }}>
-                      94, sycamore Road, Amersham, HP6 5EN.
+                      {siteContent?.restaurant?.address || '94, sycamore Road, Amersham, HP6 5EN.'}
                     </span>
                   </div>
                 </div>
@@ -735,6 +761,70 @@ export default function LiveDosaContent() {
                     onChange={handleChange}
                     style={formFieldStyle}
                   />
+
+                  {/* Dynamic Custom Form Field Boxes Added from Admin */}
+                  {customFields.map((field: any) => {
+                    const fieldVal = customFieldsData[field.name || field.id] || '';
+                    if (field.type === 'textarea') {
+                      return (
+                        <div key={field.id}>
+                          {field.label && (
+                            <label style={{ fontSize: '13px', color: '#666', marginBottom: '4px', display: 'block', fontWeight: 600 }}>
+                              {field.label} {field.required ? '*' : ''}
+                            </label>
+                          )}
+                          <textarea
+                            rows={3}
+                            placeholder={field.placeholder || field.label}
+                            value={fieldVal}
+                            required={!!field.required}
+                            onChange={(e) => handleCustomFieldChange(field.name || field.id, e.target.value)}
+                            style={{ ...formFieldStyle, resize: 'vertical' }}
+                          />
+                        </div>
+                      );
+                    }
+                    if (field.type === 'select' && Array.isArray(field.options)) {
+                      return (
+                        <div key={field.id}>
+                          {field.label && (
+                            <label style={{ fontSize: '13px', color: '#666', marginBottom: '4px', display: 'block', fontWeight: 600 }}>
+                              {field.label} {field.required ? '*' : ''}
+                            </label>
+                          )}
+                          <select
+                            value={fieldVal}
+                            required={!!field.required}
+                            onChange={(e) => handleCustomFieldChange(field.name || field.id, e.target.value)}
+                            style={formFieldStyle}
+                          >
+                            <option value="">{field.placeholder || `Select ${field.label}`}</option>
+                            {field.options.map((opt: string, optIdx: number) => (
+                              <option key={optIdx} value={opt}>{opt}</option>
+                            ))}
+                          </select>
+                        </div>
+                      );
+                    }
+                    return (
+                      <div key={field.id}>
+                        {field.label && (
+                          <label style={{ fontSize: '13px', color: '#666', marginBottom: '4px', display: 'block', fontWeight: 600 }}>
+                            {field.label} {field.required ? '*' : ''}
+                          </label>
+                        )}
+                        <input
+                          type={field.type || 'text'}
+                          placeholder={field.placeholder || field.label}
+                          value={fieldVal}
+                          required={!!field.required}
+                          onChange={(e) => handleCustomFieldChange(field.name || field.id, e.target.value)}
+                          style={formFieldStyle}
+                        />
+                      </div>
+                    );
+                  })}
+
                   <textarea
                     name="message"
                     placeholder="Message"

@@ -11,10 +11,10 @@ export default function FAQ({ faqs: propFaqs }: FAQProps) {
   const [openIndex, setOpenIndex] = useState(-1);
 
   return (
-    <section style={{ padding: 'clamp(3.5rem, 6vw, 6rem) clamp(1rem, 4vw, 2rem)', backgroundColor: '#FDF6F0' }}>
+    <section style={{ padding: 'clamp(1.75rem, 3vw, 2.5rem) 1.5rem', backgroundColor: '#FDF6F0' }}>
       <div style={{ maxWidth: '1200px', margin: '0 auto' }}>
         
-        <div style={{ textAlign: 'center', marginBottom: '3rem' }}>
+        <div style={{ textAlign: 'center', marginBottom: '2.5rem' }}>
           <span
             style={{
               display: 'inline-block',
@@ -33,10 +33,12 @@ export default function FAQ({ faqs: propFaqs }: FAQProps) {
             Got Questions?
           </span>
           <h2 style={{ 
-            fontSize: 'clamp(2rem, 4.5vw, 2.8rem)', 
-            fontWeight: 800, 
+            fontFamily: "var(--font-sans), 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif",
+            fontSize: 'clamp(25px, 2.5vw, 30px)', 
+            fontWeight: 600, 
             color: '#1A1A1A',
-            letterSpacing: '-0.02em',
+            letterSpacing: '-0.01em',
+            lineHeight: '1.3em',
             margin: 0
           }}>
             Frequently Asked Questions

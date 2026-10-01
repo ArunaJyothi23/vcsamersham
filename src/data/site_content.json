@@ -2,7 +2,7 @@
   "restaurant": {
     "name": "Veg Chennai SriLalitha (VCS)",
     "branch": "Amersham",
-    "phone": "0149 497 2550",
+    "phone": "0149 497 2550   ",
     "phoneRaw": "+441494972550",
     "email": "vcsramersham@gmail.com",
     "address": "94 Sycamore Road, Amersham, HP6 5EN, Buckinghamshire, United Kingdom",
@@ -45,7 +45,7 @@
   "hero": {
     "badge": "Authentic South Indian Flavours",
     "title": "South Indian Vegetarian Restaurant Amersham",
-    "subtitle": "Top-rated South-Indian Vegetarian Dining • Crispy Dosas & Authentic Thalis • Family-Friendly Dining",
+    "subtitle": "Top-rated South-Indian Vegetarian Dining • 100% Pure Veg • Family-Friendly Dining",
     "primaryCta": {
       "text": "View Menu",
       "link": "/#menu"
@@ -58,7 +58,7 @@
       {
         "id": 1,
         "image": "/images/3d/masala-dosa-3d.jpg",
-        "title": "Golden Masala Dosa"
+        "title": "Golden Long Masala Dosa"
       },
       {
         "id": 2,
@@ -90,37 +90,30 @@
       "Rooted in centuries-old recipes from Chennai, our master chefs grind our batter fresh daily using stone grinders and prepare every sambar, rasam, and chutney from scratch using hand-roasted spices and cold-pressed sesame oil.",
       "Whether you are craving a paper-thin crispy ghee roast dosa, a rich paneer butter masala, or an elaborate royal thali, we offer a warm, family-friendly atmosphere that makes every meal a celebration."
     ],
+    "image": "/images/3d/restaurant-feast-3d.jpg",
     "stats": [
       {
         "label": "UK Locations",
-        "value": "5+",
-        "desc": "Across England"
+        "value": "5+"
       },
       {
         "label": "Years Experience",
-        "value": "15+",
-        "desc": "Culinary Mastery"
+        "value": "15+"
       },
       {
         "label": "Pure Vegetarian",
-        "value": "100%",
-        "desc": "Dedicated Kitchen"
-      },
-      {
-        "label": "Happy Diners",
-        "value": "5,000+",
-        "desc": "5-Star Community"
+        "value": "100%"
       }
     ]
   },
   "topFood": {
     "badge": "Chef Specials",
-    "title": "Top Food Highlights",
+    "title": "Top Food",
     "subtitle": "Handcrafted delicacies perfected over generations by our master South Indian chefs",
     "items": [
       {
         "id": 1,
-        "name": "Masala Dosa",
+        "name": "Traditional Golden Long Masala Dosa",
         "category": "Dosa Corner",
         "price": "£8.95",
         "rating": 4.9,
@@ -157,93 +150,83 @@
         "description": "An imperial platter featuring 2 vegetable curries, kootu, dal, rasam, hot sambar, poori, fragrant basmati rice & traditional sweet.",
         "image": "/images/3d/thali-royal-3d.jpg",
         "tag": "Grand Feast"
-      },
-      {
-        "id": 5,
-        "name": "Madras Filter Coffee",
-        "category": "Beverages",
-        "price": "£3.50",
-        "rating": 4.9,
-        "description": "Freshly brewed chicory-infused decoction frothed with rich hot milk, served in a traditional brass dabarah and tumbler.",
-        "image": "/images/3d/filter-coffee-3d.jpg",
-        "tag": "Classic"
       }
     ]
   },
   "testimonials": {
-    "badge": "Guest Experiences",
+    "badge": "Google Reviews",
     "title": "Loved by Diners Across Buckinghamshire",
-    "subtitle": "Discover why thousands of food lovers rate us 5 stars on Google Reviews",
-    "overallRating": "4.8",
-    "totalReviews": "250+",
+    "subtitle": "Discover why hundreds of food lovers rate us 4.6 stars on Google Reviews",
+    "overallRating": "4.6",
+    "totalReviews": "653",
     "items": [
       {
-        "id": 1790838115486,
-        "name": "Happy Customers",
-        "rating": 5,
-        "text": "Wonderful experience, authentic flavors and top tier service!",
-        "date": "Just now",
-        "verified": true
-      },
-      {
-        "id": 1790838110948,
-        "name": "Happy Customer",
-        "rating": 5,
-        "text": "Wonderful experience, authentic flavors and top tier service!",
-        "date": "Just now",
-        "verified": true
-      },
-      {
         "id": 1,
-        "name": "Sivakumar Subramanian",
+        "name": "Danyal Asaraf",
         "rating": 5,
-        "text": "The most authentic South Indian taste in Amersham! The Masala Dosa was ultra-crisp, sambar had genuine drumstick flavour, and the Madras filter coffee completed a flawless lunch. Outstanding service.",
-        "date": "1 month ago",
+        "text": "Great service. The restaurant has quite a variety of vegetarian dishes you can choose from. Really enjoyed the masala dosa, cauliflower Manchurian and the chole bhature. The mango lassi went down a treat too. Food comes out pretty quick. The dishes are all very reasonably priced.",
+        "date": "A month ago",
         "verified": true
       },
       {
         "id": 2,
-        "name": "Chitra Seetharaman",
+        "name": "Sivakumar Subramanian",
         "rating": 5,
-        "text": "Delicious pure vegetarian food with unmatched freshness. The royal thali offers an incredible variety, and the staff are extremely courteous. Our whole family loves visiting every weekend.",
-        "date": "2 weeks ago",
+        "text": "The most authentic South Indian taste in Amersham! The Masala Dosa was ultra-crisp, sambar had genuine drumstick flavour, and the Madras filter coffee completed a flawless lunch. Outstanding service.",
+        "date": "3 months ago",
         "verified": true
       },
       {
         "id": 3,
-        "name": "Nachural",
+        "name": "Chitra Seetharaman",
         "rating": 5,
-        "text": "Booked outdoor catering for an event with 120 guests. The team arrived on time, set up seamlessly, and the food was hot, fresh, and deeply praised by all our attendees. Highly recommended!",
-        "date": "3 weeks ago",
+        "text": "Delicious pure vegetarian food with unmatched freshness. The royal thali offers an incredible variety, and the staff are extremely courteous. Our whole family loves visiting every weekend.",
+        "date": "2 months ago",
         "verified": true
       },
       {
         "id": 4,
-        "name": "Shohini Chaudhuri",
+        "name": "Nachural",
         "rating": 5,
-        "text": "The Paneer Tikka was smoky, tender, and seasoned to perfection. Wonderful to have such a top-tier vegetarian gem in Sycamore Road!",
-        "date": "1 month ago",
+        "text": "Booked outdoor catering for an event with 120 guests. The team arrived on time, set up seamlessly, and the food was hot, fresh, and deeply praised by all our attendees. Highly recommended!",
+        "date": "5 months ago",
         "verified": true
       },
       {
         "id": 5,
+        "name": "Shohini Chaudhuri",
+        "rating": 5,
+        "text": "The Paneer Tikka was smoky, tender, and seasoned to perfection. Wonderful to have such a top-tier vegetarian gem in Sycamore Road!",
+        "date": "4 months ago",
+        "verified": true
+      },
+      {
+        "id": 6,
         "name": "Alice Grahame",
         "rating": 5,
         "text": "Superb vegan and gluten-free choices. Everything is clearly labeled, and the team accommodated our dietary allergies without hesitation.",
+        "date": "6 months ago",
+        "verified": true
+      },
+      {
+        "id": 7,
+        "name": "Venkatesh Rao",
+        "rating": 5,
+        "text": "Outstanding crispy Ghee Roast Dosa and authentic Madras Sambar. Amersham is truly blessed to have Veg Chennai SriLalitha!",
         "date": "2 months ago",
+        "verified": true
+      },
+      {
+        "id": 8,
+        "name": "Priya Sharma",
+        "rating": 5,
+        "text": "The weekend buffet spread was phenomenal! Everything from fresh piping hot medu vadas to fragrant biryani was top quality. Friendly staff and fast service.",
+        "date": "3 weeks ago",
         "verified": true
       }
     ]
   },
   "faqs": [
-    {
-      "q": "New Frequently Asked Question?",
-      "a": "Answer to the question goes here."
-    },
-    {
-      "q": "Heyy",
-      "a": "HAHAHA"
-    },
     {
       "q": "Where is Veg Chennai SriLalitha Amersham located?",
       "a": "We are located at 94 Sycamore Rd, Amersham HP6 5EN, United Kingdom in the heart of Amersham town centre."
@@ -270,22 +253,395 @@
     }
   ],
   "catering": {
-    "badge": "Event Catering",
-    "title": "Bring the Authentic Flavours to Your Next Event",
-    "subtitle": "From intimate gatherings of 30 to grand celebrations of 500+ guests, our professional catering team delivers unforgettable dining experiences.",
-    "services": [
+    "badge": "Bring the Flavours to Your Event",
+    "title": "Bring the Flavours to Your Event",
+    "description": "Whether it’s a corporate gathering, wedding celebration, or private party, our catering services bring authentic South Indian vegetarian cuisine to your venue. We handle everything from menu planning to setup, ensuring your event is a delicious success.",
+    "features": [
       {
-        "title": "Live Dosa Stations",
-        "desc": "Chefs cooking crispy dosas, uttapams, and hot snacks live on-site before your guests.",
-        "link": "/live-dosa-catering",
-        "cta": "Explore Live Dosa"
+        "title": "Corporate Events",
+        "desc": "Impress your colleagues with authentic South Indian cuisine for office gatherings"
       },
       {
-        "title": "Outdoor & Buffet Feasts",
-        "desc": "Multi-course pure vegetarian hot buffet setups with premium chaffing dishes and waitstaff.",
-        "link": "/outdoor-catering",
-        "cta": "View Buffet Packages"
+        "title": "Weddings & Parties",
+        "desc": "Make your special day memorable with our traditional catering services"
+      },
+      {
+        "title": "Private Functions",
+        "desc": "Customized menus for intimate celebrations and family gatherings"
+      }
+    ],
+    "outdoorButtonText": "Outdoor Catering",
+    "outdoorButtonLink": "/outdoor-catering",
+    "liveDosaButtonText": "Live Dosa Catering",
+    "liveDosaButtonLink": "/live-dosa-catering",
+    "image": "/images/migrated/CaffeChennai-70-1024x683.jpg"
+  },
+  "header": {
+    "announcement": "Authentic South Indian Pure Vegetarian Cuisine in Amersham",
+    "phone": "0149 497 2550",
+    "orderButtonText": "Order Online",
+    "orderButtonLink": "/#order",
+    "logoUrl": "/images/migrated/vcsr-logo.webp"
+  },
+  "whyChooseUs": {
+    "badge": "",
+    "title": "Why Families Love Us",
+    "cards": [
+      {
+        "title": "Authentic Recipes",
+        "desc": "Traditional Chennai recipes passed down through generations, prepared fresh daily."
+      },
+      {
+        "title": "Expert Chefs",
+        "desc": "Skilled chefs from Chennai bringing theatrical live dosa and vada stations."
+      },
+      {
+        "title": "Award Winning",
+        "desc": "Recognized as World’s Favourite Dosa Place with consistent 5-star ratings."
+      },
+      {
+        "title": "Family Friendly",
+        "desc": "Warm atmosphere perfect for families, celebrations, and corporate events."
       }
     ]
+  },
+  "footer": {
+    "tagline": "Authentic South Indian vegetarian cuisine, served with heart in Amersham.",
+    "phone": "0149 497 2550",
+    "email": "vcsramersham@gmail.com",
+    "address": "94, sycamore Road, Amersham, HP6 5EN.",
+    "copyright": "© 2026 Veg Chennai SriLalitha Amersham . All rights reserved."
+  },
+  "seo": {
+    "home": {
+      "pageName": "Home Page",
+      "url": "/",
+      "title": "South Indian Vegetarian Restaurant Amersham | 100% Pure Veg",
+      "description": "Top-rated South-Indian Vegetarian Dining • 100% Pure Veg • Family-Friendly Dining • Authentic Dosa, Idli & Catering Services in Amersham.",
+      "keywords": "South Indian Restaurant Amersham, Vegetarian Restaurant Amersham, Dosa Amersham, Indian Food Buckinghamshire, Vegan Indian Amersham, Pure Veg Restaurant",
+      "canonical": "https://vcsamersham.co.uk/",
+      "h1": "South Indian Vegetarian Restaurant Amersham",
+      "ogImage": "/images/migrated/WhatsApp-Image-2025-11-01-at-15.41.07-2.jpeg"
+    },
+    "menu": {
+      "pageName": "Menu Page",
+      "url": "/#menu",
+      "title": "Authentic South Indian Menu | Veg Chennai SriLalitha Amersham",
+      "description": "Explore our delicious range of Dosas, Idlis, Vadas, Thalis, Biryanis, and traditional South Indian sweets & curries.",
+      "keywords": "South Indian Menu, Dosa Menu Amersham, Vegetarian Thali, Idli Vada, Filter Coffee UK",
+      "canonical": "https://vcsamersham.co.uk/#menu",
+      "h1": "Our Menu",
+      "ogImage": "/images/long-dosa-feast.png"
+    },
+    "outdoorCatering": {
+      "pageName": "Outdoor Catering",
+      "url": "/outdoor-catering",
+      "title": "Outdoor Indian Catering Amersham & Buckinghamshire | VCS",
+      "description": "Authentic South Indian vegetarian catering for weddings, parties, corporate events, and celebrations across Buckinghamshire.",
+      "keywords": "Indian Catering Amersham, Wedding Catering Buckinghamshire, Vegetarian Catering London, Corporate Event Food",
+      "canonical": "https://vcsamersham.co.uk/outdoor-catering",
+      "h1": "Traditional South Indian Outdoor Catering",
+      "ogImage": "/images/3d/restaurant-feast-3d.jpg"
+    },
+    "liveDosaCatering": {
+      "pageName": "Live Dosa Catering",
+      "url": "/live-dosa-catering",
+      "title": "Live Dosa Catering Buckinghamshire | Theatrical Live Stations",
+      "description": "Live Dosa catering counters with skilled chefs preparing fresh crispy dosas and vadas right in front of your guests.",
+      "keywords": "Live Dosa Counter UK, Live Dosa Catering Buckinghamshire, Live Dosa Party London, Fresh Dosa Catering",
+      "canonical": "https://vcsamersham.co.uk/live-dosa-catering",
+      "h1": "Live Dosa & Tiffin Catering",
+      "ogImage": "/images/long-dosa-feast.png"
+    },
+    "contact": {
+      "pageName": "Contact & Location",
+      "url": "/#contact",
+      "title": "Contact Us | Veg Chennai SriLalitha Amersham",
+      "description": "Visit us at 94 Sycamore Road, Amersham. Call 0149 497 2550 for table bookings, takeaway orders, and catering inquiries.",
+      "keywords": "VCS Amersham contact, Indian restaurant Sycamore Road, book table VCS, phone number VCS Amersham",
+      "canonical": "https://vcsamersham.co.uk/#contact",
+      "h1": "Contact Us",
+      "ogImage": "/images/migrated/vcsr-logo.webp"
+    },
+    "privacyPolicy": {
+      "pageName": "Privacy Policy",
+      "url": "/privacy-policy",
+      "title": "Privacy Policy | Veg Chennai SriLalitha Amersham",
+      "description": "Privacy policy and personal data protection principles for Veg Chennai SriLalitha Amersham.",
+      "keywords": "Privacy policy VCS Amersham, customer data protection, terms and privacy",
+      "canonical": "https://vcsamersham.co.uk/privacy-policy",
+      "h1": "Privacy Policy",
+      "ogImage": "/images/migrated/vcsr-logo.webp"
+    },
+    "cookiesPolicy": {
+      "pageName": "Cookies Policy",
+      "url": "/cookies-policy",
+      "title": "Cookies Policy | Veg Chennai SriLalitha Amersham",
+      "description": "Information on how Veg Chennai SriLalitha Amersham uses cookies and tracking technologies.",
+      "keywords": "Cookies policy VCS Amersham, web cookies, site analytics and tracking",
+      "canonical": "https://vcsamersham.co.uk/cookies-policy",
+      "h1": "Cookie Policy",
+      "ogImage": "/images/migrated/vcsr-logo.webp"
+    },
+    "disclaimer": {
+      "pageName": "Disclaimer",
+      "url": "/disclaimer",
+      "title": "Disclaimer & Food Allergens | Veg Chennai SriLalitha Amersham",
+      "description": "Food safety, allergen declarations, and terms disclaimer for Veg Chennai SriLalitha Amersham.",
+      "keywords": "Disclaimer VCS Amersham, food allergen notice, dietary disclaimer",
+      "canonical": "https://vcsamersham.co.uk/disclaimer",
+      "h1": "Disclaimer",
+      "ogImage": "/images/migrated/vcsr-logo.webp"
+    }
+  },
+  "customFormFields": [
+    {
+      "id": "dietaryRequirements",
+      "label": "Dietary Requirements & Allergens",
+      "name": "dietaryRequirements",
+      "type": "text",
+      "placeholder": "e.g. Jain, Vegan, Nut-free, Halal friendly",
+      "required": false,
+      "formTarget": "all",
+      "enabled": true
+    },
+    {
+      "id": "eventLocation",
+      "label": "Event Location / Venue Postcode",
+      "name": "eventLocation",
+      "type": "text",
+      "placeholder": "e.g. Amersham HP6 5EN, London, Watford",
+      "required": false,
+      "formTarget": "catering",
+      "enabled": true
+    }
+  ],
+  "outdoorCatering": {
+    "badge": "21+ Years Experience • UK Wide",
+    "title": "Authentic 100% Pure Vegetarian Catering",
+    "intro": "Authentic 100% vegetarian catering in UK, backed by 21+ years of experience. Proud to have catered to all the VIPs and VVIPs of Indian origin across the UK. Perfect for weddings, corporate events, housewarmings, and temple functions. Enjoy live dosa stations, soft idlis, crispy vadas, and traditional banana-leaf feasts with sambar, rasam, poriyal, and payasam—freshly prepared for a truly authentic and memorable experience.",
+    "bgImage": "/images/migrated/WhatsApp-Image-2025-11-01-at-15.41.07-2.jpeg",
+    "options": [
+      {
+        "id": "opt1",
+        "tabTitle": "Option 1",
+        "name": "Standard Live Dosa Station",
+        "price": "Weekdays: £11.00/pp (min 35 pax) • Weekends: £12.00/pp (min 40 pax)",
+        "desc": "Idly Or Veg Biryani, Meduvada (Live), Masala Dosa (Live), Plain Dosa (Live), Onion Dosa (Live), PodiDosa (Live), Onion Uthappam (Live), Capsicum Uthappam (Live), Chilli Uthappam (Live), Plain Uthappam (Live), PodiUthappam (Live), Coconut chutney, Tomato & Onion Chutney and Sambar.",
+        "whatWeBring": "We shall bring all the equipment necessary for cooking, Bain Marie to keep food hot, and 9-inch disposable compartment plates, spoons and serviettes.",
+        "whatWeNeed": "One serving table, power plug point, and 50-60 sq ft shaded cooking space with lighting.",
+        "upgrades": "Gazebo (£70), Serving Waiter (£70), Crockery & Steel Spoons (£3/pp), Extra Hour (£100/hr)"
+      },
+      {
+        "id": "opt2",
+        "tabTitle": "Option 2",
+        "name": "Live Dosa + Dessert & Main Course",
+        "price": "Weekdays: £16.50/pp (min 35 pax) • Weekends: £17.50/pp (min 40 pax)",
+        "desc": "Complete Live Dosa station plus 1 Dessert, 1 Main Course dish from our special catering menu, and 3 Hours serving duration.",
+        "whatWeBring": "All cooking equipment, commercial griddle, hot holding Bain Marie, disposable plates, spoons and serviettes.",
+        "whatWeNeed": "One serving table, power plug point, 50-60 sq ft shaded cooking space.",
+        "upgrades": "Gazebo (£70), Serving Waiter (£70), Crockery (£3/pp), Extra Hour (£100/hr)"
+      },
+      {
+        "id": "opt3",
+        "tabTitle": "Option 3",
+        "name": "Madras Thali / South Indian Meals / Andhra Bhojanam",
+        "price": "£10.99/ per person (additions available)",
+        "desc": "Plain Rice, Sambar, Rasam, Koottu, Poriyal, Kaarakolambu, Sweet, Pappad, Yoghurt, Pickle, Veg Kurma and One Poori (1).",
+        "whatWeBring": "Complete buffet setup, chafing dishes, Bain Marie, serving cutlery and disposable tableware.",
+        "whatWeNeed": "Serving tables, clean service area, and electricity supply.",
+        "upgrades": "Gazebo (£70), Serving Waiter (£70), Crockery (£3/pp), Additional Rice/Sweet specials"
+      },
+      {
+        "id": "opt4",
+        "tabTitle": "Option 4",
+        "name": "Tailor Your Own Custom Menu",
+        "price": "Price depends on your customized menu selections",
+        "desc": "Mix and match starters, curries, live stations for Jilebi, Paan, Dosa, and Vada with custom bread and rice options.",
+        "whatWeBring": "All necessary commercial cooking apparatus, hot bain maries, eco-friendly disposable dinnerware.",
+        "whatWeNeed": "Serving tables, electrical connection, and covered cooking space.",
+        "upgrades": "Gazebo (£70), Serving Waiters (£70 each), Crockery (£3/pp)"
+      },
+      {
+        "id": "opt5",
+        "tabTitle": "Option 5",
+        "name": "Grand Dosa Festival at Your Venue",
+        "price": "Special Event Package • Inquire for custom quote",
+        "desc": "Experience 25+ varieties of exotic live dosas: Masala Dosa, Paneer Dosa, Onion Dosa, Palak Dosa, Mysore Masala, Chinese Dosa, Spring Dosa, Ragi Dosa, Pesarattu, and sweet dosas.",
+        "whatWeBring": "Multiple live griddles, chef team, authentic coconut and tomato chutneys, piping hot sambar.",
+        "whatWeNeed": "Dedicated live cooking counter space, electrical outlets, and serving tables.",
+        "upgrades": "Gazebo (£70), Additional live stations, Dessert counters"
+      },
+      {
+        "id": "opt6",
+        "tabTitle": "Option 6",
+        "name": "Authentic Gujarati Catering Menu",
+        "price": "Traditional Gujarati Feast • Inquire for bespoke quote",
+        "desc": "Dhokla, Khandvi, Sev Khamani, Gujarati Dal, Kadhi, Undhiyu, Sev Tameta, Batata Nu Shaak, Puri, Rotli, Shrikhand, Basundi, and Mohanthal.",
+        "whatWeBring": "Complete traditional buffet chafing stations, table warmers, and disposable tableware.",
+        "whatWeNeed": "Buffet table line, power point, and covered dining area.",
+        "upgrades": "Live Fafda/Jalebi station, Serving staff, Ceramic crockery"
+      },
+      {
+        "id": "opt7",
+        "tabTitle": "Option 7",
+        "name": "Authentic North Indian & Punjabi Catering Menu",
+        "price": "Royal Punjabi Feast • Inquire for bespoke quote",
+        "desc": "Paneer Tikka, Hara Bhara Kabab, Samosa, Paneer Butter Masala, Dal Makhani, Chole Bhature, Shahi Paneer, Jeera Rice, Garlic Naan, Gulab Jamun, and Gajar Halwa.",
+        "whatWeBring": "Tandoori live station (optional), hot chafing dishes, premium disposable tableware.",
+        "whatWeNeed": "Buffet tables, electrical outlet, and dining area.",
+        "upgrades": "Live Tandoor counter, Live Chaat counter, Serving waiters"
+      },
+      {
+        "id": "opt8",
+        "tabTitle": "Option 8",
+        "name": "Wedding & Reception Grand Feast",
+        "price": "Comprehensive Wedding Package • Bespoke Menu",
+        "desc": "Full multi-course wedding dining: Welcome drinks, 4 live starters, 3 main curries, dal, special rice, assorted breads, 3 desserts, live paan counter, and complete table service.",
+        "whatWeBring": "Full professional chef and service team, luxury chafing setup, commercial hot units, uniform staff.",
+        "whatWeNeed": "Venue kitchen or designated marquee prep area, power connections, and guest seating.",
+        "upgrades": "Full ceramic tableware hire, Linens, Mocktail bar"
+      },
+      {
+        "id": "opt9",
+        "tabTitle": "Option 9",
+        "name": "High Tea, Snack Boxes & Corporate Tiffins",
+        "price": "From £6.50 / box or person",
+        "desc": "Freshly packed idli-vada boxes, samosas, mini dosas, veg cutlets, mithai sweets, and thermos flasks of authentic Kumbakonam Madras Filter Coffee.",
+        "whatWeBring": "Insulated delivery hot-boxes or on-site setup, napkins, disposables.",
+        "whatWeNeed": "Drop-off location or snack buffet counter.",
+        "upgrades": "Hot filter coffee dispenser, Fresh juice dispensers"
+      }
+    ]
+  },
+  "liveDosaCatering": {
+    "badge": "Theatrical Live Stations ",
+    "title": "Live Dosa Catering Buckinghamshire",
+    "subtitle": "Live Dosa catering counters with skilled master chefs preparing fresh crispy dosas and vadas right in front of your guests across Buckinghamshire, London, and Berkshire.  ",
+    "heroImage": "/images/long-dosa-feast.png",
+    "pricing": {
+      "weekdayPrice": "£11.00",
+      "minWeekdayPax": "35",
+      "weekdayCallout": "£385",
+      "weekendPrice": "£12.00",
+      "minWeekendPax": "40",
+      "weekendCallout": "£480",
+      "duration": "2 Hours live cooking/serving + 30 mins setup",
+      "deposit": "50% deposit required at booking, balance in cash after the event."
+    },
+    "menuItems": [
+      {
+        "name": "Idly, Meduvada (Live)",
+        "desc": "Steamed fluffy idlis and crisp golden vadas prepared hot on-site"
+      },
+      {
+        "name": "Masala Dosa (Live)",
+        "desc": "Crisp golden dosa filled with spiced potato masala"
+      },
+      {
+        "name": "Plain Dosa (Live)",
+        "desc": "Classic thin, crispy golden crepe with pure ghee/oil"
+      },
+      {
+        "name": "Onion Dosa (Live)",
+        "desc": "Crispy dosa generously topped with finely chopped sauteed onions"
+      },
+      {
+        "name": "Podi Dosa (Live)",
+        "desc": "Spiced with spicy gun powder (karam podi) and pure ghee"
+      },
+      {
+        "name": "Onion Uthappam (Live)",
+        "desc": "Thick, soft pancake topped with crunchy onions and cilantro"
+      },
+      {
+        "name": "Capsicum Uthappam (Live)",
+        "desc": "Thick soft uthappam topped with sweet bell peppers"
+      },
+      {
+        "name": "Chilli Uthappam (Live)",
+        "desc": "Spicy uthappam with green chillies for spice lovers"
+      },
+      {
+        "name": "Plain Uthappam (Live)",
+        "desc": "Fluffy traditional South Indian fermented pancake"
+      },
+      {
+        "name": "Podi Uthappam (Live)",
+        "desc": "Soft uthappam dusted with aromatic spicy podi & ghee"
+      },
+      {
+        "name": "One Dessert Special",
+        "desc": "Pineapple Kesari, Gulab Jamun, or Warm Semiya Payasam"
+      },
+      {
+        "name": "One Main Course Dish",
+        "desc": "Vegetable Biryani, Paneer Butter Masala, or Chana Masala"
+      }
+    ],
+    "includedItems": [
+      "Professional master chef with traditional South Indian skills",
+      "Commercial-grade griddle & gas/electrical cooking equipment",
+      "Fresh stone-ground batter & premium quality ingredients",
+      "Authentic condiments: Coconut Chutney, Tomato Chutney & Piping Hot Sambar",
+      "Bain Marie hot holding units to keep food fresh and steaming",
+      "Disposable 9-inch compartment plates, spoons, and serviettes"
+    ],
+    "upgrades": [
+      {
+        "name": "Gazebo Setup",
+        "price": "£70"
+      },
+      {
+        "name": "Serving Waiter Staff",
+        "price": "£70 / staff"
+      },
+      {
+        "name": "Ceramic Crockery & Steel Cutlery",
+        "price": "£3.00 / per person"
+      },
+      {
+        "name": "Extra Cooking / Serving Hour",
+        "price": "£100 / hour"
+      },
+      {
+        "name": "Live Jalebi Counter",
+        "price": "Custom add-on"
+      },
+      {
+        "name": "Live Paan Station",
+        "price": "Custom add-on"
+      }
+    ]
+  },
+  "legalPolicies": {
+    "privacyPolicy": {
+      "title": "Privacy Policy",
+      "effectiveDate": "01/01/2027",
+      "intro": "At Veg chennai Srilalitha, we are committed to protecting your privacy and ensuring that your personal information is handled in a safe and responsible manner. This Privacy Policy outlines how we collect, use, and protect your information when you visit our website or place an order with us.",
+      "infoCollected": "Website usage data (IP address, browser type), personal contact details (name, phone, email, delivery address), payment information processed securely, order history and preferences.",
+      "howWeUse": "We use your information to process and deliver orders, communicate regarding inquiries, improve our website and services, and send promotional offers if opted in.",
+      "sharing": "We do not sell or rent your personal data. We only share details with trusted delivery drivers and payment processors strictly for completing your orders.",
+      "security": "We take appropriate technical and organizational measures to protect your personal information from unauthorized access, misuse, or disclosure.",
+      "cookies": "Our website uses essential cookies to enhance your browsing experience, analyze traffic, and personalize content.",
+      "rights": "You retain full rights to request access, correction, or deletion of your personal records by contacting our team."
+    },
+    "cookiesPolicy": {
+      "title": "Cookie Policy",
+      "effectiveDate": "01/01/2027",
+      "intro": "This Cookie Policy explains how Veg Chennai Srilalitha uses cookies and similar technologies when you visit our website.",
+      "whatAreCookies": "Cookies are small text files stored securely on your browser to keep track of your cart, preferences, and session smoothly.",
+      "howWeUse": "Ensure core site security, remember your favorites, speed up page loading, and analyze traffic patterns.",
+      "types": "Essential Functionality Cookies, Performance & Analytics Cookies, and Customer Preference Cookies.",
+      "managing": "You can adjust, block, or delete cookies at any time directly within your web browser settings."
+    },
+    "disclaimer": {
+      "title": "Disclaimer",
+      "foodSafety": "We are committed to maintaining high standards of food safety and hygiene in the preparation of all our dishes. However, as our kitchen handles a variety of ingredients, we cannot guarantee that any item is completely free from allergens. Customers with food allergies or specific dietary requirements must inform us clearly at the time of ordering so that we can take appropriate precautions.",
+      "accuracy": "We make every effort to ensure that the information provided on our website, including menu descriptions, pricing, and availability, is accurate and up to date. Nevertheless, we reserve the right to make changes at any time without prior notice.",
+      "liability": "To the fullest extent permitted by law, Veg Chennai Srilalitha shall not be held liable for any direct, indirect, incidental, or consequential damages arising from the use of our website, ordering services, or consumption of our food products.",
+      "timings": "All preparation and delivery times provided are estimates only. While we strive to meet these timeframes, delays may occur due to factors beyond our control, including but not limited to traffic conditions, weather, or high demand periods.",
+      "foodImages": "Images of food displayed on our website, menus, or promotional materials are for illustrative purposes only. Actual dishes may vary in appearance, portion size, and presentation due to factors such as ingredient availability, preparation methods, and seasonal variations."
+    }
   }
 }

@@ -5,7 +5,12 @@ import { useEffect, useRef } from 'react';
 import Header from './Header';
 import Footer from './Footer';
 
-export default function ClientLayout({ children }: { children: React.ReactNode }) {
+interface ClientLayoutProps {
+  children: React.ReactNode;
+  siteContent?: any;
+}
+
+export default function ClientLayout({ children, siteContent }: ClientLayoutProps) {
   const pathname = usePathname();
   const router = useRouter();
   const isAdmin = pathname?.startsWith('/admin');
@@ -22,6 +27,9 @@ export default function ClientLayout({ children }: { children: React.ReactNode }
         channel.onmessage = (event) => {
           if (event.data?.type === 'CONTENT_SAVED') {
             router.refresh();
+            setTimeout(() => {
+              window.location.reload();
+            }, 300);
           }
         };
       }
@@ -33,6 +41,9 @@ export default function ClientLayout({ children }: { children: React.ReactNode }
     const handleStorage = (e: StorageEvent) => {
       if (e.key === 'vcs_last_content_save') {
         router.refresh();
+        setTimeout(() => {
+          window.location.reload();
+        }, 300);
       }
     };
     window.addEventListener('storage', handleStorage);
@@ -48,6 +59,9 @@ export default function ClientLayout({ children }: { children: React.ReactNode }
           } else if (json.version > currentVersionRef.current) {
             currentVersionRef.current = json.version;
             router.refresh();
+            setTimeout(() => {
+              window.location.reload();
+            }, 300);
           }
         }
       } catch (e) {
@@ -63,12 +77,12 @@ export default function ClientLayout({ children }: { children: React.ReactNode }
     window.addEventListener('focus', handleFocus);
     document.addEventListener('visibilitychange', handleFocus);
 
-    // 4. Lightweight polling check every 3.5 seconds (only when tab is visible)
+    // 4. Lightweight polling check every 3 seconds (only when tab is visible)
     const interval = setInterval(() => {
       if (document.visibilityState === 'visible') {
         checkVersion();
       }
-    }, 3500);
+    }, 3000);
 
     // Initial check
     checkVersion();
@@ -88,11 +102,12 @@ export default function ClientLayout({ children }: { children: React.ReactNode }
 
   return (
     <>
-      <Header />
+      <Header restaurant={siteContent?.restaurant} header={siteContent?.header} />
       <main style={{ flex: 1, width: '100%', overflowX: 'clip' }}>
         {children}
       </main>
-      <Footer />
+      <Footer footer={siteContent?.footer} restaurant={siteContent?.restaurant} />
     </>
   );
 }
+

@@ -2,6 +2,10 @@ import type { Metadata, Viewport } from "next";
 import { Plus_Jakarta_Sans, Playfair_Display } from "next/font/google";
 import "./globals.css";
 import ClientLayout from "../components/ClientLayout";
+import { getSiteContent } from "@/lib/firebaseService";
+
+export const dynamic = 'force-dynamic';
+export const revalidate = 0;
 
 const plusJakartaSans = Plus_Jakarta_Sans({
   subsets: ["latin"],
@@ -24,40 +28,51 @@ export const viewport: Viewport = {
   themeColor: "#C5926B",
 };
 
-export const metadata: Metadata = {
-  metadataBase: new URL("https://vcsamersham.co.uk"),
-  title: "South Indian Vegetarian Restaurant Amersham | 100% Pure Veg",
-  description: "South Indian Vegetarian Restaurant Amersham. Top-rated South-Indian Vegetarian Dining • 100% Pure Veg • Family-Friendly Dining • Authentic Dosa, Idli & Catering Services.",
-  alternates: {
-    canonical: "/",
-  },
-  openGraph: {
-    title: "South Indian Vegetarian Restaurant Amersham | 100% Pure Veg",
-    description: "South Indian Vegetarian Restaurant Amersham. Top-rated South-Indian Vegetarian Dining • 100% Pure Veg • Family-Friendly Dining View Menu Order Online",
-    url: "https://vcsamersham.co.uk/",
-    siteName: "Veg Chennai Srilalitha Amersham",
-    locale: "en_GB",
-    type: "website",
-    images: [
-      {
-        url: "/images/migrated/vcsr-logo.webp",
-        width: 800,
-        height: 600,
-        alt: "Veg Chennai Srilalitha Amersham Logo",
-      },
-    ],
-  },
-  twitter: {
-    card: "summary_large_image",
-    title: "South Indian Vegetarian Restaurant Amersham | 100% Pure Veg",
-    description: "Top-rated South Indian Vegetarian Dining & Catering in Amersham. 100% Pure Veg.",
-    images: ["/images/migrated/vcsr-logo.webp"],
-  },
-  icons: {
-    icon: "/icon.jpeg",
-    apple: "/icon.jpeg",
-  },
-};
+export async function generateMetadata(): Promise<Metadata> {
+  const siteContent = await getSiteContent();
+  const seo = siteContent?.seo?.home;
+  const title = seo?.title || "South Indian Vegetarian Restaurant Amersham | 100% Pure Veg";
+  const description = seo?.description || "Top-rated South-Indian Vegetarian Dining • 100% Pure Veg • Family-Friendly Dining • Authentic Dosa, Idli & Catering Services in Amersham.";
+  const keywords = seo?.keywords ? seo.keywords.split(',').map((k: string) => k.trim()) : undefined;
+  const canonical = seo?.canonical || "/";
+  const ogImage = seo?.ogImage || "/images/migrated/WhatsApp-Image-2025-11-01-at-15.41.07-2.jpeg";
+
+  return {
+    metadataBase: new URL("https://vcsamersham.co.uk"),
+    title,
+    description,
+    keywords,
+    alternates: {
+      canonical,
+    },
+    openGraph: {
+      title,
+      description,
+      url: "https://vcsamersham.co.uk/",
+      siteName: "Veg Chennai Srilalitha Amersham",
+      locale: "en_GB",
+      type: "website",
+      images: [
+        {
+          url: ogImage,
+          width: 1200,
+          height: 630,
+          alt: title,
+        },
+      ],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title,
+      description,
+      images: [ogImage],
+    },
+    icons: {
+      icon: "/icon.jpeg",
+      apple: "/icon.jpeg",
+    },
+  };
+}
 
 const jsonLd = {
   "@context": "https://schema.org",
@@ -113,11 +128,13 @@ const jsonLd = {
   ]
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const siteContent = await getSiteContent();
+
   return (
     <html lang="en" className={`${plusJakartaSans.variable} ${playfairDisplay.variable}`}>
       <head>
@@ -134,12 +151,12 @@ export default function RootLayout({
       <body
         style={{
           margin: 0,
-          fontFamily: 'var(--font-sans), -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif',
+          fontFamily: 'var(--font-sans), "Plus Jakarta Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif',
           minHeight: '100vh',
           backgroundColor: '#FFFDF9',
         }}
       >
-        <ClientLayout>
+        <ClientLayout siteContent={siteContent}>
           {children}
         </ClientLayout>
       </body>

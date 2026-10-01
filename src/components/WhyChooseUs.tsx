@@ -1,56 +1,72 @@
 'use client';
 
-export default function WhyChooseUs() {
-  const cards = [
-    {
-      title: "Authentic Recipes",
-      desc: "Traditional Chennai recipes passed down through generations, prepared fresh daily.",
-      icon: (
-        <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="#C45C26" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-          <path d="M12 2a5 5 0 0 0-5 5v3H5a2 2 0 0 0-2 2v2a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-2a2 2 0 0 0-2-2h-2V7a5 5 0 0 0-5-5z" />
-          <path d="M9 16v4" />
-          <path d="M15 16v4" />
-          <path d="M12 16v4" />
-        </svg>
-      ),
-    },
-    {
-      title: "Expert Chefs",
-      desc: "Skilled chefs from Chennai bringing theatrical live dosa and vada stations.",
-      icon: (
-        <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="#C45C26" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-          <path d="M6 13.87A4 4 0 0 1 7.41 6a5.11 5.11 0 0 1 1.05-1.54 5 5 0 0 1 7.08 0A5.11 5.11 0 0 1 16.59 6 4 4 0 0 1 18 13.87V21H6Z" />
-          <line x1="6" y1="17" x2="18" y2="17" />
-        </svg>
-      ),
-    },
-    {
-      title: "Award Winning",
-      desc: "Recognized as World's Favourite Dosa Place with consistent 5-star ratings.",
-      icon: (
-        <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="#C45C26" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-          <path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6" />
-          <path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18" />
-          <path d="M4 22h16" />
-          <path d="M10 14.66V17c0 .55-.45 1-1 1H7" />
-          <path d="M14 14.66V17c0 .55.45 1 1 1h2" />
-          <path d="M18 2H6v7a6 6 0 0 0 12 0V2Z" />
-        </svg>
-      ),
-    },
-    {
-      title: "Family Friendly",
-      desc: "Warm atmosphere perfect for families, celebrations, and corporate events.",
-      icon: (
-        <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="#C45C26" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-          <path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z" />
-        </svg>
-      ),
-    },
-  ];
+interface WhyChooseUsProps {
+  content?: any;
+}
+
+const defaultCards = [
+  {
+    title: "Authentic Recipes",
+    desc: "Traditional Chennai recipes passed down through generations, prepared fresh daily.",
+  },
+  {
+    title: "Expert Chefs",
+    desc: "Skilled chefs from Chennai bringing theatrical live dosa and vada stations.",
+  },
+  {
+    title: "Award Winning",
+    desc: "Recognized as World's Favourite Dosa Place with consistent 5-star ratings.",
+  },
+  {
+    title: "Family Friendly",
+    desc: "Warm atmosphere perfect for families, celebrations, and corporate events.",
+  },
+];
+
+const cardIcons: Record<number, React.ReactNode> = {
+  0: (
+    <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="#C45C26" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M12 2a5 5 0 0 0-5 5v3H5a2 2 0 0 0-2 2v2a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-2a2 2 0 0 0-2-2h-2V7a5 5 0 0 0-5-5z" />
+      <path d="M9 16v4" />
+      <path d="M15 16v4" />
+      <path d="M12 16v4" />
+    </svg>
+  ),
+  1: (
+    <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="#C45C26" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M6 13.87A4 4 0 0 1 7.41 6a5.11 5.11 0 0 1 1.05-1.54 5 5 0 0 1 7.08 0A5.11 5.11 0 0 1 16.59 6 4 4 0 0 1 18 13.87V21H6Z" />
+      <line x1="6" y1="17" x2="18" y2="17" />
+    </svg>
+  ),
+  2: (
+    <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="#C45C26" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6" />
+      <path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18" />
+      <path d="M4 22h16" />
+      <path d="M10 14.66V17c0 .55-.45 1-1 1H7" />
+      <path d="M14 14.66V17c0 .55.45 1 1 1h2" />
+      <path d="M18 2H6v7a6 6 0 0 0 12 0V2Z" />
+    </svg>
+  ),
+  3: (
+    <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="#C45C26" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z" />
+    </svg>
+  ),
+};
+
+export default function WhyChooseUs({ content }: WhyChooseUsProps) {
+  const badge = content?.badge || 'Pure Authenticity';
+  const title = content?.title || 'Why Families Love Us';
+  const rawFeatures = content?.features || content?.cards || defaultCards;
+  const cards = rawFeatures.map((item: any, idx: number) => ({
+    title: item.title,
+    desc: item.desc || item.description,
+    icon: cardIcons[idx % 4],
+  }));
 
   return (
-    <section style={{ padding: 'clamp(3.5rem, 6vw, 5.5rem) clamp(1rem, 4vw, 2rem)', backgroundColor: '#FDF6F0' }}>
+    <section style={{ padding: 'clamp(1.75rem, 3vw, 2.5rem) 1.5rem', backgroundColor: '#FDF6F0' }}>
       <div style={{ maxWidth: '1200px', margin: '0 auto', textAlign: 'center' }}>
         <span
           style={{
@@ -67,17 +83,19 @@ export default function WhyChooseUs() {
             marginBottom: '0.75rem',
           }}
         >
-          Pure Authenticity
+          {badge}
         </span>
 
         <h2 style={{ 
-          fontSize: 'clamp(2rem, 4.5vw, 2.8rem)', 
-          fontWeight: 800, 
+          fontFamily: "var(--font-sans), 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif",
+          fontSize: 'clamp(25px, 2.5vw, 30px)', 
+          fontWeight: 600, 
           color: '#1A1A1A', 
-          marginBottom: '2.5rem',
-          letterSpacing: '-0.02em'
+          marginBottom: '2.25rem',
+          lineHeight: '1.3em',
+          letterSpacing: '-0.01em'
         }}>
-          Why Families Love Us
+          {title}
         </h2>
 
         <div style={{ 
@@ -85,7 +103,7 @@ export default function WhyChooseUs() {
           gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 250px), 1fr))',
           gap: '1.5rem'
         }}>
-          {cards.map((card, idx) => (
+          {cards.map((card: any, idx: number) => (
             <div 
               key={idx}
               className="tactile-card"

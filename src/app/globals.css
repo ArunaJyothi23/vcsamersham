@@ -37,14 +37,45 @@ body {
   box-sizing: border-box;
 }
 
-body {
+body, button, input, select, textarea {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-sans), 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen-Sans, Ubuntu, Cantarell, 'Helvetica Neue', sans-serif;
+  font-size: 16px;
+  line-height: 1.65;
   margin: 0;
   padding: 0;
   -webkit-font-smoothing: antialiased;
 }
+
+h1 {
+  font-family: var(--font-sans), 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  font-size: clamp(30px, 3.5vw, 36px);
+  font-weight: 700;
+  line-height: 1.35;
+  letter-spacing: -0.01em;
+}
+
+h2 {
+  font-family: var(--font-sans), 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  font-size: clamp(25px, 2.5vw, 30px);
+  font-weight: 600;
+  line-height: 1.3;
+  letter-spacing: -0.01em;
+}
+
+h3 {
+  font-family: var(--font-sans), 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  font-size: clamp(20px, 2vw, 24px);
+  font-weight: 600;
+  line-height: 1.3;
+}
+
+p {
+  font-size: 16px;
+  line-height: 1.65;
+}
+
 
 /* Catering form input overrides - ensures exact styling across browsers */
 .live-dosa-form input[type="text"],

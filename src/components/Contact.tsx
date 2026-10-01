@@ -1,3 +1,5 @@
+'use client';
+
 import defaultSiteContent from '../data/site_content.json';
 
 interface ContactProps {
@@ -8,13 +10,13 @@ export default function Contact({ restaurant }: ContactProps) {
   const rest = restaurant || defaultSiteContent.restaurant;
 
   return (
-    <section id="contact" style={{ padding: 'clamp(3.5rem, 6vw, 6rem) clamp(1rem, 4vw, 2rem)', backgroundColor: '#FFFDF9' }}>
+    <section id="contact" style={{ padding: 'clamp(1.75rem, 3vw, 2.5rem) 1.5rem', backgroundColor: '#FFFDF9' }}>
       <div style={{ 
         maxWidth: '1200px', 
         margin: '0 auto', 
         display: 'grid', 
         gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 360px), 1fr))', 
-        gap: 'clamp(2rem, 5vw, 4rem)',
+        gap: 'clamp(2rem, 4vw, 3.5rem)',
         alignItems: 'start'
       }}>
         
@@ -40,11 +42,13 @@ export default function Contact({ restaurant }: ContactProps) {
           </span>
 
           <h2 style={{ 
-            fontSize: 'clamp(2rem, 4.5vw, 2.8rem)', 
-            fontWeight: 800, 
+            fontFamily: "var(--font-sans), 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif",
+            fontSize: 'clamp(25px, 2.5vw, 30px)', 
+            fontWeight: 600, 
             color: '#1A1A1A', 
-            marginBottom: '2rem',
-            letterSpacing: '-0.02em'
+            marginBottom: '1.75rem',
+            letterSpacing: '-0.01em',
+            lineHeight: '1.3em'
           }}>
             Contact Us
           </h2>

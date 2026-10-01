@@ -1,81 +1,96 @@
-export const metadata = {
-  title: 'Privacy Policy - VCS Amersham',
-  description: 'Privacy Policy for Veg Chennai Srilalitha Amersham.',
-};
+import { getSiteContent } from '@/lib/firebaseService';
 
-export default function PrivacyPolicy() {
+export const dynamic = 'force-dynamic';
+export const revalidate = 0;
+
+export async function generateMetadata() {
+  const siteContent = await getSiteContent();
+  const privacy = siteContent?.legalPolicies?.privacyPolicy;
+  const seo = siteContent?.seo?.privacyPolicy;
+  const title = seo?.title || `${privacy?.title || 'Privacy Policy'} - VCS Amersham`;
+  const description = seo?.description || privacy?.intro || 'Privacy Policy for Veg Chennai Srilalitha Amersham.';
+  const keywords = seo?.keywords ? seo.keywords.split(',').map((k: string) => k.trim()) : undefined;
+  const canonical = seo?.canonical || '/privacy-policy';
+  const ogImage = seo?.ogImage || '/images/migrated/WhatsApp-Image-2025-11-01-at-15.41.07-2.jpeg';
+
+  return {
+    title,
+    description,
+    keywords,
+    alternates: { canonical },
+    openGraph: {
+      title,
+      description,
+      url: 'https://vcsamersham.co.uk/privacy-policy',
+      siteName: 'Veg Chennai Srilalitha Amersham',
+      locale: 'en_GB',
+      type: 'website',
+      images: [{ url: ogImage, width: 1200, height: 630, alt: title }],
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title,
+      description,
+      images: [ogImage],
+    },
+  };
+}
+
+export default async function PrivacyPolicy() {
+  const siteContent = await getSiteContent();
+  const privacy = siteContent?.legalPolicies?.privacyPolicy;
+  const restaurant = siteContent?.restaurant;
+
   return (
-    <div style={{ padding: 'clamp(2.5rem, 5vw, 4rem) clamp(1rem, 4vw, 2rem)', backgroundColor: '#fff', color: '#111', fontFamily: 'inherit', lineHeight: '1.8' }}>
+    <div style={{ padding: 'clamp(2.5rem, 5vw, 4rem) clamp(1rem, 4vw, 2rem)', backgroundColor: '#FFFDF9', color: '#111', fontFamily: 'inherit', lineHeight: '1.8' }}>
       <div style={{ maxWidth: '900px', margin: '0 auto' }}>
-        <h1 style={{ fontSize: 'clamp(2rem, 5vw, 3rem)', fontWeight: 700, marginBottom: '1rem', color: '#1a2f4c' }}>Privacy Policy</h1>
-        <p style={{ fontWeight: 'bold', marginBottom: '2rem' }}>Effective Date: 01/01/2027</p>
+        <h1 style={{ fontSize: 'clamp(2rem, 5vw, 3rem)', fontWeight: 700, marginBottom: '1rem', color: '#1a2f4c' }}>
+          {privacy?.title || 'Privacy Policy'}
+        </h1>
+        <p style={{ fontWeight: 'bold', marginBottom: '2rem', color: '#DE7843' }}>
+          Effective Date: {privacy?.effectiveDate || '01/01/2027'}
+        </p>
 
-        <p style={{ marginBottom: '2.5rem' }}>
-          At Veg chennai Srilalitha, we are committed to protecting your privacy and ensuring that your personal information is handled in a safe and responsible manner. This Privacy Policy outlines how we collect, use, and protect your information when you visit our website or place an order with us.
+        <p style={{ marginBottom: '2.5rem', fontSize: '1.05rem', color: '#444' }}>
+          {privacy?.intro ||
+            'At Veg chennai Srilalitha, we are committed to protecting your privacy and ensuring that your personal information is handled in a safe and responsible manner. This Privacy Policy outlines how we collect, use, and protect your information when you visit our website or place an order with us.'}
         </p>
 
         <h2 style={{ fontSize: 'clamp(1.35rem, 3.5vw, 1.85rem)', fontWeight: 600, marginTop: '2.5rem', marginBottom: '1rem', color: '#1a2f4c' }}>Information We Collect</h2>
-        <p style={{ marginBottom: '1rem' }}>We may collect the following types of information:</p>
-        <ul style={{ marginLeft: '1.5rem', marginBottom: '2.5rem', listStyleType: 'disc' }}>
-          <li style={{ marginBottom: '0.8rem' }}>Website usage data (such as IP address, browser type, and pages visited)</li>
-          <li style={{ marginBottom: '0.8rem' }}>Personal details such as your name, phone number, email address, and delivery address</li>
-          <li style={{ marginBottom: '0.8rem' }}>Payment information (processed securely through third-party providers; we do not store full card details)</li>
-          <li style={{ marginBottom: '0.8rem' }}>Order history and preferences</li>
-        </ul>
-
-        <h2 style={{ fontSize: '2rem', fontWeight: 600, marginTop: '3rem', marginBottom: '1.5rem', color: '#1a2f4c' }}>How We Use Your Information</h2>
-        <p style={{ marginBottom: '1rem' }}>We use your information to:</p>
-        <ul style={{ marginLeft: '1.5rem', marginBottom: '2.5rem', listStyleType: 'disc' }}>
-          <li style={{ marginBottom: '0.8rem' }}>Process and deliver your orders</li>
-          <li style={{ marginBottom: '0.8rem' }}>Communicate with you regarding your orders or inquiries</li>
-          <li style={{ marginBottom: '0.8rem' }}>Improve our website, services, and customer experience</li>
-          <li style={{ marginBottom: '0.8rem' }}>Send promotional offers or updates (only if you opt in)</li>
-        </ul>
-
-        <h2 style={{ fontSize: '2rem', fontWeight: 600, marginTop: '3rem', marginBottom: '1.5rem', color: '#1a2f4c' }}>Sharing Your Information</h2>
-        <p style={{ marginBottom: '1rem' }}>We do not sell or rent your personal data. However, we may share your information with:</p>
-        <ul style={{ marginLeft: '1.5rem', marginBottom: '2.5rem', listStyleType: 'disc' }}>
-          <li style={{ marginBottom: '0.8rem' }}>Authorities if required by law</li>
-          <li style={{ marginBottom: '0.8rem' }}>Payment processors to securely handle transactions</li>
-          <li style={{ marginBottom: '0.8rem' }}>Delivery partners to fulfill your order</li>
-          <li style={{ marginBottom: '0.8rem' }}>Service providers who help operate our website and business</li>
-        </ul>
-
-        <h2 style={{ fontSize: '2rem', fontWeight: 600, marginTop: '3rem', marginBottom: '1.5rem', color: '#1a2f4c' }}>Data Security</h2>
-        <p style={{ marginBottom: '2.5rem' }}>
-          We take appropriate technical and organizational measures to protect your personal information from unauthorized access, misuse, or disclosure. However, no online system can be completely secure.
+        <p style={{ marginBottom: '1.5rem', color: '#444' }}>
+          {privacy?.infoCollected || 'Website usage data (IP address, browser type), personal contact details (name, phone, email, delivery address), payment information processed securely, order history and preferences.'}
         </p>
 
-        <h2 style={{ fontSize: '2rem', fontWeight: 600, marginTop: '3rem', marginBottom: '1.5rem', color: '#1a2f4c' }}>Cookies & Tracking</h2>
-        <p style={{ marginBottom: '2.5rem' }}>
-          Our website may use cookies and similar technologies to enhance your browsing experience, analyze traffic, and personalize content. You can manage cookie preferences through your browser settings.
+        <h2 style={{ fontSize: 'clamp(1.35rem, 3.5vw, 1.85rem)', fontWeight: 600, marginTop: '2.5rem', marginBottom: '1rem', color: '#1a2f4c' }}>How We Use Your Information</h2>
+        <p style={{ marginBottom: '1.5rem', color: '#444' }}>
+          {privacy?.howWeUse || 'We use your information to process and deliver orders, communicate regarding inquiries, improve our website and services, and send promotional offers if opted in.'}
         </p>
 
-        <h2 style={{ fontSize: '2rem', fontWeight: 600, marginTop: '3rem', marginBottom: '1.5rem', color: '#1a2f4c' }}>Your Rights</h2>
-        <p style={{ marginBottom: '1rem' }}>Depending on your location, you may have the right to:</p>
-        <ul style={{ marginLeft: '1.5rem', marginBottom: '1rem', listStyleType: 'disc' }}>
-          <li style={{ marginBottom: '0.8rem' }}>Access the personal data we hold about you</li>
-          <li style={{ marginBottom: '0.8rem' }}>Request corrections or updates</li>
-          <li style={{ marginBottom: '0.8rem' }}>Request deletion of your data</li>
-          <li style={{ marginBottom: '0.8rem' }}>Withdraw consent for marketing communications</li>
-        </ul>
-        <p style={{ marginBottom: '2.5rem' }}>To exercise any of these rights, please contact us using the details below.</p>
-
-        <h2 style={{ fontSize: '2rem', fontWeight: 600, marginTop: '3rem', marginBottom: '1.5rem', color: '#1a2f4c' }}>Third-Party Links</h2>
-        <p style={{ marginBottom: '2.5rem' }}>
-          Our website may contain links to external websites. We are not responsible for the privacy practices or content of those sites.
+        <h2 style={{ fontSize: 'clamp(1.35rem, 3.5vw, 1.85rem)', fontWeight: 600, marginTop: '2.5rem', marginBottom: '1rem', color: '#1a2f4c' }}>Sharing Your Information</h2>
+        <p style={{ marginBottom: '1.5rem', color: '#444' }}>
+          {privacy?.sharing || 'We do not sell or rent your personal data. We only share details with trusted delivery drivers and payment processors strictly for completing your orders.'}
         </p>
 
-        <h2 style={{ fontSize: '2rem', fontWeight: 600, marginTop: '3rem', marginBottom: '1.5rem', color: '#1a2f4c' }}>Changes to This Policy</h2>
-        <p style={{ marginBottom: '2.5rem' }}>
-          We may update this Privacy Policy from time to time. Any changes will be posted on this page with an updated effective date.
+        <h2 style={{ fontSize: 'clamp(1.35rem, 3.5vw, 1.85rem)', fontWeight: 600, marginTop: '2.5rem', marginBottom: '1rem', color: '#1a2f4c' }}>Data Security</h2>
+        <p style={{ marginBottom: '1.5rem', color: '#444' }}>
+          {privacy?.security || 'We take appropriate technical and organizational measures to protect your personal information from unauthorized access, misuse, or disclosure.'}
         </p>
 
-        <h2 style={{ fontSize: '2rem', fontWeight: 600, marginTop: '3rem', marginBottom: '1.5rem', color: '#1a2f4c' }}>Contact Us</h2>
-        <p style={{ marginBottom: '0.5rem' }}>If you have any questions about this Privacy Policy or how your data is handled, please contact us at:</p>
-        <p style={{ marginBottom: '0.2rem' }}><strong>Email:</strong> vcsramersham@gmail.com.</p>
-        <p style={{ marginBottom: '0.2rem' }}><strong>Phone:</strong> +0149 497 2550</p>
-        <p style={{ marginBottom: '2.5rem' }}><strong>Address:</strong> 94, sycamore Road, Amersham, HP6 5EN.</p>
+        <h2 style={{ fontSize: 'clamp(1.35rem, 3.5vw, 1.85rem)', fontWeight: 600, marginTop: '2.5rem', marginBottom: '1rem', color: '#1a2f4c' }}>Cookies &amp; Tracking</h2>
+        <p style={{ marginBottom: '1.5rem', color: '#444' }}>
+          {privacy?.cookies || 'Our website uses essential cookies to enhance your browsing experience, analyze traffic, and personalize content.'}
+        </p>
+
+        <h2 style={{ fontSize: 'clamp(1.35rem, 3.5vw, 1.85rem)', fontWeight: 600, marginTop: '2.5rem', marginBottom: '1rem', color: '#1a2f4c' }}>Your Rights</h2>
+        <p style={{ marginBottom: '1.5rem', color: '#444' }}>
+          {privacy?.rights || 'You retain full rights to request access, correction, or deletion of your personal records by contacting our team.'}
+        </p>
+
+        <h2 style={{ fontSize: 'clamp(1.35rem, 3.5vw, 1.85rem)', fontWeight: 600, marginTop: '2.5rem', marginBottom: '1rem', color: '#1a2f4c' }}>Contact Us</h2>
+        <p style={{ marginBottom: '0.5rem', color: '#444' }}>If you have any questions about this Privacy Policy or how your data is handled, please contact us at:</p>
+        <p style={{ marginBottom: '0.2rem' }}><strong>Email:</strong> {restaurant?.email || 'vcsramersham@gmail.com'}</p>
+        <p style={{ marginBottom: '0.2rem' }}><strong>Phone:</strong> {restaurant?.phone || '+0149 497 2550'}</p>
+        <p style={{ marginBottom: '2.5rem' }}><strong>Address:</strong> {restaurant?.address || '94, sycamore Road, Amersham, HP6 5EN.'}</p>
       </div>
     </div>
   );

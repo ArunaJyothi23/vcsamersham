@@ -3,7 +3,12 @@ import Link from 'next/link';
 import { useState, useEffect } from 'react';
 import { usePathname } from 'next/navigation';
 
-export default function Header() {
+interface HeaderProps {
+  restaurant?: any;
+  header?: any;
+}
+
+export default function Header({ restaurant, header }: HeaderProps = {}) {
   const pathname = usePathname();
   const [activeTab, setActiveTab] = useState('home');
   const [cateringOpen, setCateringOpen] = useState(false);
@@ -16,10 +21,32 @@ export default function Header() {
   const isContactActive = pathname === '/' && activeTab === 'contact';
 
   useEffect(() => {
+    if (pathname !== '/') return;
+
+    const handleScroll = () => {
+      const scrollPos = window.scrollY + 120;
+      const contactEl = document.getElementById('contact');
+      const menuEl = document.getElementById('menu');
+
+      if (contactEl && scrollPos >= contactEl.offsetTop) {
+        setActiveTab('contact');
+      } else if (menuEl && scrollPos >= menuEl.offsetTop) {
+        setActiveTab('menu');
+      } else {
+        setActiveTab('home');
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    handleScroll(); // Initial check
+
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, [pathname]);
+
+  useEffect(() => {
     if (window.location.hash) {
       const hash = window.location.hash.substring(1);
       if (hash === 'home') {
-        // Clean URL immediately so #home never lingers in the address bar
         window.history.replaceState(null, '', window.location.pathname || '/');
         window.scrollTo({ top: 0, behavior: 'smooth' });
         setActiveTab('home');
@@ -35,8 +62,6 @@ export default function Header() {
           window.scrollTo({ top: offsetPosition, behavior: 'smooth' });
         }
       }, 150);
-    } else {
-      setActiveTab('home');
     }
   }, []);
 
@@ -181,8 +206,8 @@ export default function Header() {
         <div style={{ display: 'flex', alignItems: 'center' }}>
           <Link href="/" onClick={(e) => handleNavClick(e, 'home')}>
             <img
-              src="/images/migrated/WhatsApp-Image-2025-11-03-at-18.48.43-1024x430.jpeg"
-              alt="VCS Amersham Logo"
+              src={header?.logo || "/images/migrated/WhatsApp-Image-2025-11-03-at-18.48.43-1024x430.jpeg"}
+              alt={restaurant?.name || "VCS Amersham Logo"}
               className="header-logo"
             />
           </Link>
@@ -395,7 +420,7 @@ export default function Header() {
               e.currentTarget.style.backgroundColor = '#d38b6d';
             }}
           >
-            Order Online
+            {header?.orderButtonText || "Order Online"}
           </a>
         </div>
 
@@ -508,8 +533,8 @@ export default function Header() {
                 style={{ textDecoration: 'none', display: 'flex', flexDirection: 'column', gap: '3px' }}
               >
                 <img
-                  src="/images/migrated/WhatsApp-Image-2025-11-03-at-18.48.43-1024x430.jpeg"
-                  alt="VCS Amersham Logo"
+                  src={header?.logo || "/images/migrated/WhatsApp-Image-2025-11-03-at-18.48.43-1024x430.jpeg"}
+                  alt={restaurant?.name || "VCS Amersham Logo"}
                   style={{
                     height: '46px',
                     width: 'auto',
@@ -747,7 +772,7 @@ export default function Header() {
               }}
             >
               <a
-                href="tel:+01494972550"
+                href={`tel:${(restaurant?.phone || "+44 1494 972550").replace(/\s+/g, '')}`}
                 style={{
                   backgroundColor: 'rgba(255, 255, 255, 0.06)',
                   border: '1px solid rgba(255, 255, 255, 0.1)',
@@ -767,7 +792,7 @@ export default function Header() {
                 <span>📞</span> Call Us
               </a>
               <a
-                href="https://maps.google.com/?q=94+Sycamore+Road+Amersham+HP6+5EN"
+                href={`https://maps.google.com/?q=${encodeURIComponent(restaurant?.address || "94 Sycamore Road Amersham HP6 5EN")}`}
                 target="_blank"
                 rel="noopener noreferrer"
                 style={{

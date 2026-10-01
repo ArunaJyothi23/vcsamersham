@@ -25,23 +25,26 @@ export default function Hero({ content }: HeroProps) {
       className="hero-section"
       style={{
         position: 'relative',
-        minHeight: 'clamp(520px, 80vh, 760px)',
+        height: 'calc(100vh - 80px)',
+        minHeight: 'calc(100vh - 80px)',
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
         color: '#fff',
         backgroundColor: '#0c0a08',
         overflow: 'hidden',
+        fontFamily: "var(--font-sans), 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen-Sans, Ubuntu, Cantarell, 'Helvetica Neue', sans-serif",
       }}
     >
       <style>{`
-        @media (max-width: 640px) {
+        @media (max-width: 768px) {
           .hero-section {
-            min-height: auto !important;
-            padding: 3.25rem 0 3.25rem 0 !important;
+            height: auto !important;
+            min-height: 85vh !important;
+            padding: 3.5rem 0 !important;
           }
           .hero-content-wrapper {
-            padding: 1rem 1.25rem !important;
+            padding: 1.25rem 1.25rem !important;
           }
         }
       `}</style>
@@ -98,7 +101,7 @@ export default function Hero({ content }: HeroProps) {
           maxWidth: '960px',
           width: '100%',
           margin: '0 auto',
-          padding: 'clamp(2.5rem, 5vw, 4.5rem) clamp(1.25rem, 4vw, 2.5rem)',
+          padding: 'clamp(2rem, 4vw, 3.5rem) clamp(1.25rem, 4vw, 2.5rem)',
           display: 'flex',
           flexDirection: 'column',
           alignItems: 'center',
@@ -111,7 +114,7 @@ export default function Hero({ content }: HeroProps) {
             display: 'inline-flex',
             alignItems: 'center',
             gap: '0.85rem',
-            marginBottom: '1.15rem',
+            marginBottom: '1rem',
           }}
         >
           <span
@@ -124,14 +127,14 @@ export default function Hero({ content }: HeroProps) {
           <span
             style={{
               fontSize: 'clamp(0.74rem, 1.4vw, 0.84rem)',
-              letterSpacing: '0.26em',
+              letterSpacing: '0.22em',
               textTransform: 'uppercase',
               color: '#F4D3A1',
               fontWeight: 600,
               textShadow: '0 2px 10px rgba(0, 0, 0, 0.9)',
             }}
           >
-            ✦ PURE VEGETARIAN FINE DINING ✦
+            {heroData.badge || '✦ PURE VEGETARIAN FINE DINING ✦'}
           </span>
           <span
             style={{
@@ -142,48 +145,41 @@ export default function Hero({ content }: HeroProps) {
           />
         </div>
 
-        {/* Prestigious Royal Headline with Serif Typography & Champagne-Gold Gradient */}
+        {/* Prestigious Main Title: Exact 36px desktop / 28px mobile Plus Jakarta Sans matching live site */}
         <h1
           style={{
-            fontFamily: 'var(--font-serif), "Playfair Display", Georgia, serif',
-            fontSize: 'clamp(2.4rem, 5.8vw, 4.35rem)',
+            fontFamily: "var(--font-sans), 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif",
+            fontSize: 'clamp(28px, 3.8vw, 36px)',
             fontWeight: 700,
-            lineHeight: 1.14,
+            lineHeight: 1.35,
             letterSpacing: '-0.015em',
-            marginBottom: '1.35rem',
+            marginBottom: '1.25rem',
             maxWidth: '900px',
-            filter: 'drop-shadow(0 4px 20px rgba(0, 0, 0, 0.95))',
+            color: '#FFFFFF',
+            textShadow: '0 3px 16px rgba(0, 0, 0, 0.85)',
           }}
         >
-          <span
-            style={{
-              display: 'block',
-              background: 'linear-gradient(180deg, #FFFFFF 25%, #FFF2E2 75%, #F0DFCC 100%)',
-              WebkitBackgroundClip: 'text',
-              WebkitTextFillColor: 'transparent',
-            }}
-          >
-            {heroData.title || defaultSiteContent.hero.title}
-          </span>
+          {heroData.title || defaultSiteContent.hero.title}
         </h1>
 
-        {/* Refined Subtitle in Warm Ivory with Golden Bullets */}
+        {/* Live Site Matching Subtitle: 16px font size with 1.65 line-height */}
         <h2
           style={{
-            fontSize: 'clamp(0.98rem, 1.9vw, 1.2rem)',
+            fontFamily: "var(--font-sans), 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif",
+            fontSize: '16px',
             fontWeight: 400,
             lineHeight: 1.65,
-            color: '#F6EFE9',
-            textShadow: '0 2px 14px rgba(0, 0, 0, 0.95)',
+            color: '#FFFFFF',
+            textShadow: '0 2px 12px rgba(0, 0, 0, 0.85)',
             maxWidth: '760px',
-            marginBottom: '2.5rem',
+            marginBottom: '2rem',
             letterSpacing: '0.01em',
           }}
         >
           {heroData.subtitle || defaultSiteContent.hero.subtitle}
         </h2>
 
-        {/* High-End Tactile Action Buttons */}
+        {/* High-End Tactile Action Buttons: 16px, 4px border-radius matching Astra */}
         <style>{`
           @media (max-width: 560px) {
             .hero-action-buttons {
@@ -195,7 +191,7 @@ export default function Hero({ content }: HeroProps) {
               width: 100% !important;
               max-width: 320px !important;
               box-sizing: border-box !important;
-              padding: 0.9rem 1.5rem !important;
+              padding: 14px 24px !important;
             }
           }
         `}</style>
@@ -203,7 +199,7 @@ export default function Hero({ content }: HeroProps) {
           className="hero-action-buttons"
           style={{
             display: 'flex',
-            gap: '1.35rem',
+            gap: '1.25rem',
             justifyContent: 'center',
             alignItems: 'center',
             flexWrap: 'wrap',
@@ -215,14 +211,15 @@ export default function Hero({ content }: HeroProps) {
             style={{
               background: 'linear-gradient(135deg, #DE7843 0%, #B8531D 100%)',
               color: '#FFFFFF',
-              padding: '1rem 2.65rem',
-              borderRadius: '14px',
+              padding: '14px 32px',
+              borderRadius: '4px',
               textDecoration: 'none',
-              fontWeight: 700,
-              fontSize: '1.05rem',
-              letterSpacing: '0.03em',
+              fontWeight: 600,
+              fontSize: '16px',
+              lineHeight: '1em',
+              letterSpacing: '0.02em',
               boxShadow:
-                '0 10px 28px rgba(184, 83, 29, 0.48), inset 0 1px 1px rgba(255, 255, 255, 0.45)',
+                '0 8px 24px rgba(184, 83, 29, 0.45), inset 0 1px 1px rgba(255, 255, 255, 0.45)',
               minWidth: '160px',
               textAlign: 'center',
               display: 'inline-block',
@@ -238,14 +235,15 @@ export default function Hero({ content }: HeroProps) {
               background: 'rgba(255, 255, 255, 0.09)',
               border: '1.5px solid rgba(248, 213, 158, 0.5)',
               color: '#FFFFFF',
-              padding: '1rem 2.65rem',
-              borderRadius: '14px',
+              padding: '14px 32px',
+              borderRadius: '4px',
               textDecoration: 'none',
-              fontWeight: 700,
-              fontSize: '1.05rem',
-              letterSpacing: '0.03em',
+              fontWeight: 600,
+              fontSize: '16px',
+              lineHeight: '1em',
+              letterSpacing: '0.02em',
               boxShadow:
-                '0 10px 28px rgba(0, 0, 0, 0.45), inset 0 1px 0 rgba(255, 255, 255, 0.25)',
+                '0 8px 24px rgba(0, 0, 0, 0.45), inset 0 1px 0 rgba(255, 255, 255, 0.25)',
               minWidth: '160px',
               textAlign: 'center',
               backdropFilter: 'blur(14px)',

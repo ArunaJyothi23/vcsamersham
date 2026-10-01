@@ -42,7 +42,7 @@ export default function TopFood({ content }: TopFoodProps) {
     rating: String(item.rating || "4.9"),
   }));
   return (
-    <section style={{ padding: 'clamp(3.5rem, 6vw, 6rem) 0 clamp(2.5rem, 5vw, 4rem)', backgroundColor: '#FFFDF9', textAlign: 'center', overflow: 'hidden' }}>
+    <section style={{ padding: '0.75rem 0 2rem 0', backgroundColor: '#FFFDF9', textAlign: 'center', overflow: 'hidden' }}>
       <style>{`
         @keyframes scrollMarquee {
           0% {
@@ -87,41 +87,47 @@ export default function TopFood({ content }: TopFoodProps) {
             border-radius: 12px !important;
           }
         }
+        .top-food-cards-grid {
+          display: grid;
+          grid-template-columns: repeat(4, minmax(0, 1fr));
+          gap: clamp(0.75rem, 1.4vw, 1.25rem);
+        }
+        @media (max-width: 960px) {
+          .top-food-cards-grid {
+            display: flex !important;
+            overflow-x: auto !important;
+            scroll-snap-type: x mandatory !important;
+            -webkit-overflow-scrolling: touch !important;
+            gap: 1rem !important;
+            padding-bottom: 0.85rem !important;
+          }
+          .top-food-cards-grid > .tactile-card {
+            min-width: 280px !important;
+            max-width: 300px !important;
+            flex-shrink: 0 !important;
+            scroll-snap-align: start !important;
+          }
+        }
       `}</style>
       
-      <div style={{ maxWidth: '1240px', margin: '0 auto', padding: '0 clamp(1rem, 3vw, 2rem)', marginBottom: '3.5rem' }}>
-        <span
-          style={{
-            display: 'inline-block',
-            backgroundColor: 'rgba(196, 92, 38, 0.1)',
-            color: '#C45C26',
-            border: '1px solid rgba(196, 92, 38, 0.25)',
-            padding: '4px 14px',
-            borderRadius: '20px',
-            fontSize: '0.8rem',
-            fontWeight: 700,
-            letterSpacing: '1px',
-            textTransform: 'uppercase',
-            marginBottom: '0.75rem',
-          }}
-        >
-          Gastronomic Excellence
-        </span>
-
-        <h2 style={{ fontSize: 'clamp(2.2rem, 5vw, 3rem)', fontWeight: 800, color: '#1A1A1A', textAlign: 'center', margin: '0 0 1rem 0', letterSpacing: '-0.02em' }}>
-          Top Food
+      <div style={{ maxWidth: '1320px', margin: '0 auto', padding: '0 clamp(1rem, 2.5vw, 2rem)', marginBottom: '1.25rem' }}>
+        <h2 style={{ 
+          fontFamily: "var(--font-sans), 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif",
+          fontSize: 'clamp(25px, 2.5vw, 30px)', 
+          fontWeight: 600, 
+          color: '#1A1A1A', 
+          textAlign: 'center', 
+          margin: '0 0 1.25rem 0', 
+          lineHeight: '1.3em',
+          letterSpacing: '-0.01em' 
+        }}>
+          {topFoodData.title || 'Top Food'}
         </h2>
 
-        <p style={{ maxWidth: '680px', margin: '0 auto 2.5rem', color: '#666666', fontSize: '1rem', lineHeight: 1.6 }}>
-          Indulge in our masterfully prepared South Indian vegetarian specialties, crafted with pure ghee, stone-ground batters, and hand-roasted spices.
-        </p>
-
-        {/* 4 Signature 3D Visual Cards Grid (Per Transformation Guide) */}
+        {/* All Signature 3D Visual Cards in 1 Row */}
         <div
+          className="top-food-cards-grid"
           style={{
-            display: 'grid',
-            gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 270px), 1fr))',
-            gap: '1.5rem',
             textAlign: 'left',
           }}
         >

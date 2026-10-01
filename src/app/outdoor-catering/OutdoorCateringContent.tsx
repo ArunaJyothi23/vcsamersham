@@ -29,7 +29,11 @@ function MapPinIcon() {
   );
 }
 
-export default function OutdoorCateringContent() {
+interface OutdoorCateringContentProps {
+  siteContent?: any;
+}
+
+export default function OutdoorCateringContent({ siteContent }: OutdoorCateringContentProps) {
   // State for Top Option Tabs (Option 1 to Option 9)
   const [selectedOption, setSelectedOption] = useState<number>(0);
 
@@ -45,11 +49,20 @@ export default function OutdoorCateringContent() {
     noOfPax: '',
     message: '',
   });
+  const [customFieldsData, setCustomFieldsData] = useState<Record<string, string>>({});
   const [submitting, setSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
 
-  const handleFormChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+  const customFields = (siteContent?.customFormFields || []).filter(
+    (f: any) => f.enabled !== false && (f.formTarget === 'all' || f.formTarget === 'catering' || f.formTarget === 'outdoorCatering')
+  );
+
+  const handleFormChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     setForm({ ...form, [e.target.name]: e.target.value });
+  };
+
+  const handleCustomFieldChange = (name: string, value: string) => {
+    setCustomFieldsData(prev => ({ ...prev, [name]: value }));
   };
 
   const handleFormSubmit = async (e: React.FormEvent) => {
@@ -60,6 +73,7 @@ export default function OutdoorCateringContent() {
     setSubmitted(true);
     setTimeout(() => setSubmitted(false), 3000);
     setForm({ name: '', email: '', phone: '', dateOfEvent: '', noOfPax: '', message: '' });
+    setCustomFieldsData({});
   };
 
   // Active category and dishes
@@ -67,6 +81,10 @@ export default function OutdoorCateringContent() {
 
   // Current active option
   const activeOption = outdoorData.options[selectedOption] || outdoorData.options[0];
+
+  const outdoorBadge = siteContent?.outdoorCatering?.badge || '👑 Royal Heritage Catering • 21+ Years UK-Wide';
+  const outdoorTitle = siteContent?.outdoorCatering?.title || 'Authentic 100% Pure Vegetarian Catering';
+  const outdoorIntro = siteContent?.outdoorCatering?.intro || 'Authentic 100% vegetarian catering in UK, backed by 21+ years of experience. Proud to have catered to all the VIPs and VVIPs of Indian origin across the UK. Perfect for weddings, corporate events, housewarmings, and temple functions. Enjoy live dosa stations, soft idlis, crispy vadas, and traditional banana-leaf feasts with sambar, rasam, poriyal, and payasam—freshly prepared for a truly authentic and memorable experience.';
 
   const formFieldStyle: React.CSSProperties = {
     width: '100%',
@@ -280,7 +298,7 @@ export default function OutdoorCateringContent() {
                   marginBottom: '1rem',
                 }}
               >
-                👑 Royal Heritage Catering • 21+ Years UK-Wide
+                {outdoorBadge}
               </span>
 
               <h1
@@ -293,7 +311,7 @@ export default function OutdoorCateringContent() {
                   letterSpacing: '-0.02em',
                 }}
               >
-                Authentic 100% Pure Vegetarian Catering
+                {outdoorTitle}
               </h1>
 
               <p
@@ -304,12 +322,7 @@ export default function OutdoorCateringContent() {
                   marginBottom: '2rem',
                 }}
               >
-                Authentic 100% vegetarian catering in UK, backed by 21+ years of experience. Proud to
-                have catered to all the VIPs and VVIPs of Indian origin across the UK. Perfect for
-                weddings, corporate events, housewarmings, and temple functions. Enjoy live dosa
-                stations, soft idlis, crispy vadas, and traditional banana-leaf feasts with sambar,
-                rasam, poriyal, and payasam—freshly prepared for a truly authentic and memorable
-                experience.
+                {outdoorIntro}
               </p>
 
               {/* Stat / Highlight Badges: Perfect 3-Column Balance on Mobile and Desktop */}
@@ -642,20 +655,57 @@ export default function OutdoorCateringContent() {
               </div>
             )}
 
-            {/* Options 8 & 9: Gujarathi & Punjabi Menu */}
+            {/* Options 8 & 9: Gujarathi & Punjabi Menu in ONE Unified Clean Section */}
             {(selectedOption === 7 || selectedOption === 8) && (
-              <div>
-                <h2 style={{ fontSize: '2rem', fontWeight: 800, color: '#1A1A1A', marginBottom: '2rem', textAlign: 'center', letterSpacing: '-0.02em' }}>
+              <div style={{ scrollMarginTop: '100px' }}>
+                <h2 style={{ 
+                  fontFamily: "var(--font-sans), 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif",
+                  fontSize: 'clamp(24px, 2.5vw, 30px)', 
+                  fontWeight: 700, 
+                  color: '#1A1A1A', 
+                  marginBottom: '1.75rem', 
+                  textAlign: 'center', 
+                  letterSpacing: '-0.01em' 
+                }}>
                   {selectedOption === 7 ? 'Gujarathi Menu' : 'Punjabi Menu'}
                 </h2>
-                <div style={{ display: 'flex', flexDirection: 'column', gap: '2rem' }}>
+
+                <div
+                  style={{
+                    backgroundColor: '#FFFFFF',
+                    borderRadius: '18px',
+                    border: '1px solid #E8E0D5',
+                    padding: 'clamp(1.5rem, 3vw, 2.5rem)',
+                    boxShadow: '0 4px 20px rgba(0, 0, 0, 0.03)',
+                    display: 'flex',
+                    flexDirection: 'column',
+                    gap: '1.75rem',
+                  }}
+                >
                   {activeOption.contents.map((block, bIdx) => {
                     if (block.type === 'heading') {
                       return (
-                        <div key={bIdx} style={{ borderBottom: '2px solid #C45C26', paddingBottom: '0.5rem', marginTop: '1rem' }}>
-                          <strong style={{ display: 'block', fontSize: '1.35rem', fontWeight: 800, color: '#C45C26', margin: 0 }}>
+                        <div 
+                          key={bIdx} 
+                          style={{ 
+                            borderBottom: '2px solid #C45C26', 
+                            paddingBottom: '0.5rem', 
+                            marginTop: bIdx === 0 ? 0 : '0.5rem',
+                            display: 'flex',
+                            alignItems: 'center',
+                            gap: '0.65rem'
+                          }}
+                        >
+                          <span style={{ width: '8px', height: '8px', borderRadius: '50%', backgroundColor: '#C45C26' }} />
+                          <h3 style={{ 
+                            fontFamily: "var(--font-sans), 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif",
+                            fontSize: '1.2rem', 
+                            fontWeight: 700, 
+                            color: '#C45C26', 
+                            margin: 0 
+                          }}>
                             {block.content}
-                          </strong>
+                          </h3>
                         </div>
                       );
                     }
@@ -665,26 +715,28 @@ export default function OutdoorCateringContent() {
                           key={bIdx}
                           style={{
                             display: 'grid',
-                            gridTemplateColumns: 'repeat(auto-fill, minmax(180px, 1fr))',
-                            gap: '0.85rem',
+                            gridTemplateColumns: 'repeat(auto-fill, minmax(min(100%, 220px), 1fr))',
+                            gap: '0.75rem 1.25rem',
+                            padding: '0 0.25rem 0.5rem 0.25rem',
                           }}
                         >
                           {block.items.map((it, itIdx) => (
                             <div
                               key={itIdx}
-                              className="tactile-card"
                               style={{
-                                backgroundColor: '#ffffff',
-                                padding: '12px 16px',
-                                borderRadius: '12px',
-                                border: '1px solid #E8E0D5',
-                                fontSize: '0.95rem',
-                                color: '#333',
-                                fontWeight: 600,
-                                boxShadow: '0 2px 6px rgba(0,0,0,0.02)',
+                                display: 'flex',
+                                alignItems: 'center',
+                                gap: '0.65rem',
+                                fontSize: '0.96rem',
+                                color: '#2D3748',
+                                fontWeight: 500,
+                                lineHeight: 1.45,
                               }}
                             >
-                              • {it}
+                              <svg width="17" height="17" viewBox="0 0 20 20" fill="#C45C26" style={{ flexShrink: 0 }}>
+                                <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+                              </svg>
+                              <span>{it}</span>
                             </div>
                           ))}
                         </div>
@@ -934,7 +986,7 @@ export default function OutdoorCateringContent() {
                   <div>
                     <span style={{ display: 'block', fontSize: '0.8rem', color: '#666', fontWeight: 600 }}>Phone Hotline</span>
                     <span style={{ color: '#1A1A1A', fontSize: '16px', fontWeight: 700 }}>
-                      +0149 497 2550
+                      {siteContent?.restaurant?.phone || '+0149 497 2550'}
                     </span>
                   </div>
                 </a>
@@ -968,7 +1020,7 @@ export default function OutdoorCateringContent() {
                   <div>
                     <span style={{ display: 'block', fontSize: '0.8rem', color: '#666', fontWeight: 600 }}>Restaurant Location</span>
                     <span style={{ color: '#1A1A1A', fontSize: '16px', fontWeight: 700 }}>
-                      94, sycamore Road, Amersham, HP6 5EN.
+                      {siteContent?.restaurant?.address || '94, sycamore Road, Amersham, HP6 5EN.'}
                     </span>
                   </div>
                 </div>
@@ -1039,6 +1091,70 @@ export default function OutdoorCateringContent() {
                     onChange={handleFormChange}
                     style={formFieldStyle}
                   />
+
+                  {/* Dynamic Custom Form Field Boxes Added from Admin */}
+                  {customFields.map((field: any) => {
+                    const fieldVal = customFieldsData[field.name || field.id] || '';
+                    if (field.type === 'textarea') {
+                      return (
+                        <div key={field.id}>
+                          {field.label && (
+                            <label style={{ fontSize: '13px', color: '#666', marginBottom: '4px', display: 'block', fontWeight: 600 }}>
+                              {field.label} {field.required ? '*' : ''}
+                            </label>
+                          )}
+                          <textarea
+                            rows={3}
+                            placeholder={field.placeholder || field.label}
+                            value={fieldVal}
+                            required={!!field.required}
+                            onChange={(e) => handleCustomFieldChange(field.name || field.id, e.target.value)}
+                            style={{ ...formFieldStyle, resize: 'vertical' }}
+                          />
+                        </div>
+                      );
+                    }
+                    if (field.type === 'select' && Array.isArray(field.options)) {
+                      return (
+                        <div key={field.id}>
+                          {field.label && (
+                            <label style={{ fontSize: '13px', color: '#666', marginBottom: '4px', display: 'block', fontWeight: 600 }}>
+                              {field.label} {field.required ? '*' : ''}
+                            </label>
+                          )}
+                          <select
+                            value={fieldVal}
+                            required={!!field.required}
+                            onChange={(e) => handleCustomFieldChange(field.name || field.id, e.target.value)}
+                            style={formFieldStyle}
+                          >
+                            <option value="">{field.placeholder || `Select ${field.label}`}</option>
+                            {field.options.map((opt: string, optIdx: number) => (
+                              <option key={optIdx} value={opt}>{opt}</option>
+                            ))}
+                          </select>
+                        </div>
+                      );
+                    }
+                    return (
+                      <div key={field.id}>
+                        {field.label && (
+                          <label style={{ fontSize: '13px', color: '#666', marginBottom: '4px', display: 'block', fontWeight: 600 }}>
+                            {field.label} {field.required ? '*' : ''}
+                          </label>
+                        )}
+                        <input
+                          type={field.type || 'text'}
+                          placeholder={field.placeholder || field.label}
+                          value={fieldVal}
+                          required={!!field.required}
+                          onChange={(e) => handleCustomFieldChange(field.name || field.id, e.target.value)}
+                          style={formFieldStyle}
+                        />
+                      </div>
+                    );
+                  })}
+
                   <textarea
                     name="message"
                     placeholder="Event details, preferred menu options, or dietary requests..."

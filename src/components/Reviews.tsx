@@ -76,7 +76,7 @@ export default function Reviews({ testimonials }: ReviewsProps) {
   };
 
   return (
-    <section id="reviews" style={{ padding: 'clamp(3.5rem, 6vw, 5.5rem) clamp(1rem, 4vw, 2rem)', backgroundColor: '#FDF6F0', textAlign: 'center' }}>
+    <section id="reviews" style={{ padding: 'clamp(1.75rem, 3vw, 2.5rem) 1.5rem', backgroundColor: '#FDF6F0', textAlign: 'center' }}>
       <div style={{ maxWidth: '1200px', margin: '0 auto' }}>
         <span
           style={{
@@ -97,11 +97,13 @@ export default function Reviews({ testimonials }: ReviewsProps) {
         </span>
 
         <h2 style={{ 
-          fontSize: 'clamp(2rem, 4.5vw, 2.8rem)', 
-          fontWeight: 800, 
+          fontFamily: "var(--font-sans), 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif",
+          fontSize: 'clamp(25px, 2.5vw, 30px)', 
+          fontWeight: 600, 
           color: '#1A1A1A', 
-          marginBottom: '2.5rem',
-          letterSpacing: '-0.02em'
+          marginBottom: '2.25rem',
+          letterSpacing: '-0.01em',
+          lineHeight: '1.3em'
         }}>
           Google reviews
         </h2>
@@ -215,7 +217,7 @@ export default function Reviews({ testimonials }: ReviewsProps) {
                 <span style={{ color: '#D4A017', fontSize: '1.25rem', letterSpacing: '2px' }}>★★★★★</span>
               </div>
               <p style={{ margin: '0 0 0.8rem 0', color: '#666666', fontSize: '0.9rem', fontWeight: 500 }}>
-                Based on 645 reviews
+                Based on 653 reviews
               </p>
               <p style={{ margin: '0 0 1.5rem 0', color: '#888888', fontSize: '0.85rem' }}>
                 powered by <span style={{ fontWeight: 700, color: '#1A1A1A' }}>Google</span>

@@ -27,8 +27,8 @@ export default async function Home() {
       <TopFood content={siteContent?.topFood} />
       <Menu menuConfig={menuData} />
       <OrderOnline />
-      <Catering />
-      <WhyChooseUs />
+      <Catering content={siteContent?.catering} />
+      <WhyChooseUs content={siteContent?.whyChooseUs} />
       <FAQ faqs={siteContent?.faqs} />
       <Contact restaurant={siteContent?.restaurant} />
       <Reviews testimonials={siteContent?.testimonials} />

@@ -1,4 +1,12 @@
+'use client';
+
 import defaultSiteContent from '../data/site_content.json';
+
+const defaultStats = [
+  { label: 'UK Locations', value: '5+' },
+  { label: 'Years Experience', value: '15+' },
+  { label: 'Pure Vegetarian', value: '100%' }
+];
 
 interface AboutSectionProps {
   content?: any;
@@ -7,17 +15,22 @@ interface AboutSectionProps {
 
 export default function AboutSection({ content, restaurant }: AboutSectionProps) {
   const about = content || defaultSiteContent.about;
-  const stats = about.stats && about.stats.length > 0 ? about.stats : defaultSiteContent.about.stats;
+  const rawStats = (about?.stats && Array.isArray(about.stats) && about.stats.length > 0) 
+    ? about.stats 
+    : ((defaultSiteContent.about as any)?.stats && Array.isArray((defaultSiteContent.about as any).stats)) 
+      ? (defaultSiteContent.about as any).stats 
+      : defaultStats;
+  const stats = rawStats.filter((st: any) => !st.label?.toLowerCase().includes('happy') && !st.value?.includes('5,000'));
 
   return (
-    <section style={{ padding: 'clamp(3.5rem, 6vw, 6rem) clamp(1rem, 4vw, 2.5rem)', backgroundColor: '#FDF6F0', position: 'relative' }}>
+    <section style={{ padding: 'clamp(2rem, 3.5vw, 2.75rem) 1.5rem clamp(1rem, 1.8vw, 1.5rem)', backgroundColor: '#FDF6F0', position: 'relative' }}>
       <div
         style={{
-          maxWidth: '1240px',
+          maxWidth: '1200px',
           margin: '0 auto',
           display: 'grid',
           gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 340px), 1fr))',
-          gap: 'clamp(2rem, 5vw, 4.5rem)',
+          gap: 'clamp(2rem, 4vw, 3.5rem)',
           alignItems: 'center',
         }}
       >
@@ -43,21 +56,23 @@ export default function AboutSection({ content, restaurant }: AboutSectionProps)
 
           <h2
             style={{
-              fontSize: 'clamp(2rem, 4.2vw, 2.85rem)',
-              fontWeight: 800,
-              marginBottom: '1.5rem',
+              fontFamily: "var(--font-sans), 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif",
+              fontSize: 'clamp(25px, 2.5vw, 30px)',
+              fontWeight: 600,
+              marginBottom: '1.25rem',
               color: '#1A1A1A',
-              lineHeight: 1.25,
-              letterSpacing: '-0.02em',
+              lineHeight: 1.3,
+              letterSpacing: '-0.01em',
             }}
           >
             {about.title || defaultSiteContent.about.title}
           </h2>
           <div
             style={{
-              fontSize: 'clamp(0.95rem, 1.8vw, 1.05rem)',
+              fontFamily: "var(--font-sans), 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif",
+              fontSize: '16px',
               color: '#555555',
-              lineHeight: 1.8,
+              lineHeight: 1.65,
               marginBottom: '2rem',
               display: 'flex',
               flexDirection: 'column',
@@ -65,17 +80,17 @@ export default function AboutSection({ content, restaurant }: AboutSectionProps)
             }}
           >
             {(about.paragraphs || defaultSiteContent.about.paragraphs).map((p: string, idx: number) => (
-              <p key={idx} style={{ margin: 0 }}>
+              <p key={idx} style={{ margin: 0, fontSize: '16px', lineHeight: 1.65 }}>
                 {p}
               </p>
             ))}
           </div>
 
-          {/* Dynamic Trust Metric Stats - Responsive with no overflow */}
+          {/* Dynamic Trust Metric Stats - 3 perfectly balanced columns */}
           <div
             style={{
               display: 'grid',
-              gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 110px), 1fr))',
+              gridTemplateColumns: 'repeat(3, minmax(0, 1fr))',
               gap: 'clamp(0.6rem, 1.5vw, 1rem)',
               marginTop: '1.5rem',
             }}
@@ -131,8 +146,8 @@ export default function AboutSection({ content, restaurant }: AboutSectionProps)
             }}
           >
             <img
-              src="/images/3d/restaurant-feast-3d.jpg"
-              alt="3D Illustrated South Indian Dining Feast Amersham"
+              src={about.image || "/images/3d/restaurant-feast-3d.jpg"}
+              alt="South Indian Dining Feast Amersham"
               style={{
                 width: '100%',
                 height: '100%',

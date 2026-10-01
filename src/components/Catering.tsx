@@ -1,15 +1,21 @@
 'use client';
 import Link from 'next/link';
 
-export default function Catering() {
+interface CateringProps {
+  content?: any;
+}
+
+export default function Catering({ content }: CateringProps) {
+  const title = content?.title || 'Bring the Flavours to Your Event';
+  const description = content?.description || 'Whether it’s a corporate gathering, wedding celebration, or private party, our catering services bring authentic South Indian vegetarian cuisine to your venue. We handle everything from menu planning to setup, ensuring your event is a delicious success.';
   return (
-    <section id="catering" style={{ padding: 'clamp(3.5rem, 6vw, 6rem) clamp(1rem, 4vw, 2rem)', backgroundColor: '#FFFDF9' }}>
+    <section id="catering" style={{ padding: 'clamp(1.75rem, 3vw, 2.5rem) 1.5rem', backgroundColor: '#FFFDF9' }}>
       <div style={{ 
         maxWidth: '1200px', 
         margin: '0 auto', 
         display: 'grid', 
         gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 320px), 1fr))', 
-        gap: 'clamp(2rem, 5vw, 4rem)', 
+        gap: 'clamp(2rem, 4vw, 3.5rem)', 
         alignItems: 'center' 
       }}>
         
@@ -34,103 +40,95 @@ export default function Catering() {
           </span>
 
           <h2 style={{ 
-            fontSize: 'clamp(1.9rem, 4vw, 2.8rem)', 
-            fontWeight: 800, 
+            fontFamily: "var(--font-sans), 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif",
+            fontSize: 'clamp(25px, 2.5vw, 30px)', 
+            fontWeight: 600, 
             color: '#1A1A1A', 
             marginBottom: '1.25rem', 
-            lineHeight: 1.2,
-            letterSpacing: '-0.02em'
+            lineHeight: '1.3em',
+            letterSpacing: '-0.01em'
           }}>
-            Bring the Flavours to Your Event
+            {title}
           </h2>
-          <p style={{ fontSize: 'clamp(0.95rem, 1.8vw, 1.05rem)', color: '#555555', lineHeight: 1.6, marginBottom: '2rem' }}>
-            Whether it&apos;s a corporate gathering, wedding celebration, or private party, our catering services bring authentic South Indian vegetarian cuisine to your venue. We handle everything from menu planning to setup, ensuring your event is a delicious success.
+          <p style={{ 
+            fontFamily: "var(--font-sans), 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif",
+            fontSize: '16px', 
+            color: '#555555', 
+            lineHeight: 1.65, 
+            marginBottom: '2rem' 
+          }}>
+            {description}
           </p>
 
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem', marginBottom: '2.5rem' }}>
-            {/* Feature 1 */}
-            <div 
-              className="tactile-card"
-              style={{ 
-                display: 'flex', 
-                gap: '1.25rem', 
-                alignItems: 'flex-start',
-                backgroundColor: 'rgba(255, 255, 255, 0.9)',
-                backdropFilter: 'blur(10px)',
-                WebkitBackdropFilter: 'blur(10px)',
-                border: '1px solid #E8E0D5',
-                borderRadius: '14px',
-                padding: '1rem 1.25rem',
-                boxShadow: '0 2px 10px rgba(0, 0, 0, 0.03)'
-              }}
-            >
-              <div style={{ backgroundColor: '#FDF6F0', padding: '0.75rem', borderRadius: '12px', flexShrink: 0, border: '1px solid #E8E0D5', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+          {(() => {
+            const defaultFeatures = [
+              {
+                title: 'Corporate Events',
+                desc: 'Impress your colleagues with authentic South Indian cuisine for office gatherings.',
+              },
+              {
+                title: 'Weddings & Parties',
+                desc: 'Make your special day memorable with our traditional catering services.',
+              },
+              {
+                title: 'Private Functions',
+                desc: 'Customized menus for intimate celebrations and family gatherings.',
+              },
+            ];
+
+            const featureIcons: Record<number, React.ReactNode> = {
+              0: (
                 <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#C45C26" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                   <rect x="2" y="7" width="20" height="14" rx="2" ry="2" />
                   <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16" />
                 </svg>
-              </div>
-              <div>
-                <strong style={{ display: 'block', fontSize: '1.08rem', fontWeight: 700, margin: '0 0 0.3rem 0', color: '#1A1A1A' }}>Corporate Events</strong>
-                <p style={{ margin: 0, color: '#666666', lineHeight: 1.5, fontSize: '0.92rem' }}>Impress your colleagues with authentic South Indian cuisine for office gatherings.</p>
-              </div>
-            </div>
-
-            {/* Feature 2 */}
-            <div 
-              className="tactile-card"
-              style={{ 
-                display: 'flex', 
-                gap: '1.25rem', 
-                alignItems: 'flex-start',
-                backgroundColor: 'rgba(255, 255, 255, 0.9)',
-                backdropFilter: 'blur(10px)',
-                WebkitBackdropFilter: 'blur(10px)',
-                border: '1px solid #E8E0D5',
-                borderRadius: '14px',
-                padding: '1rem 1.25rem',
-                boxShadow: '0 2px 10px rgba(0, 0, 0, 0.03)'
-              }}
-            >
-              <div style={{ backgroundColor: '#FDF6F0', padding: '0.75rem', borderRadius: '12px', flexShrink: 0, border: '1px solid #E8E0D5', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+              ),
+              1: (
                 <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#C45C26" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                   <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
                   <circle cx="12" cy="7" r="4" />
                 </svg>
-              </div>
-              <div>
-                <strong style={{ display: 'block', fontSize: '1.08rem', fontWeight: 700, margin: '0 0 0.3rem 0', color: '#1A1A1A' }}>Weddings &amp; Parties</strong>
-                <p style={{ margin: 0, color: '#666666', lineHeight: 1.5, fontSize: '0.92rem' }}>Make your special day memorable with our traditional catering services.</p>
-              </div>
-            </div>
-
-            {/* Feature 3 */}
-            <div 
-              className="tactile-card"
-              style={{ 
-                display: 'flex', 
-                gap: '1.25rem', 
-                alignItems: 'flex-start',
-                backgroundColor: 'rgba(255, 255, 255, 0.9)',
-                backdropFilter: 'blur(10px)',
-                WebkitBackdropFilter: 'blur(10px)',
-                border: '1px solid #E8E0D5',
-                borderRadius: '14px',
-                padding: '1rem 1.25rem',
-                boxShadow: '0 2px 10px rgba(0, 0, 0, 0.03)'
-              }}
-            >
-              <div style={{ backgroundColor: '#FDF6F0', padding: '0.75rem', borderRadius: '12px', flexShrink: 0, border: '1px solid #E8E0D5', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+              ),
+              2: (
                 <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#C45C26" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                   <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
                 </svg>
+              ),
+            };
+
+            const features = content?.features || defaultFeatures;
+
+            return (
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem', marginBottom: '2.5rem' }}>
+                {features.map((feat: any, idx: number) => (
+                  <div
+                    key={idx}
+                    className="tactile-card"
+                    style={{
+                      display: 'flex',
+                      gap: '1.25rem',
+                      alignItems: 'flex-start',
+                      backgroundColor: 'rgba(255, 255, 255, 0.9)',
+                      backdropFilter: 'blur(10px)',
+                      WebkitBackdropFilter: 'blur(10px)',
+                      border: '1px solid #E8E0D5',
+                      borderRadius: '14px',
+                      padding: '1rem 1.25rem',
+                      boxShadow: '0 2px 10px rgba(0, 0, 0, 0.03)',
+                    }}
+                  >
+                    <div style={{ backgroundColor: '#FDF6F0', padding: '0.75rem', borderRadius: '12px', flexShrink: 0, border: '1px solid #E8E0D5', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                      {featureIcons[idx % 3]}
+                    </div>
+                    <div>
+                      <strong style={{ display: 'block', fontSize: '1.08rem', fontWeight: 700, margin: '0 0 0.3rem 0', color: '#1A1A1A' }}>{feat.title}</strong>
+                      <p style={{ margin: 0, color: '#666666', lineHeight: 1.5, fontSize: '0.92rem' }}>{feat.desc || feat.description}</p>
+                    </div>
+                  </div>
+                ))}
               </div>
-              <div>
-                <strong style={{ display: 'block', fontSize: '1.08rem', fontWeight: 700, margin: '0 0 0.3rem 0', color: '#1A1A1A' }}>Private Functions</strong>
-                <p style={{ margin: 0, color: '#666666', lineHeight: 1.5, fontSize: '0.92rem' }}>Customized menus for intimate celebrations and family gatherings.</p>
-              </div>
-            </div>
-          </div>
+            );
+          })()}
 
           {/* Call to Action Buttons - Responsive on Mobile with Explicit Contrast */}
           <div style={{ display: 'flex', gap: '1rem', flexWrap: 'wrap', alignItems: 'center' }}>
@@ -140,11 +138,12 @@ export default function Catering() {
               style={{
                 backgroundColor: '#C45C26',
                 color: '#ffffff',
-                padding: '0.9rem 1.75rem',
-                borderRadius: '12px',
+                padding: '14px 28px',
+                borderRadius: '4px',
                 textDecoration: 'none',
-                fontWeight: 700,
-                fontSize: '0.98rem',
+                fontWeight: 600,
+                fontSize: '16px',
+                lineHeight: '1em',
                 boxShadow: '0 6px 18px rgba(196, 92, 38, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.3)',
                 display: 'inline-flex',
                 alignItems: 'center',
@@ -162,11 +161,12 @@ export default function Catering() {
                 backgroundColor: '#FFFFFF',
                 color: '#C45C26',
                 border: '2px solid #C45C26',
-                padding: '0.9rem 1.75rem',
-                borderRadius: '12px',
+                padding: '14px 28px',
+                borderRadius: '4px',
                 textDecoration: 'none',
-                fontWeight: 700,
-                fontSize: '0.98rem',
+                fontWeight: 600,
+                fontSize: '16px',
+                lineHeight: '1em',
                 boxShadow: '0 4px 14px rgba(196, 92, 38, 0.12), inset 0 1px 0 rgba(255, 255, 255, 0.9)',
                 display: 'inline-flex',
                 alignItems: 'center',
