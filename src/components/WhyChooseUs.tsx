@@ -1,25 +1,52 @@
+'use client';
+
 export default function WhyChooseUs() {
   const cards = [
     {
       title: "Authentic Recipes",
       desc: "Traditional Chennai recipes passed down through generations, prepared fresh daily.",
-      img: "/images/migrated/Screenshot-2025-11-01-172306.png"
+      icon: (
+        <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="#C45C26" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+          <path d="M12 2a5 5 0 0 0-5 5v3H5a2 2 0 0 0-2 2v2a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-2a2 2 0 0 0-2-2h-2V7a5 5 0 0 0-5-5z" />
+          <path d="M9 16v4" />
+          <path d="M15 16v4" />
+          <path d="M12 16v4" />
+        </svg>
+      ),
     },
     {
       title: "Expert Chefs",
       desc: "Skilled chefs from Chennai bringing theatrical live dosa and vada stations.",
-      img: "/images/migrated/Screenshot-2025-11-01-172314.png"
+      icon: (
+        <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="#C45C26" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+          <path d="M6 13.87A4 4 0 0 1 7.41 6a5.11 5.11 0 0 1 1.05-1.54 5 5 0 0 1 7.08 0A5.11 5.11 0 0 1 16.59 6 4 4 0 0 1 18 13.87V21H6Z" />
+          <line x1="6" y1="17" x2="18" y2="17" />
+        </svg>
+      ),
     },
     {
       title: "Award Winning",
       desc: "Recognized as World's Favourite Dosa Place with consistent 5-star ratings.",
-      img: "/images/migrated/Screenshot-2025-11-01-172321.png"
+      icon: (
+        <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="#C45C26" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+          <path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6" />
+          <path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18" />
+          <path d="M4 22h16" />
+          <path d="M10 14.66V17c0 .55-.45 1-1 1H7" />
+          <path d="M14 14.66V17c0 .55.45 1 1 1h2" />
+          <path d="M18 2H6v7a6 6 0 0 0 12 0V2Z" />
+        </svg>
+      ),
     },
     {
       title: "Family Friendly",
       desc: "Warm atmosphere perfect for families, celebrations, and corporate events.",
-      img: "/images/migrated/Screenshot-2025-11-01-172329.png"
-    }
+      icon: (
+        <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="#C45C26" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+          <path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z" />
+        </svg>
+      ),
+    },
   ];
 
   return (
@@ -66,14 +93,15 @@ export default function WhyChooseUs() {
                 border: '1px solid #E8E0D5', 
                 borderRadius: '18px', 
                 padding: '2.5rem 1.75rem', 
-                backgroundColor: 'rgba(255, 255, 255, 0.88)', 
+                backgroundColor: 'rgba(255, 255, 255, 0.92)', 
                 backdropFilter: 'blur(12px)',
                 WebkitBackdropFilter: 'blur(12px)',
                 boxShadow: '0 4px 18px rgba(0, 0, 0, 0.04)',
                 display: 'flex',
                 flexDirection: 'column',
                 alignItems: 'center',
-                textAlign: 'center'
+                textAlign: 'center',
+                transition: 'transform 0.25s ease, box-shadow 0.25s ease',
               }}
             >
               <div style={{ 
@@ -87,7 +115,7 @@ export default function WhyChooseUs() {
                 backgroundColor: 'rgba(196, 92, 38, 0.08)',
                 border: '1px solid rgba(196, 92, 38, 0.2)'
               }}>
-                <img src={card.img} alt={card.title} style={{ width: '44px', height: '44px', objectFit: 'contain' }} />
+                {card.icon}
               </div>
               <strong style={{ display: 'block', fontSize: '1.18rem', fontWeight: 700, marginBottom: '0.75rem', color: '#1A1A1A' }}>
                 {card.title}

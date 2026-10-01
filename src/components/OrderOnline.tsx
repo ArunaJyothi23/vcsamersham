@@ -4,24 +4,44 @@ export default function OrderOnline() {
   const cards = [
     {
       name: 'Just Eat',
-      img: '/images/migrated/Add-a-heading-6.png',
       url: 'https://www.just-eat.co.uk/restaurants-veg-chennai-srilalitha-restaurant-amersham/menu',
-      bgColor: '#F47921',
-      btnColor: '#F47921',
+      brandColor: '#F47921',
+      tagline: 'Order on Just Eat UK',
+      logo: (
+        <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+          <svg width="36" height="36" viewBox="0 0 24 24" fill="#FFFFFF">
+            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 14H9v-2h2v2zm0-4H9V7h2v5zm4 4h-2v-2h2v2zm0-4h-2V7h2v5z"/>
+          </svg>
+          <span style={{ fontSize: '1.75rem', fontWeight: 900, color: '#FFFFFF', letterSpacing: '-0.03em' }}>JUST EAT</span>
+        </div>
+      ),
     },
     {
       name: 'Deliveroo',
-      img: '/images/migrated/Add-a-heading-7.png',
       url: 'https://deliveroo.co.uk/menu/london/amersham/veg-chennai-srilalitha-restaurant-amersham-94-sycamore-road?srsltid=AfmBOorzUfSYUnlbsIN5SoZGUbYlThiZfIwXAxhjawxxeLOhrBXGmHSu',
-      bgColor: '#37B7B3',
-      btnColor: '#37B7B3',
+      brandColor: '#00CDBC',
+      tagline: 'Fast Delivery to Your Door',
+      logo: (
+        <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+          <svg width="34" height="34" viewBox="0 0 24 24" fill="#FFFFFF">
+            <path d="M18.8 6.2c-.4-1.2-1.3-2-2.5-2.2-.4-.1-.8-.1-1.2 0-1.2.3-2.2 1.2-2.6 2.4-.2.5-.2 1.1-.1 1.6l-6.8 4c-.7-.5-1.6-.7-2.6-.5-1.4.3-2.5 1.5-2.8 2.9-.4 1.8.8 3.5 2.6 3.8.4.1.8.1 1.2 0 1.2-.3 2.2-1.2 2.6-2.4.2-.5.2-1.1.1-1.6l6.8-4c.7.5 1.6.7 2.6.5 1.4-.3 2.5-1.5 2.8-2.9.2-.6.1-1.1-.1-1.6z"/>
+          </svg>
+          <span style={{ fontSize: '1.75rem', fontWeight: 900, color: '#FFFFFF', letterSpacing: '-0.03em' }}>deliveroo</span>
+        </div>
+      ),
     },
     {
       name: 'Uber Eats',
-      img: '/images/migrated/Add-a-heading-8.png',
       url: 'https://www.ubereats.com/gb/store/veg-chennai-srilalitha-restaurant/bT7Vlm2LXG6Pxxw_AfOPLQ?srsltid=AfmBOopjKkWAUzwoh2nLsTm0qoSvR83K5GvCEfUTAra5oj7gJTmyMXU6',
-      bgColor: '#00C532',
-      btnColor: '#00C532',
+      brandColor: '#06C167',
+      tagline: 'Track Your Live Order',
+      logo: (
+        <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+          <span style={{ fontSize: '1.75rem', fontWeight: 900, color: '#FFFFFF', letterSpacing: '-0.03em' }}>
+            Uber <span style={{ color: '#000000', backgroundColor: '#FFFFFF', padding: '2px 8px', borderRadius: '6px', marginLeft: '4px' }}>Eats</span>
+          </span>
+        </div>
+      ),
     },
   ];
 
@@ -56,15 +76,14 @@ export default function OrderOnline() {
         <h2 style={{ 
           fontSize: 'clamp(2.2rem, 5vw, 2.85rem)', 
           fontWeight: 800, 
-          marginBottom: '3rem',
-          color: '#1A1A1A',
+          color: '#1A1A1A', 
           letterSpacing: '-0.02em',
-          margin: '0 auto 3rem auto'
+          margin: '0 auto 2.75rem auto'
         }}>
           Order Online
         </h2>
         
-        {/* 3 Equal Cards Grid Matching Exact Live Design */}
+        {/* 3 Equal Cards Grid Matching Exact Brand Colors */}
         <div style={{ 
           display: 'grid', 
           gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 280px), 1fr))',
@@ -75,72 +94,63 @@ export default function OrderOnline() {
           {cards.map((card, idx) => (
             <div
               key={idx}
+              className="tactile-card"
               style={{
-                backgroundColor: card.bgColor,
-                borderRadius: '12px',
+                backgroundColor: card.brandColor,
+                borderRadius: '18px',
                 overflow: 'hidden',
                 display: 'flex',
                 flexDirection: 'column',
                 alignItems: 'center',
-                paddingBottom: '24px',
-                boxShadow: '0 4px 20px rgba(0,0,0,0.06)',
+                justifyContent: 'space-between',
+                padding: '2.5rem 1.75rem',
+                minHeight: '220px',
+                boxShadow: '0 8px 24px rgba(0,0,0,0.12)',
                 transition: 'transform 0.25s ease, box-shadow 0.25s ease',
               }}
               onMouseEnter={(e) => {
-                e.currentTarget.style.transform = 'translateY(-4px)';
-                e.currentTarget.style.boxShadow = '0 12px 28px rgba(0,0,0,0.12)';
+                e.currentTarget.style.transform = 'translateY(-6px)';
+                e.currentTarget.style.boxShadow = '0 16px 36px rgba(0,0,0,0.2)';
               }}
               onMouseLeave={(e) => {
                 e.currentTarget.style.transform = 'translateY(0)';
-                e.currentTarget.style.boxShadow = '0 4px 20px rgba(0,0,0,0.06)';
+                e.currentTarget.style.boxShadow = '0 8px 24px rgba(0,0,0,0.12)';
               }}
             >
-              <div style={{ width: '100%', overflow: 'hidden' }}>
-                <img 
-                  src={card.img} 
-                  alt={card.name} 
-                  style={{ 
-                    width: '100%', 
-                    height: 'auto', 
-                    display: 'block', 
-                    objectFit: 'contain'
-                  }} 
-                />
+              <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '0.5rem', marginBottom: '1.5rem' }}>
+                {card.logo}
+                <span style={{ fontSize: '0.88rem', color: 'rgba(255, 255, 255, 0.9)', fontWeight: 600 }}>
+                  {card.tagline}
+                </span>
               </div>
 
-              {/* White Pill Button Overlaid at bottom */}
+              {/* White Pill Button */}
               <a 
                 href={card.url} 
                 target="_blank" 
                 rel="noopener noreferrer" 
                 style={{ 
                   backgroundColor: '#FFFFFF', 
-                  color: card.btnColor, 
-                  padding: '9px 28px', 
-                  borderRadius: '25px', 
+                  color: card.brandColor, 
+                  padding: '11px 32px', 
+                  borderRadius: '30px', 
                   textDecoration: 'none',
-                  fontWeight: 700,
-                  fontSize: '13px',
-                  border: `1px solid ${card.btnColor}`,
-                  boxShadow: '0 3px 10px rgba(0,0,0,0.12)',
-                  display: 'inline-block',
-                  marginTop: '-56px',
-                  position: 'relative',
-                  zIndex: 2,
+                  fontWeight: 800,
+                  fontSize: '0.92rem',
+                  boxShadow: '0 4px 14px rgba(0,0,0,0.15)',
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  gap: '6px',
                   transition: 'all 0.2s ease',
                 }}
                 onMouseEnter={(e) => {
-                  e.currentTarget.style.backgroundColor = card.btnColor;
-                  e.currentTarget.style.color = '#FFFFFF';
-                  e.currentTarget.style.borderColor = '#FFFFFF';
+                  e.currentTarget.style.transform = 'scale(1.05)';
                 }}
                 onMouseLeave={(e) => {
-                  e.currentTarget.style.backgroundColor = '#FFFFFF';
-                  e.currentTarget.style.color = card.btnColor;
-                  e.currentTarget.style.borderColor = card.btnColor;
+                  e.currentTarget.style.transform = 'scale(1)';
                 }}
               >
-                Order Now
+                Order Now →
               </a>
             </div>
           ))}

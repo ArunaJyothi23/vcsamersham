@@ -64,8 +64,11 @@ export default function Catering() {
                 boxShadow: '0 2px 10px rgba(0, 0, 0, 0.03)'
               }}
             >
-              <div style={{ backgroundColor: '#FDF6F0', padding: '0.75rem', borderRadius: '12px', flexShrink: 0, border: '1px solid #E8E0D5' }}>
-                <img src="/images/migrated/Screenshot-2025-11-01-172630.png" alt="Corporate Events" style={{ width: '36px', height: '36px', objectFit: 'contain' }} />
+              <div style={{ backgroundColor: '#FDF6F0', padding: '0.75rem', borderRadius: '12px', flexShrink: 0, border: '1px solid #E8E0D5', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#C45C26" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <rect x="2" y="7" width="20" height="14" rx="2" ry="2" />
+                  <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16" />
+                </svg>
               </div>
               <div>
                 <strong style={{ display: 'block', fontSize: '1.08rem', fontWeight: 700, margin: '0 0 0.3rem 0', color: '#1A1A1A' }}>Corporate Events</strong>
@@ -89,8 +92,11 @@ export default function Catering() {
                 boxShadow: '0 2px 10px rgba(0, 0, 0, 0.03)'
               }}
             >
-              <div style={{ backgroundColor: '#FDF6F0', padding: '0.75rem', borderRadius: '12px', flexShrink: 0, border: '1px solid #E8E0D5' }}>
-                <img src="/images/migrated/Screenshot-2025-11-01-172645.png" alt="Weddings & Parties" style={{ width: '36px', height: '36px', objectFit: 'contain' }} />
+              <div style={{ backgroundColor: '#FDF6F0', padding: '0.75rem', borderRadius: '12px', flexShrink: 0, border: '1px solid #E8E0D5', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#C45C26" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
+                  <circle cx="12" cy="7" r="4" />
+                </svg>
               </div>
               <div>
                 <strong style={{ display: 'block', fontSize: '1.08rem', fontWeight: 700, margin: '0 0 0.3rem 0', color: '#1A1A1A' }}>Weddings &amp; Parties</strong>
@@ -114,8 +120,10 @@ export default function Catering() {
                 boxShadow: '0 2px 10px rgba(0, 0, 0, 0.03)'
               }}
             >
-              <div style={{ backgroundColor: '#FDF6F0', padding: '0.75rem', borderRadius: '12px', flexShrink: 0, border: '1px solid #E8E0D5' }}>
-                <img src="/images/migrated/Screenshot-2025-11-01-172702.png" alt="Private Functions" style={{ width: '36px', height: '36px', objectFit: 'contain' }} />
+              <div style={{ backgroundColor: '#FDF6F0', padding: '0.75rem', borderRadius: '12px', flexShrink: 0, border: '1px solid #E8E0D5', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#C45C26" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
+                </svg>
               </div>
               <div>
                 <strong style={{ display: 'block', fontSize: '1.08rem', fontWeight: 700, margin: '0 0 0.3rem 0', color: '#1A1A1A' }}>Private Functions</strong>

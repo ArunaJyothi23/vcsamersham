@@ -15,6 +15,7 @@ export default function Menu({ menuConfig }: MenuProps) {
     : defaultMenuConfig.categories;
   const menuData = menuConfig?.menuData || defaultMenuConfig.menuData;
   const [activeCategory, setActiveCategory] = useState(categories[0] || 'Dosa Corner');
+  const [allergyImgFailed, setAllergyImgFailed] = useState(false);
 
   return (
     <section 
@@ -50,7 +51,7 @@ export default function Menu({ menuConfig }: MenuProps) {
             fontSize: 'clamp(2rem, 4.5vw, 2.8rem)', 
             fontWeight: 800, 
             textAlign: 'center', 
-            color: '#1A1A1A',
+            color: '#1A1A1A', 
             letterSpacing: '-0.02em',
             margin: 0
           }}>
@@ -58,20 +59,58 @@ export default function Menu({ menuConfig }: MenuProps) {
           </h2>
         </div>
 
-        {/* Allergy info banner replica as Image */}
+        {/* Allergy info banner with fallback UI */}
         <div style={{ display: 'flex', justifyContent: 'center', marginBottom: '2.5rem' }}>
-          <img 
-            src="/images/migrated/WhatsApp-Image-2025-12-03-at-11.49.42-e1764743369811.jpeg" 
-            alt="Allergy Legend" 
-            style={{ 
-              maxWidth: '100%', 
-              width: 'min(620px, 100%)', 
-              height: 'auto', 
-              borderRadius: '12px',
-              boxShadow: '0 8px 24px rgba(0, 0, 0, 0.06)',
-              border: '1px solid #E8E0D5'
-            }}
-          />
+          {!allergyImgFailed ? (
+            <img 
+              src="/images/migrated/WhatsApp-Image-2025-12-03-at-11.49.42-e1764743369811.jpeg" 
+              alt="Allergy Legend" 
+              style={{ 
+                maxWidth: '100%', 
+                width: 'min(620px, 100%)', 
+                height: 'auto', 
+                borderRadius: '12px',
+                boxShadow: '0 8px 24px rgba(0, 0, 0, 0.06)',
+                border: '1px solid #E8E0D5',
+                display: 'block',
+              }}
+              onError={() => setAllergyImgFailed(true)}
+            />
+          ) : (
+            <div
+              style={{
+                backgroundColor: 'rgba(255, 255, 255, 0.95)',
+                border: '1px solid #E8E0D5',
+                borderRadius: '16px',
+                padding: '1rem 1.5rem',
+                display: 'flex',
+                flexWrap: 'wrap',
+                gap: '1rem',
+                alignItems: 'center',
+                justifyContent: 'center',
+                boxShadow: '0 4px 16px rgba(0,0,0,0.04)',
+              }}
+            >
+              <span style={{ fontSize: '0.85rem', fontWeight: 800, color: '#C45C26', textTransform: 'uppercase', letterSpacing: '0.5px' }}>
+                Allergen Guide:
+              </span>
+              <span style={{ fontSize: '0.85rem', color: '#444', display: 'flex', alignItems: 'center', gap: '4px' }}>
+                <strong style={{ color: '#16a34a' }}>[V]</strong> Vegetarian
+              </span>
+              <span style={{ fontSize: '0.85rem', color: '#444', display: 'flex', alignItems: 'center', gap: '4px' }}>
+                <strong style={{ color: '#059669' }}>[VG]</strong> Vegan
+              </span>
+              <span style={{ fontSize: '0.85rem', color: '#444', display: 'flex', alignItems: 'center', gap: '4px' }}>
+                <strong style={{ color: '#d97706' }}>[GF]</strong> Gluten-Free
+              </span>
+              <span style={{ fontSize: '0.85rem', color: '#444', display: 'flex', alignItems: 'center', gap: '4px' }}>
+                <strong style={{ color: '#dc2626' }}>[N]</strong> Contains Nuts
+              </span>
+              <span style={{ fontSize: '0.85rem', color: '#444', display: 'flex', alignItems: 'center', gap: '4px' }}>
+                <strong style={{ color: '#4f46e5' }}>[D]</strong> Dairy
+              </span>
+            </div>
+          )}
         </div>
 
         {/* Category Tabs with Swiss tactile pill styling */}

@@ -71,12 +71,12 @@ export default function AboutSection({ content, restaurant }: AboutSectionProps)
             ))}
           </div>
 
-          {/* Dynamic Trust Metric Stats */}
+          {/* Dynamic Trust Metric Stats - Responsive with no overflow */}
           <div
             style={{
               display: 'grid',
-              gridTemplateColumns: 'repeat(auto-fit, minmax(130px, 1fr))',
-              gap: '1.25rem',
+              gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 110px), 1fr))',
+              gap: 'clamp(0.6rem, 1.5vw, 1rem)',
               marginTop: '1.5rem',
             }}
           >
@@ -85,29 +85,31 @@ export default function AboutSection({ content, restaurant }: AboutSectionProps)
                 key={idx}
                 className="tactile-card"
                 style={{
-                  backgroundColor: 'rgba(255, 255, 255, 0.92)',
+                  backgroundColor: 'rgba(255, 255, 255, 0.95)',
                   backdropFilter: 'blur(12px)',
                   WebkitBackdropFilter: 'blur(12px)',
                   borderRadius: '16px',
-                  padding: '1.25rem 1rem',
+                  padding: '1rem 0.6rem',
                   textAlign: 'center',
                   boxShadow: '0 4px 18px rgba(0, 0, 0, 0.04)',
                   border: '1px solid #E8E0D5',
+                  overflow: 'hidden',
                 }}
               >
                 <div
                   style={{
-                    fontSize: 'clamp(2rem, 3.5vw, 2.5rem)',
+                    fontSize: 'clamp(1.35rem, 2.2vw, 1.8rem)',
                     fontWeight: 800,
                     color: '#C45C26',
                     lineHeight: 1.1,
-                    marginBottom: '0.4rem',
+                    marginBottom: '0.35rem',
                     letterSpacing: '-0.02em',
+                    whiteSpace: 'nowrap',
                   }}
                 >
                   {st.value}
                 </div>
-                <div style={{ fontSize: '0.88rem', fontWeight: 700, color: '#1A1A1A' }}>
+                <div style={{ fontSize: '0.8rem', fontWeight: 700, color: '#1A1A1A', lineHeight: 1.25 }}>
                   {st.label}
                 </div>
               </div>
@@ -115,8 +117,8 @@ export default function AboutSection({ content, restaurant }: AboutSectionProps)
           </div>
         </div>
 
-        {/* Right Column: 3D Dining Feast with Floating Rating Badge */}
-        <div style={{ position: 'relative', width: '100%', paddingBottom: '1.75rem' }}>
+        {/* Right Column: 3D Dining Feast with Perfectly Positioned Floating Badge */}
+        <div style={{ position: 'relative', width: '100%', maxWidth: '580px', margin: '0 auto' }}>
           <div
             style={{
               position: 'relative',
@@ -138,51 +140,50 @@ export default function AboutSection({ content, restaurant }: AboutSectionProps)
                 objectFit: 'cover',
               }}
             />
-          </div>
 
-          {/* Floating 3D Glass Badge: ★★★★★ 5,000+ Happy Customers */}
-          <div
-            className="tactile-card"
-            style={{
-              position: 'absolute',
-              bottom: '0',
-              right: 'clamp(8px, 3vw, 25px)',
-              maxWidth: 'calc(100% - 16px)',
-              backgroundColor: 'rgba(196, 92, 38, 0.96)',
-              backdropFilter: 'blur(12px)',
-              WebkitBackdropFilter: 'blur(12px)',
-              color: '#ffffff',
-              padding: 'clamp(0.75rem, 2.5vw, 1.1rem) clamp(1rem, 3.5vw, 1.85rem)',
-              borderRadius: '16px',
-              boxShadow: '0 14px 32px rgba(196, 92, 38, 0.45)',
-              border: '1px solid rgba(255, 255, 255, 0.25)',
-              display: 'flex',
-              flexDirection: 'column',
-              alignItems: 'center',
-              justifyContent: 'center',
-              zIndex: 5,
-            }}
-          >
+            {/* Floating 3D Badge kept cleanly inside the image frame */}
             <div
+              className="tactile-card"
               style={{
-                fontSize: 'clamp(1.1rem, 3vw, 1.3rem)',
-                color: '#FFD700',
-                letterSpacing: '2px',
-                marginBottom: '0.2rem',
+                position: 'absolute',
+                bottom: '16px',
+                right: '16px',
+                backgroundColor: 'rgba(196, 92, 38, 0.95)',
+                backdropFilter: 'blur(12px)',
+                WebkitBackdropFilter: 'blur(12px)',
+                color: '#ffffff',
+                padding: '0.65rem 1.15rem',
+                borderRadius: '14px',
+                boxShadow: '0 10px 25px rgba(0, 0, 0, 0.35)',
+                border: '1px solid rgba(255, 255, 255, 0.3)',
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
+                justifyContent: 'center',
+                zIndex: 5,
               }}
             >
-              ★★★★★
-            </div>
-            <div
-              style={{
-                fontSize: 'clamp(0.9rem, 2.8vw, 1.05rem)',
-                fontWeight: 800,
-                letterSpacing: '0.3px',
-                textAlign: 'center',
-                whiteSpace: 'nowrap',
-              }}
-            >
-              5,000+ Happy Customers
+              <div
+                style={{
+                  fontSize: '0.95rem',
+                  color: '#FFD700',
+                  letterSpacing: '2px',
+                  marginBottom: '0.15rem',
+                }}
+              >
+                ★★★★★
+              </div>
+              <div
+                style={{
+                  fontSize: '0.85rem',
+                  fontWeight: 800,
+                  letterSpacing: '0.3px',
+                  textAlign: 'center',
+                  whiteSpace: 'nowrap',
+                }}
+              >
+                5,000+ Happy Customers
+              </div>
             </div>
           </div>
         </div>

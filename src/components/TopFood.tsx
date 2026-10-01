@@ -241,6 +241,9 @@ export default function TopFood({ content }: TopFoodProps) {
             alt={`Top Food Dish ${index + 1}`}
             className="marquee-img"
             loading="lazy"
+            onError={(e) => {
+              (e.currentTarget as HTMLElement).style.display = 'none';
+            }}
           />
         ))}
       </div>
