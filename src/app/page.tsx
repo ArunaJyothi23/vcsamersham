@@ -8,20 +8,30 @@ import WhyChooseUs from '../components/WhyChooseUs';
 import FAQ from '../components/FAQ';
 import Contact from '../components/Contact';
 import Reviews from '../components/Reviews';
+import { getSiteContent, getMenuData } from '@/lib/firebaseService';
 
-export default function Home() {
+// Force dynamic SSR so edits saved in Admin Studio appear immediately on page reload
+export const dynamic = 'force-dynamic';
+export const revalidate = 0;
+
+export default async function Home() {
+  const [siteContent, menuData] = await Promise.all([
+    getSiteContent(),
+    getMenuData(),
+  ]);
+
   return (
     <>
-      <Hero />
-      <AboutSection />
-      <TopFood />
-      <Menu />
+      <Hero content={siteContent?.hero} />
+      <AboutSection content={siteContent?.about} restaurant={siteContent?.restaurant} />
+      <TopFood content={siteContent?.topFood} />
+      <Menu menuConfig={menuData} />
       <OrderOnline />
       <Catering />
       <WhyChooseUs />
-      <FAQ />
-      <Contact />
-      <Reviews />
+      <FAQ faqs={siteContent?.faqs} />
+      <Contact restaurant={siteContent?.restaurant} />
+      <Reviews testimonials={siteContent?.testimonials} />
     </>
   );
 }

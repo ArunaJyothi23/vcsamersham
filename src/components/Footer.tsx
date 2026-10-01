@@ -46,7 +46,7 @@ export default function Footer() {
         <div>
           <div style={{ backgroundColor: '#fff', display: 'inline-flex', padding: '0.4rem 0.8rem', borderRadius: '6px', marginBottom: '1.2rem' }}>
             <img 
-              src="https://vcsamersham.co.uk/wp-content/uploads/2026/06/vcsr-logo.webp" 
+              src="/images/migrated/vcsr-logo.webp" 
               alt="VCS Amersham Logo" 
               style={{ height: '40px', width: 'auto' }}
             />
@@ -96,6 +96,7 @@ export default function Footer() {
           <Link href="/privacy-policy" style={linkStyle} onMouseOver={e => e.currentTarget.style.color = '#fff'} onMouseOut={e => e.currentTarget.style.color = '#9ca3af'}>Privacy Policy</Link>
           <Link href="/cookies-policy" style={linkStyle} onMouseOver={e => e.currentTarget.style.color = '#fff'} onMouseOut={e => e.currentTarget.style.color = '#9ca3af'}>Cookies Policy</Link>
           <Link href="/disclaimer" style={linkStyle} onMouseOver={e => e.currentTarget.style.color = '#fff'} onMouseOut={e => e.currentTarget.style.color = '#9ca3af'}>Disclaimer</Link>
+          <Link href="/admin" style={{ ...linkStyle, color: '#DE7843', fontSize: '0.82rem', fontWeight: 600, marginTop: '0.75rem' }} onMouseOver={e => e.currentTarget.style.color = '#fff'} onMouseOut={e => e.currentTarget.style.color = '#DE7843'}>Admin Studio ⚙️</Link>
         </div>
 
       </div>

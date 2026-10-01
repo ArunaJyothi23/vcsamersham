@@ -4,21 +4,21 @@ export default function OrderOnline() {
   const cards = [
     {
       name: 'Just Eat',
-      img: 'https://vcsamersham.co.uk/wp-content/uploads/2026/06/Add-a-heading-6.png',
+      img: '/images/migrated/Add-a-heading-6.png',
       url: 'https://www.just-eat.co.uk/restaurants-veg-chennai-srilalitha-restaurant-amersham/menu',
       bgColor: '#F47921',
       btnColor: '#F47921',
     },
     {
       name: 'Deliveroo',
-      img: 'https://vcsamersham.co.uk/wp-content/uploads/2026/06/Add-a-heading-7.png',
+      img: '/images/migrated/Add-a-heading-7.png',
       url: 'https://deliveroo.co.uk/menu/london/amersham/veg-chennai-srilalitha-restaurant-amersham-94-sycamore-road?srsltid=AfmBOorzUfSYUnlbsIN5SoZGUbYlThiZfIwXAxhjawxxeLOhrBXGmHSu',
       bgColor: '#37B7B3',
       btnColor: '#37B7B3',
     },
     {
       name: 'Uber Eats',
-      img: 'https://vcsamersham.co.uk/wp-content/uploads/2026/06/Add-a-heading-8.png',
+      img: '/images/migrated/Add-a-heading-8.png',
       url: 'https://www.ubereats.com/gb/store/veg-chennai-srilalitha-restaurant/bT7Vlm2LXG6Pxxw_AfOPLQ?srsltid=AfmBOopjKkWAUzwoh2nLsTm0qoSvR83K5GvCEfUTAra5oj7gJTmyMXU6',
       bgColor: '#00C532',
       btnColor: '#00C532',
@@ -26,14 +26,40 @@ export default function OrderOnline() {
   ];
 
   return (
-    <section id="order" style={{ padding: 'clamp(3rem, 6vw, 5rem) clamp(1rem, 4vw, 2rem)', backgroundColor: '#ffffff', textAlign: 'center' }}>
+    <section 
+      id="order" 
+      style={{ 
+        padding: 'clamp(3.5rem, 6vw, 5.5rem) clamp(1rem, 4vw, 2rem)', 
+        backgroundColor: '#FFFDF9', 
+        textAlign: 'center',
+        scrollMarginTop: '85px',
+      }}
+    >
       <div style={{ maxWidth: '1150px', margin: '0 auto' }}>
+        <span
+          style={{
+            display: 'inline-block',
+            backgroundColor: 'rgba(196, 92, 38, 0.1)',
+            color: '#C45C26',
+            border: '1px solid rgba(196, 92, 38, 0.25)',
+            padding: '4px 14px',
+            borderRadius: '20px',
+            fontSize: '0.8rem',
+            fontWeight: 700,
+            letterSpacing: '1px',
+            textTransform: 'uppercase',
+            marginBottom: '0.75rem',
+          }}
+        >
+          Direct to Your Door
+        </span>
         <h2 style={{ 
           fontSize: 'clamp(2.2rem, 5vw, 2.85rem)', 
-          fontWeight: 700, 
+          fontWeight: 800, 
           marginBottom: '3rem',
-          color: '#000000',
-          fontFamily: 'inherit'
+          color: '#1A1A1A',
+          letterSpacing: '-0.02em',
+          margin: '0 auto 3rem auto'
         }}>
           Order Online
         </h2>
@@ -41,7 +67,7 @@ export default function OrderOnline() {
         {/* 3 Equal Cards Grid Matching Exact Live Design */}
         <div style={{ 
           display: 'grid', 
-          gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 300px), 1fr))',
+          gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 280px), 1fr))',
           gap: 'clamp(1.5rem, 3vw, 2.25rem)',
           justifyContent: 'center',
           alignItems: 'stretch'

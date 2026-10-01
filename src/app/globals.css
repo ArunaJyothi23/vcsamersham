@@ -22,6 +22,11 @@
 
 html {
   box-sizing: border-box;
+  scroll-behavior: smooth;
+}
+
+section[id] {
+  scroll-margin-top: 85px;
 }
 
 body {
@@ -82,3 +87,97 @@ body {
 .outdoor-enquiry-form textarea::placeholder {
   color: #9ca3af !important;
 }
+
+/* ==========================================================================
+   Minimalist Swiss + Glassmorphism 3D Design System
+   Inspired by Premium 3D Restaurant Web Transformation Guide
+   ========================================================================== */
+:root {
+  --color-charcoal: #1a1a1a;
+  --color-terracotta: #c45c26;
+  --color-saffron: #d19979;
+  --color-peach: #e8a87c;
+  --color-cream: #fdf6f0;
+  --color-gold: #d4a017;
+  --color-glass-border: rgba(255, 255, 255, 0.45);
+  --color-glass-dark-border: rgba(209, 153, 121, 0.25);
+  --shadow-3d-soft: 0 10px 30px -5px rgba(0, 0, 0, 0.06), 0 2px 8px -2px rgba(209, 153, 121, 0.08);
+  --shadow-3d-elevated: 0 20px 45px -10px rgba(0, 0, 0, 0.12), 0 4px 12px -2px rgba(209, 153, 121, 0.15);
+  --shadow-glass-dark: 0 20px 50px rgba(0, 0, 0, 0.6), 0 0 20px rgba(209, 153, 121, 0.1);
+}
+
+.glass-panel-light {
+  background: rgba(255, 255, 255, 0.82) !important;
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.7) !important;
+  box-shadow: 0 12px 35px -5px rgba(0, 0, 0, 0.07), 0 2px 8px -2px rgba(209, 153, 121, 0.08) !important;
+  border-radius: 20px;
+}
+
+.glass-panel-dark {
+  background: rgba(14, 12, 10, 0.8) !important;
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  border: 1px solid rgba(209, 153, 121, 0.3) !important;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.65), 0 0 25px rgba(209, 153, 121, 0.12) !important;
+  border-radius: 20px;
+}
+
+.tactile-card {
+  transition: transform 0.28s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.28s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.tactile-card:hover {
+  transform: translateY(-4px) scale(1.01);
+  box-shadow: 0 20px 45px -10px rgba(0, 0, 0, 0.12), 0 4px 12px -2px rgba(209, 153, 121, 0.15) !important;
+}
+
+.btn-3d-primary {
+  background: linear-gradient(135deg, #d38b6d 0%, #b86e52 100%) !important;
+  color: #ffffff !important;
+  border: 1px solid rgba(255, 255, 255, 0.22) !important;
+  box-shadow: 0 6px 18px rgba(209, 153, 121, 0.4), inset 0 1px 1px rgba(255, 255, 255, 0.3) !important;
+  transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.2s cubic-bezier(0.16, 1, 0.3, 1) !important;
+}
+.btn-3d-primary:hover {
+  transform: translateY(-2px) scale(1.02) !important;
+  box-shadow: 0 10px 24px rgba(209, 153, 121, 0.52), inset 0 1px 1px rgba(255, 255, 255, 0.4) !important;
+}
+.btn-3d-primary:active {
+  transform: translateY(1px) scale(0.99) !important;
+}
+
+.btn-3d-secondary {
+  background: rgba(255, 255, 255, 0.12) !important;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  color: #ffffff !important;
+  border: 1px solid rgba(255, 255, 255, 0.35) !important;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.25) !important;
+  transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), background-color 0.2s, box-shadow 0.2s !important;
+}
+.btn-3d-secondary:hover {
+  background: rgba(255, 255, 255, 0.2) !important;
+  transform: translateY(-2px) scale(1.02) !important;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.35) !important;
+}
+.btn-3d-secondary:active {
+  transform: translateY(1px) scale(0.99) !important;
+}
+
+.btn-3d-light-secondary {
+  background: rgba(255, 255, 255, 0.95) !important;
+  color: #1a1a1a !important;
+  border: 1px solid #e8e0d5 !important;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.05) !important;
+  transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), background-color 0.2s, box-shadow 0.2s !important;
+}
+.btn-3d-light-secondary:hover {
+  background: #ffffff !important;
+  transform: translateY(-2px) scale(1.02) !important;
+  box-shadow: 0 8px 22px rgba(0, 0, 0, 0.09) !important;
+}
+.btn-3d-light-secondary:active {
+  transform: translateY(1px) scale(0.99) !important;
+}
+

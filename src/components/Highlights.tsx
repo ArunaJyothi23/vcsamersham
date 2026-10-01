@@ -36,7 +36,7 @@ export default function Highlights() {
             transition: 'transform 0.3s ease'
           }}>
             <div style={{ fontSize: '3rem', marginBottom: '1rem' }}>{feature.icon}</div>
-            <h3 style={{ fontSize: '1.5rem', marginBottom: '1rem', color: '#111827' }}>{feature.title}</h3>
+            <div style={{ fontSize: '1.5rem', fontWeight: 700, marginBottom: '1rem', color: '#111827' }}>{feature.title}</div>
             <p style={{ color: '#4b5563', lineHeight: 1.6 }}>{feature.description}</p>
           </div>
         ))}

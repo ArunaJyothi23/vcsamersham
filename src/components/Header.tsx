@@ -1,12 +1,19 @@
 'use client';
 import Link from 'next/link';
 import { useState, useEffect } from 'react';
+import { usePathname } from 'next/navigation';
 
 export default function Header() {
+  const pathname = usePathname();
   const [activeTab, setActiveTab] = useState('home');
   const [cateringOpen, setCateringOpen] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [mobileCateringOpen, setMobileCateringOpen] = useState(false);
+
+  const isCateringActive = pathname === '/live-dosa-catering' || pathname === '/outdoor-catering';
+  const isHomeActive = pathname === '/' && activeTab === 'home' && !isCateringActive;
+  const isMenuActive = pathname === '/' && activeTab === 'menu';
+  const isContactActive = pathname === '/' && activeTab === 'contact';
 
   useEffect(() => {
     if (window.location.hash) {
@@ -147,11 +154,12 @@ export default function Header() {
             gap: 0.75rem;
           }
           .header-container {
-            padding: 0.5rem 1.25rem !important;
+            padding: 0.55rem 1.25rem !important;
+            min-height: 64px !important;
           }
           .header-logo {
-            height: 52px !important;
-            max-width: 145px !important;
+            height: 56px !important;
+            max-width: 175px !important;
           }
         }
       `}</style>
@@ -173,7 +181,7 @@ export default function Header() {
         <div style={{ display: 'flex', alignItems: 'center' }}>
           <Link href="/" onClick={(e) => handleNavClick(e, 'home')}>
             <img
-              src="https://vcsamersham.co.uk/wp-content/uploads/2026/06/WhatsApp-Image-2025-11-03-at-18.48.43-1024x430.jpeg"
+              src="/images/migrated/WhatsApp-Image-2025-11-03-at-18.48.43-1024x430.jpeg"
               alt="VCS Amersham Logo"
               className="header-logo"
             />
@@ -195,7 +203,7 @@ export default function Header() {
           >
             <li
               style={{
-                borderBottom: activeTab === 'home' ? '3px solid #d38b6d' : '3px solid transparent',
+                borderBottom: isHomeActive ? '3px solid #d38b6d' : '3px solid transparent',
                 paddingBottom: '4px',
                 transition: 'border-color 0.2s',
               }}
@@ -205,7 +213,7 @@ export default function Header() {
                 onClick={(e) => handleNavClick(e, 'home')}
                 style={{
                   textDecoration: 'none',
-                  color: activeTab === 'home' ? '#fff' : '#ccc',
+                  color: isHomeActive ? '#fff' : '#ccc',
                   fontWeight: 'bold',
                 }}
               >
@@ -214,7 +222,7 @@ export default function Header() {
             </li>
             <li
               style={{
-                borderBottom: activeTab === 'menu' ? '3px solid #d38b6d' : '3px solid transparent',
+                borderBottom: isMenuActive ? '3px solid #d38b6d' : '3px solid transparent',
                 paddingBottom: '4px',
                 transition: 'border-color 0.2s',
               }}
@@ -224,13 +232,13 @@ export default function Header() {
                 onClick={(e) => handleNavClick(e, 'menu')}
                 style={{
                   textDecoration: 'none',
-                  color: activeTab === 'menu' ? '#fff' : '#ccc',
+                  color: isMenuActive ? '#fff' : '#ccc',
                   fontWeight: 'bold',
                   transition: 'color 0.2s',
                 }}
                 onMouseOver={(e) => (e.currentTarget.style.color = '#fff')}
                 onMouseOut={(e) => {
-                  if (activeTab !== 'menu') e.currentTarget.style.color = '#ccc';
+                  if (!isMenuActive) e.currentTarget.style.color = '#ccc';
                 }}
               >
                 Menu
@@ -238,7 +246,7 @@ export default function Header() {
             </li>
             <li
               style={{
-                borderBottom: activeTab === 'contact' ? '3px solid #d38b6d' : '3px solid transparent',
+                borderBottom: isContactActive ? '3px solid #d38b6d' : '3px solid transparent',
                 paddingBottom: '4px',
                 transition: 'border-color 0.2s',
               }}
@@ -248,13 +256,13 @@ export default function Header() {
                 onClick={(e) => handleNavClick(e, 'contact')}
                 style={{
                   textDecoration: 'none',
-                  color: activeTab === 'contact' ? '#fff' : '#ccc',
+                  color: isContactActive ? '#fff' : '#ccc',
                   fontWeight: 'bold',
                   transition: 'color 0.2s',
                 }}
                 onMouseOver={(e) => (e.currentTarget.style.color = '#fff')}
                 onMouseOut={(e) => {
-                  if (activeTab !== 'contact') e.currentTarget.style.color = '#ccc';
+                  if (!isContactActive) e.currentTarget.style.color = '#ccc';
                 }}
               >
                 Contact
@@ -262,14 +270,20 @@ export default function Header() {
             </li>
 
             <li
-              style={{ position: 'relative', cursor: 'pointer', paddingBottom: '7px' }}
+              style={{
+                position: 'relative',
+                cursor: 'pointer',
+                paddingBottom: '4px',
+                borderBottom: isCateringActive ? '3px solid #d38b6d' : '3px solid transparent',
+                transition: 'border-color 0.2s',
+              }}
               onMouseEnter={() => setCateringOpen(true)}
               onMouseLeave={() => setCateringOpen(false)}
             >
               <span
                 style={{
                   textDecoration: 'none',
-                  color: '#ccc',
+                  color: isCateringActive ? '#fff' : '#ccc',
                   fontWeight: 'bold',
                   transition: 'color 0.2s',
                   display: 'flex',
@@ -277,7 +291,9 @@ export default function Header() {
                   gap: '4px',
                 }}
                 onMouseOver={(e) => (e.currentTarget.style.color = '#fff')}
-                onMouseOut={(e) => (e.currentTarget.style.color = '#ccc')}
+                onMouseOut={(e) => {
+                  if (!isCateringActive) e.currentTarget.style.color = '#ccc';
+                }}
               >
                 Catering <span style={{ fontSize: '0.7em' }}>▼</span>
               </span>
@@ -492,7 +508,7 @@ export default function Header() {
                 style={{ textDecoration: 'none', display: 'flex', flexDirection: 'column', gap: '3px' }}
               >
                 <img
-                  src="https://vcsamersham.co.uk/wp-content/uploads/2026/06/WhatsApp-Image-2025-11-03-at-18.48.43-1024x430.jpeg"
+                  src="/images/migrated/WhatsApp-Image-2025-11-03-at-18.48.43-1024x430.jpeg"
                   alt="VCS Amersham Logo"
                   style={{
                     height: '46px',
@@ -613,31 +629,31 @@ export default function Header() {
                   style={{
                     padding: '12px 14px',
                     borderRadius: '8px',
-                    color: '#dddddd',
+                    color: isCateringActive ? '#ffffff' : '#dddddd',
                     fontSize: '1.05rem',
-                    fontWeight: 600,
+                    fontWeight: isCateringActive ? 700 : 600,
                     cursor: 'pointer',
                     display: 'flex',
                     justifyContent: 'space-between',
                     alignItems: 'center',
-                    backgroundColor: mobileCateringOpen ? 'rgba(255, 255, 255, 0.04)' : 'transparent',
-                    borderLeft: '3px solid transparent',
+                    backgroundColor: isCateringActive || mobileCateringOpen ? 'rgba(211, 139, 109, 0.12)' : 'transparent',
+                    borderLeft: isCateringActive ? '3px solid #d38b6d' : '3px solid transparent',
                   }}
                 >
-                  <span>Catering Services</span>
+                  <span style={{ color: isCateringActive ? '#ffffff' : '#dddddd' }}>Catering Services</span>
                   <span
                     style={{
                       fontSize: '0.75rem',
                       color: '#d38b6d',
                       transition: 'transform 0.25s ease',
-                      transform: mobileCateringOpen ? 'rotate(180deg)' : 'rotate(0deg)',
+                      transform: mobileCateringOpen || isCateringActive ? 'rotate(180deg)' : 'rotate(0deg)',
                     }}
                   >
                     ▼
                   </span>
                 </div>
 
-                {mobileCateringOpen && (
+                {(mobileCateringOpen || isCateringActive) && (
                   <div
                     style={{
                       padding: '6px 10px 10px 22px',
@@ -655,16 +671,16 @@ export default function Header() {
                       href="/live-dosa-catering"
                       onClick={() => setMobileMenuOpen(false)}
                       style={{
-                        color: '#f0ede6',
+                        color: pathname === '/live-dosa-catering' ? '#ffffff' : '#f0ede6',
                         fontSize: '0.95rem',
-                        fontWeight: 500,
+                        fontWeight: pathname === '/live-dosa-catering' ? 700 : 500,
                         textDecoration: 'none',
                         padding: '8px 10px',
                         borderRadius: '6px',
                         display: 'flex',
                         alignItems: 'center',
                         gap: '8px',
-                        backgroundColor: 'rgba(255, 255, 255, 0.03)',
+                        backgroundColor: pathname === '/live-dosa-catering' ? 'rgba(211, 139, 109, 0.2)' : 'rgba(255, 255, 255, 0.03)',
                       }}
                     >
                       <span style={{ color: '#d38b6d' }}>›</span>
@@ -674,16 +690,16 @@ export default function Header() {
                       href="/outdoor-catering"
                       onClick={() => setMobileMenuOpen(false)}
                       style={{
-                        color: '#f0ede6',
+                        color: pathname === '/outdoor-catering' ? '#ffffff' : '#f0ede6',
                         fontSize: '0.95rem',
-                        fontWeight: 500,
+                        fontWeight: pathname === '/outdoor-catering' ? 700 : 500,
                         textDecoration: 'none',
                         padding: '8px 10px',
                         borderRadius: '6px',
                         display: 'flex',
                         alignItems: 'center',
                         gap: '8px',
-                        backgroundColor: 'rgba(255, 255, 255, 0.03)',
+                        backgroundColor: pathname === '/outdoor-catering' ? 'rgba(211, 139, 109, 0.2)' : 'rgba(255, 255, 255, 0.03)',
                       }}
                     >
                       <span style={{ color: '#d38b6d' }}>›</span>

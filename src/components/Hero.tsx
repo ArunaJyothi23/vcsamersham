@@ -1,131 +1,257 @@
-export default function Hero() {
+'use client';
+import { useState, useEffect } from 'react';
+import defaultSiteContent from '../data/site_content.json';
+
+interface HeroProps {
+  content?: any;
+}
+
+export default function Hero({ content }: HeroProps) {
+  const heroData = content || defaultSiteContent.hero;
+  const carouselSlides = heroData.slides && heroData.slides.length > 0 ? heroData.slides : defaultSiteContent.hero.slides;
+  const [currentSlide, setCurrentSlide] = useState(0);
+
+  // Auto-play carousel slowly (every 4.5 seconds)
+  useEffect(() => {
+    if (carouselSlides.length <= 1) return;
+    const timer = setInterval(() => {
+      setCurrentSlide((prev) => (prev + 1) % carouselSlides.length);
+    }, 4500);
+    return () => clearInterval(timer);
+  }, [carouselSlides.length]);
+
   return (
     <section
       className="hero-section"
       style={{
         position: 'relative',
-        minHeight: '520px',
-        height: '80vh',
+        minHeight: 'clamp(520px, 80vh, 760px)',
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
-        textAlign: 'center',
         color: '#fff',
-        backgroundColor: '#0a0a0a',
-        backgroundImage:
-          'linear-gradient(rgba(0, 0, 0, 0.35), rgba(0, 0, 0, 0.45)), url("https://vcsamersham.co.uk/wp-content/uploads/2026/06/WhatsApp-Image-2025-11-01-at-15.41.07-2.jpeg")',
-        backgroundSize: 'cover',
-        backgroundPosition: 'center center',
+        backgroundColor: '#0c0a08',
+        overflow: 'hidden',
       }}
     >
       <style>{`
-        @media (max-width: 768px) {
+        @media (max-width: 640px) {
           .hero-section {
-            min-height: 520px !important;
-            height: auto !important;
-            padding: 3.5rem 1rem 3.5rem !important;
-            background-position: center 30% !important;
+            min-height: auto !important;
+            padding: 3.25rem 0 3.25rem 0 !important;
           }
-          .hero-content-card {
-            background: rgba(12, 10, 8, 0.65) !important;
-            backdrop-filter: blur(6px) !important;
-            -webkit-backdrop-filter: blur(6px) !important;
-            border: 1px solid rgba(211, 139, 109, 0.3) !important;
-            border-radius: 16px !important;
-            padding: 1.75rem 1.25rem !important;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6) !important;
+          .hero-content-wrapper {
+            padding: 1rem 1.25rem !important;
           }
         }
       `}</style>
 
+      {/* 1. Full-Bleed 3D Carousel Background with Smooth Video-Style Crossfade */}
+      <div style={{ position: 'absolute', inset: 0, zIndex: 1 }}>
+        {carouselSlides.map((slide: any, idx: number) => {
+          const isActive = idx === currentSlide;
+          return (
+            <div
+              key={slide.id}
+              style={{
+                position: 'absolute',
+                inset: 0,
+                opacity: isActive ? 1 : 0,
+                transition: 'opacity 1.4s cubic-bezier(0.4, 0, 0.2, 1), transform 5.5s ease-out',
+                transform: isActive ? 'scale(1.05)' : 'scale(1)',
+                willChange: 'opacity, transform',
+              }}
+            >
+              <img
+                src={slide.image}
+                alt={slide.title}
+                style={{
+                  width: '100%',
+                  height: '100%',
+                  objectFit: 'cover',
+                  objectPosition: 'center 48%',
+                  display: 'block',
+                }}
+              />
+            </div>
+          );
+        })}
+
+        {/* Ambient Fine-Dining Cinematic Vignette: Food has warm 3D depth, text has 100% contrast */}
+        <div
+          style={{
+            position: 'absolute',
+            inset: 0,
+            background:
+              'radial-gradient(ellipse 95% 85% at 50% 50%, rgba(14, 10, 8, 0.44) 0%, rgba(10, 7, 5, 0.78) 75%, rgba(6, 4, 3, 0.94) 100%), linear-gradient(to bottom, rgba(6, 4, 3, 0.7) 0%, transparent 22%, transparent 78%, rgba(6, 4, 3, 0.88) 100%)',
+            pointerEvents: 'none',
+          }}
+        />
+      </div>
+
+      {/* 2. Foreground Content Container: Ultra-Premium Classy Fine-Dining Layout */}
       <div
-        className="hero-content-card"
+        className="hero-content-wrapper"
         style={{
-          maxWidth: '900px',
-          padding: '2.5rem 1.5rem',
+          position: 'relative',
           zIndex: 10,
-          borderRadius: '16px',
-          margin: '0 1rem',
+          maxWidth: '960px',
+          width: '100%',
+          margin: '0 auto',
+          padding: 'clamp(2.5rem, 5vw, 4.5rem) clamp(1.25rem, 4vw, 2.5rem)',
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+          textAlign: 'center',
         }}
       >
-        <span
+        {/* Luxury Crest Eyebrow */}
+        <div
           style={{
-            display: 'inline-block',
-            backgroundColor: 'rgba(211, 139, 109, 0.22)',
-            color: '#e5a87a',
-            border: '1px solid rgba(211, 139, 109, 0.4)',
-            padding: '4px 14px',
-            borderRadius: '20px',
-            fontSize: '0.82rem',
-            fontWeight: 700,
-            letterSpacing: '1px',
-            textTransform: 'uppercase',
-            marginBottom: '1rem',
+            display: 'inline-flex',
+            alignItems: 'center',
+            gap: '0.85rem',
+            marginBottom: '1.15rem',
           }}
         >
-          🌿 100% Pure Vegetarian South Indian
-        </span>
+          <span
+            style={{
+              width: '36px',
+              height: '1px',
+              background: 'linear-gradient(90deg, transparent, #E8A87C)',
+            }}
+          />
+          <span
+            style={{
+              fontSize: 'clamp(0.74rem, 1.4vw, 0.84rem)',
+              letterSpacing: '0.26em',
+              textTransform: 'uppercase',
+              color: '#F4D3A1',
+              fontWeight: 600,
+              textShadow: '0 2px 10px rgba(0, 0, 0, 0.9)',
+            }}
+          >
+            ✦ PURE VEGETARIAN FINE DINING ✦
+          </span>
+          <span
+            style={{
+              width: '36px',
+              height: '1px',
+              background: 'linear-gradient(90deg, #E8A87C, transparent)',
+            }}
+          />
+        </div>
 
+        {/* Prestigious Royal Headline with Serif Typography & Champagne-Gold Gradient */}
         <h1
           style={{
-            fontSize: 'clamp(1.9rem, 5.2vw, 3.8rem)',
-            fontWeight: 800,
-            marginBottom: '1rem',
-            lineHeight: 1.2,
-            textShadow: '0 2px 10px rgba(0, 0, 0, 0.8)',
+            fontFamily: 'var(--font-serif), "Playfair Display", Georgia, serif',
+            fontSize: 'clamp(2.4rem, 5.8vw, 4.35rem)',
+            fontWeight: 700,
+            lineHeight: 1.14,
+            letterSpacing: '-0.015em',
+            marginBottom: '1.35rem',
+            maxWidth: '900px',
+            filter: 'drop-shadow(0 4px 20px rgba(0, 0, 0, 0.95))',
           }}
         >
-          South Indian Vegetarian Restaurant Amersham
+          <span
+            style={{
+              display: 'block',
+              background: 'linear-gradient(180deg, #FFFFFF 25%, #FFF2E2 75%, #F0DFCC 100%)',
+              WebkitBackgroundClip: 'text',
+              WebkitTextFillColor: 'transparent',
+            }}
+          >
+            {heroData.title || defaultSiteContent.hero.title}
+          </span>
         </h1>
 
-        <p
+        {/* Refined Subtitle in Warm Ivory with Golden Bullets */}
+        <h2
           style={{
-            fontSize: 'clamp(0.95rem, 2.2vw, 1.25rem)',
-            marginBottom: '2rem',
-            color: '#f0ede6',
-            fontWeight: 500,
-            textShadow: '0 2px 6px rgba(0, 0, 0, 0.8)',
-            maxWidth: '750px',
-            margin: '0 auto 2rem',
-            lineHeight: 1.5,
+            fontSize: 'clamp(0.98rem, 1.9vw, 1.2rem)',
+            fontWeight: 400,
+            lineHeight: 1.65,
+            color: '#F6EFE9',
+            textShadow: '0 2px 14px rgba(0, 0, 0, 0.95)',
+            maxWidth: '760px',
+            marginBottom: '2.5rem',
+            letterSpacing: '0.01em',
           }}
         >
-          Top-rated South-Indian Vegetarian Dining • Crispy Dosas & Authentic Thalis • Family-Friendly Dining
-        </p>
+          {heroData.subtitle || defaultSiteContent.hero.subtitle}
+        </h2>
 
-        <div style={{ display: 'flex', gap: '1rem', justifyContent: 'center', flexWrap: 'wrap' }}>
+        {/* High-End Tactile Action Buttons */}
+        <style>{`
+          @media (max-width: 560px) {
+            .hero-action-buttons {
+              flex-direction: column !important;
+              width: 100% !important;
+              gap: 0.9rem !important;
+            }
+            .hero-action-buttons a {
+              width: 100% !important;
+              max-width: 320px !important;
+              box-sizing: border-box !important;
+              padding: 0.9rem 1.5rem !important;
+            }
+          }
+        `}</style>
+        <div
+          className="hero-action-buttons"
+          style={{
+            display: 'flex',
+            gap: '1.35rem',
+            justifyContent: 'center',
+            alignItems: 'center',
+            flexWrap: 'wrap',
+          }}
+        >
           <a
             href="/#menu"
+            className="btn-3d-primary"
             style={{
-              backgroundColor: '#d38b6d',
-              color: '#fff',
-              padding: '0.85rem 2.2rem',
-              borderRadius: '8px',
+              background: 'linear-gradient(135deg, #DE7843 0%, #B8531D 100%)',
+              color: '#FFFFFF',
+              padding: '1rem 2.65rem',
+              borderRadius: '14px',
               textDecoration: 'none',
-              fontWeight: 'bold',
+              fontWeight: 700,
               fontSize: '1.05rem',
-              boxShadow: '0 4px 12px rgba(211, 139, 109, 0.4)',
-              minWidth: '150px',
-              transition: 'transform 0.2s, background-color 0.2s',
+              letterSpacing: '0.03em',
+              boxShadow:
+                '0 10px 28px rgba(184, 83, 29, 0.48), inset 0 1px 1px rgba(255, 255, 255, 0.45)',
+              minWidth: '160px',
+              textAlign: 'center',
+              display: 'inline-block',
+              transition: 'all 0.25s cubic-bezier(0.16, 1, 0.3, 1)',
             }}
           >
             View Menu
           </a>
           <a
             href="/#order"
+            className="btn-3d-secondary"
             style={{
-              backgroundColor: 'rgba(255, 255, 255, 0.12)',
-              border: '1px solid rgba(255, 255, 255, 0.35)',
-              color: '#fff',
-              padding: '0.85rem 2.2rem',
-              borderRadius: '8px',
+              background: 'rgba(255, 255, 255, 0.09)',
+              border: '1.5px solid rgba(248, 213, 158, 0.5)',
+              color: '#FFFFFF',
+              padding: '1rem 2.65rem',
+              borderRadius: '14px',
               textDecoration: 'none',
-              fontWeight: 'bold',
+              fontWeight: 700,
               fontSize: '1.05rem',
-              boxShadow: '0 4px 12px rgba(0, 0, 0, 0.3)',
-              minWidth: '150px',
-              backdropFilter: 'blur(4px)',
-              transition: 'transform 0.2s, background-color 0.2s',
+              letterSpacing: '0.03em',
+              boxShadow:
+                '0 10px 28px rgba(0, 0, 0, 0.45), inset 0 1px 0 rgba(255, 255, 255, 0.25)',
+              minWidth: '160px',
+              textAlign: 'center',
+              backdropFilter: 'blur(14px)',
+              WebkitBackdropFilter: 'blur(14px)',
+              display: 'inline-block',
+              transition: 'all 0.25s cubic-bezier(0.16, 1, 0.3, 1)',
             }}
           >
             Order Online

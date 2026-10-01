@@ -1,7 +1,21 @@
 import type { Metadata, Viewport } from "next";
+import { Plus_Jakarta_Sans, Playfair_Display } from "next/font/google";
 import "./globals.css";
-import Header from "../components/Header";
-import Footer from "../components/Footer";
+import ClientLayout from "../components/ClientLayout";
+
+const plusJakartaSans = Plus_Jakarta_Sans({
+  subsets: ["latin"],
+  weight: ["400", "500", "600", "700", "800"],
+  variable: "--font-sans",
+  display: "swap",
+});
+
+const playfairDisplay = Playfair_Display({
+  subsets: ["latin"],
+  weight: ["500", "600", "700", "800", "900"],
+  variable: "--font-serif",
+  display: "swap",
+});
 
 export const viewport: Viewport = {
   width: "device-width",
@@ -26,7 +40,7 @@ export const metadata: Metadata = {
     type: "website",
     images: [
       {
-        url: "https://vcsamersham.co.uk/wp-content/uploads/2026/06/vcsr-logo.webp",
+        url: "/images/migrated/vcsr-logo.webp",
         width: 800,
         height: 600,
         alt: "Veg Chennai Srilalitha Amersham Logo",
@@ -37,7 +51,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "South Indian Vegetarian Restaurant Amersham | 100% Pure Veg",
     description: "Top-rated South Indian Vegetarian Dining & Catering in Amersham. 100% Pure Veg.",
-    images: ["https://vcsamersham.co.uk/wp-content/uploads/2026/06/vcsr-logo.webp"],
+    images: ["/images/migrated/vcsr-logo.webp"],
   },
   icons: {
     icon: "/icon.jpeg",
@@ -52,7 +66,7 @@ const jsonLd = {
       "@type": "Restaurant",
       "@id": "https://vcsamersham.co.uk/#restaurant",
       "name": "Veg Chennai Srilalitha Restaurant Amersham",
-      "image": "https://vcsamersham.co.uk/wp-content/uploads/2026/06/vcsr-logo.webp",
+      "image": "/images/migrated/vcsr-logo.webp",
       "url": "https://vcsamersham.co.uk/",
       "telephone": "+44 1494 972550",
       "email": "vcsramersham@gmail.com",
@@ -105,20 +119,29 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" className={`${plusJakartaSans.variable} ${playfairDisplay.variable}`}>
       <head>
-        <link rel="preload" as="image" href="https://images.unsplash.com/photo-1610192244261-3f33de3f55e4?q=80&w=2000&auto=format&fit=crop" />
+        <link
+          rel="preload"
+          as="image"
+          href="/images/migrated/WhatsApp-Image-2025-11-01-at-15.41.07-2.jpeg"
+        />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
       </head>
-      <body style={{ margin: 0, fontFamily: 'Arial, Helvetica, sans-serif', display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
-        <Header />
-        <main style={{ flex: 1, width: '100%', overflowX: 'clip' }}>
+      <body
+        style={{
+          margin: 0,
+          fontFamily: 'var(--font-sans), -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif',
+          minHeight: '100vh',
+          backgroundColor: '#FFFDF9',
+        }}
+      >
+        <ClientLayout>
           {children}
-        </main>
-        <Footer />
+        </ClientLayout>
       </body>
     </html>
   );
