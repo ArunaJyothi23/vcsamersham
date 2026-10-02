@@ -27,29 +27,89 @@ const DIETARY_CONFIG_MAP: Record<string, typeof ALL_DIETARY[0]> = {};
 ALL_DIETARY.forEach((item) => {
   DIETARY_CONFIG_MAP[item.code] = item;
 });
+// Map 'D' (Dairy) to 'M' (Milk / Dairy)
+DIETARY_CONFIG_MAP['D'] = DIETARY_CONFIG_MAP['M'];
 
-const TAG_REGEX = /\b(OJ|OV|GF|SB|SE|N|P|M|V)\b/g;
+function formatTitle(title: string): string {
+  if (!title) return '';
+  const trimmed = title.trim();
+  // Check if mostly uppercase
+  const letters = trimmed.replace(/[^a-zA-Z]/g, '');
+  const upperCount = (trimmed.match(/[A-Z]/g) || []).length;
+  if (letters.length > 0 && upperCount / letters.length > 0.6) {
+    return trimmed.replace(/\b[a-zA-Z]+/g, (word) => {
+      // Keep acronyms like 3D, D, etc. if short, otherwise capitalize first letter
+      return word.charAt(0).toUpperCase() + word.slice(1).toLowerCase();
+    });
+  }
+  return trimmed;
+}
 
-function extractTagsFromTitle(raw: string) {
-  const foundTags = new Set<string>();
-  const parenMatches = (raw || '').match(/\(([^)]*(?:OJ|OV|GF|SB|SE|N|P|M|V)[^)]*)\)/gi);
-  if (parenMatches) {
-    for (const pm of parenMatches) {
-      const inside = pm.replace(/[()]/g, '');
-      const tags = inside.match(TAG_REGEX);
-      if (tags) {
-        tags.forEach((t) => foundTags.add(t.toUpperCase()));
-      }
+function parseDishTitle(rawTitle: string, existingDietary: string[] = []) {
+  let clean = (rawTitle || '').trim();
+  const tags = new Set<string>((existingDietary || []).map(t => t.toUpperCase() === 'D' ? 'M' : t.toUpperCase()));
+
+  // 1. Typos and glued strings
+  clean = clean.replace(/DOSANOJD/i, () => { tags.add('N'); tags.add('OJ'); tags.add('M'); return 'Dosa'; });
+  clean = clean.replace(/\(D\)/i, () => { tags.add('M'); return ''; });
+  clean = clean.replace(/\(Milk\)\s*D/i, () => { tags.add('M'); return '(Milk)'; });
+
+  // 2. Embedded before WITH PAPPAD
+  clean = clean.replace(/\s+(OV|GF|SB|SE|OJ|N|P|M|V|D)(\s+(OV|GF|SB|SE|OJ|N|P|M|V|D))*\s+(?=WITH\b)/i, (match) => {
+    const found = match.match(/\b(OV|GF|SB|SE|OJ|N|P|M|V|D)\b/gi);
+    if (found) {
+      found.forEach((c: string) => tags.add(c.toUpperCase() === 'D' ? 'M' : c.toUpperCase()));
     }
-  }
-  const trailingMatch = (raw || '').match(/(\s+(?:OJ|OV|GF|SB|SE|N|P|M|V))+$/i);
-  if (trailingMatch) {
-    const tags = trailingMatch[0].match(TAG_REGEX);
-    if (tags) {
-      tags.forEach((t) => foundTags.add(t.toUpperCase()));
+    return ' ';
+  });
+
+  // 3. Glued compound codes
+  const compounds = [
+    { regex: /\bVNOJ\b|\s+VNOJ$/i, codes: ['V', 'N', 'OJ'] },
+    { regex: /\bNDOJ\b|\s+NDOJ$/i, codes: ['N', 'M', 'OJ'] },
+    { regex: /\bN\s*DOJ\b|\s+N\s*DOJ$/i, codes: ['N', 'M', 'OJ'] },
+    { regex: /\bN\s*D\s*0J\b|\s+N\s*D\s*0J$/i, codes: ['N', 'M', 'OJ'] },
+    { regex: /\bN\s*D\s*OJ\b|\s+N\s*D\s*OJ$/i, codes: ['N', 'M', 'OJ'] },
+    { regex: /\bOJD\b|\s+OJD$/i, codes: ['OJ', 'M'] },
+    { regex: /\bOVD\b|\s+OVD$/i, codes: ['OV', 'M'] },
+    { regex: /\bDOJ\b|\s+DOJ$/i, codes: ['M', 'OJ'] },
+    { regex: /\bVOJ\b|\s+VOJ$/i, codes: ['V', 'OJ'] },
+    { regex: /\bDN\b|\s+DN$/i, codes: ['M', 'N'] },
+    { regex: /\bVN\s*oJ\b|\s+VN\s*oJ$/i, codes: ['V', 'N', 'OJ'] },
+    { regex: /\bVN\b|\s+VN$/i, codes: ['V', 'N'] },
+    { regex: /\bOV\s+ND\b|\s+OV\s+ND$/i, codes: ['OV', 'N', 'M'] },
+  ];
+
+  compounds.forEach(({ regex, codes }) => {
+    if (regex.test(clean)) {
+      clean = clean.replace(regex, ' ').trim();
+      codes.forEach((c: string) => tags.add(c));
     }
-  }
-  return Array.from(foundTags);
+  });
+
+  // 4. Trailing codes with optional pipes: e.g. ' V | N |', ' V |', ' M N', ' V'
+  clean = clean.replace(/(\s+[|•/,]?\s*\b(OV|GF|SB|SE|OJ|N|P|M|V|D)\b)+(\s*[|•/,]?)*$/i, (match) => {
+    const found = match.match(/\b(OV|GF|SB|SE|OJ|N|P|M|V|D)\b/gi);
+    if (found) {
+      found.forEach((c: string) => tags.add(c.toUpperCase() === 'D' ? 'M' : c.toUpperCase()));
+    }
+    return '';
+  });
+
+  // 5. Parenthesized codes: '(OJ | OV | M)' or '(OJ, OV, M)'
+  clean = clean.replace(/\s*\(([^)]*\b(?:OV|GF|SB|SE|OJ|N|P|M|V|D)\b[^)]*)\)\s*$/i, (match, inside) => {
+    const found = inside.match(/\b(OV|GF|SB|SE|OJ|N|P|M|V|D)\b/gi);
+    const nonCodes = inside.replace(/\b(OV|GF|SB|SE|OJ|N|P|M|V|D)\b/gi, '').replace(/[\s,|/•\-]/g, '');
+    if (found && nonCodes.length === 0) {
+      found.forEach((c: string) => tags.add(c.toUpperCase() === 'D' ? 'M' : c.toUpperCase()));
+      return '';
+    }
+    return match;
+  });
+
+  clean = clean.replace(/[\s|/•\-]+$/, '').replace(/\s+/g, ' ').trim();
+
+  return { cleanTitle: clean, tags: Array.from(tags) };
 }
 
 export default function Menu({ menuConfig, spotlightData }: MenuProps) {
@@ -61,17 +121,22 @@ export default function Menu({ menuConfig, spotlightData }: MenuProps) {
   const [activeCategory, setActiveCategory] = useState(categories[0] || 'Super Staters');
   const [selectedDietary, setSelectedDietary] = useState<string | null>(null);
 
-  // Process and filter menu items (with deduplication)
+  // Process and filter menu items (with clean title, formatTitle and deduplication)
   const activeItems = useMemo(() => {
     const items = rawMenuData[activeCategory as keyof typeof rawMenuData] || [];
     const seen = new Set<string>();
     return items
-      .map((item: any) => ({
-        ...item,
-        tags: extractTagsFromTitle(item.title),
-      }))
+      .map((item: any) => {
+        const { cleanTitle, tags } = parseDishTitle(item.title, item.dietary);
+        const formattedTitle = formatTitle(cleanTitle);
+        return {
+          ...item,
+          cleanTitle: formattedTitle,
+          tags,
+        };
+      })
       .filter((item: any) => {
-        const key = item.title.trim().toUpperCase();
+        const key = item.cleanTitle.trim().toUpperCase();
         if (seen.has(key)) return false;
         seen.add(key);
         return true;
@@ -114,6 +179,7 @@ export default function Menu({ menuConfig, spotlightData }: MenuProps) {
           align-items: center;
           justify-content: center;
           flex-shrink: 0;
+          user-select: none;
         }
 
         .menu-category-pill:hover {
@@ -158,6 +224,103 @@ export default function Menu({ menuConfig, spotlightData }: MenuProps) {
         .dietary-guide-pill.active {
           box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
           transform: translateY(-1px);
+        }
+
+        /* Mobile Scroll & Responsive Containers */
+        .menu-category-scroll-container {
+          display: flex;
+          flex-wrap: nowrap;
+          gap: 8px;
+          justify-content: center;
+          align-items: center;
+          max-width: 1200px;
+          margin: 0 auto 2.25rem auto;
+          overflow-x: auto;
+          -webkit-overflow-scrolling: touch;
+          scrollbar-width: none;
+          padding: 4px 4px 10px 4px;
+        }
+        .menu-category-scroll-container::-webkit-scrollbar {
+          display: none;
+        }
+
+        .dietary-guide-scroll-container {
+          display: flex;
+          flex-wrap: nowrap;
+          gap: 6px;
+          align-items: center;
+          justify-content: center;
+          overflow-x: auto;
+          -webkit-overflow-scrolling: touch;
+          scrollbar-width: none;
+          padding: 2px 2px 6px 2px;
+        }
+        .dietary-guide-scroll-container::-webkit-scrollbar {
+          display: none;
+        }
+
+        .menu-spotlight-card {
+          background-color: rgba(255, 255, 255, 0.94);
+          backdrop-filter: blur(16px);
+          -webkit-backdrop-filter: blur(16px);
+          border: 1px solid #E8E0D5;
+          border-radius: 20px;
+          padding: clamp(1.25rem, 3vw, 1.75rem);
+          margin-bottom: 2.5rem;
+          display: grid;
+          grid-template-columns: repeat(auto-fit, minmax(min(100%, 340px), 1fr));
+          gap: clamp(1.25rem, 3vw, 2rem);
+          align-items: center;
+          box-shadow: 0 8px 25px rgba(196, 92, 38, 0.08);
+        }
+
+        .menu-grid-container {
+          display: grid;
+          grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr));
+          gap: 1.25rem;
+        }
+
+        .menu-dish-card {
+          background-color: rgba(255, 255, 255, 0.88);
+          backdrop-filter: blur(12px);
+          -webkit-backdrop-filter: blur(12px);
+          padding: 1.35rem 1.25rem;
+          border-radius: 16px;
+          box-shadow: 0 4px 16px rgba(0, 0, 0, 0.04);
+          display: flex;
+          flex-direction: column;
+          justify-content: space-between;
+          border: 1px solid #E8E0D5;
+          transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.25s ease, border-color 0.25s ease;
+        }
+
+        @media (max-width: 768px) {
+          .menu-category-scroll-container {
+            justify-content: flex-start !important;
+            padding-left: 6px !important;
+            padding-right: 6px !important;
+            margin-bottom: 1.5rem !important;
+          }
+          .dietary-guide-scroll-container {
+            justify-content: flex-start !important;
+            padding-left: 4px !important;
+            padding-right: 4px !important;
+          }
+          .menu-spotlight-card {
+            grid-template-columns: 1fr !important;
+            padding: 1.15rem !important;
+            gap: 1.15rem !important;
+            border-radius: 16px !important;
+            margin-bottom: 1.75rem !important;
+          }
+          .menu-grid-container {
+            grid-template-columns: 1fr !important;
+            gap: 0.85rem !important;
+          }
+          .menu-dish-card {
+            padding: 1.1rem 1rem !important;
+            border-radius: 14px !important;
+          }
         }
       `}</style>
 
@@ -236,19 +399,8 @@ export default function Menu({ menuConfig, spotlightData }: MenuProps) {
             )}
           </div>
 
-          {/* All 9 Dietary options displayed in 1 single line */}
-          <div 
-            style={{ 
-              display: 'flex', 
-              flexWrap: 'nowrap', 
-              gap: '6px', 
-              alignItems: 'center',
-              justifyContent: 'center',
-              overflowX: 'auto',
-              WebkitOverflowScrolling: 'touch',
-              paddingBottom: '2px',
-            }}
-          >
+          {/* All 9 Dietary options displayed in clean responsive scroll row */}
+          <div className="dietary-guide-scroll-container">
             {ALL_DIETARY.map((item) => {
               const isSelected = selectedDietary === item.code;
               return (
@@ -281,19 +433,8 @@ export default function Menu({ menuConfig, spotlightData }: MenuProps) {
           </div>
         </div>
 
-        {/* 2. Category Tabs in 1 Single Line */}
-        <div style={{ 
-          display: 'flex', 
-          flexWrap: 'nowrap', 
-          gap: '8px', 
-          justifyContent: 'center', 
-          alignItems: 'center',
-          maxWidth: '1200px',
-          margin: '0 auto 2.25rem auto',
-          overflowX: 'auto',
-          WebkitOverflowScrolling: 'touch',
-          paddingBottom: '2px',
-        }}>
+        {/* 2. Category Tabs in responsive scroll row */}
+        <div className="menu-category-scroll-container">
           {categories.map((cat: string) => {
             const isActive = activeCategory === cat;
             return (
@@ -367,23 +508,7 @@ export default function Menu({ menuConfig, spotlightData }: MenuProps) {
           if (!spot) return null;
 
           return (
-            <div
-              className="tactile-card"
-              style={{
-                backgroundColor: 'rgba(255, 255, 255, 0.94)',
-                backdropFilter: 'blur(16px)',
-                WebkitBackdropFilter: 'blur(16px)',
-                border: '1px solid #E8E0D5',
-                borderRadius: '20px',
-                padding: 'clamp(1.25rem, 3vw, 1.75rem)',
-                marginBottom: '2.5rem',
-                display: 'grid',
-                gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 340px), 1fr))',
-                gap: 'clamp(1.25rem, 3vw, 2rem)',
-                alignItems: 'center',
-                boxShadow: '0 8px 25px rgba(196, 92, 38, 0.08)',
-              }}
-            >
+            <div className="tactile-card menu-spotlight-card">
               <div>
                 <span
                   style={{
@@ -436,29 +561,12 @@ export default function Menu({ menuConfig, spotlightData }: MenuProps) {
           );
         })()}
 
-        {/* 4. Menu Grid - 3D Glassmorphic Cards (Restored from Screenshot 1) */}
-        <div style={{ 
-          display: 'grid', 
-          gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 290px), 1fr))', 
-          gap: '1.25rem' 
-        }}>
+        {/* 4. Menu Grid - 3D Glassmorphic Cards (Responsive mobile & desktop) */}
+        <div className="menu-grid-container">
           {filteredDishes.map((item, idx) => (
             <div 
               key={idx} 
-              className="tactile-card"
-              style={{ 
-                backgroundColor: 'rgba(255, 255, 255, 0.88)', 
-                backdropFilter: 'blur(12px)',
-                WebkitBackdropFilter: 'blur(12px)',
-                padding: '1.4rem 1.35rem', 
-                borderRadius: '16px',
-                boxShadow: '0 4px 16px rgba(0, 0, 0, 0.04)',
-                display: 'flex',
-                flexDirection: 'column',
-                justifyContent: 'space-between',
-                border: '1px solid #E8E0D5',
-                transition: 'transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.25s ease, border-color 0.25s ease'
-              }}
+              className="tactile-card menu-dish-card"
               onMouseEnter={(e) => {
                 e.currentTarget.style.transform = 'translateY(-3px)';
                 e.currentTarget.style.boxShadow = '0 10px 25px rgba(196, 92, 38, 0.12)';
@@ -471,20 +579,54 @@ export default function Menu({ menuConfig, spotlightData }: MenuProps) {
               }}
             >
               <div>
-                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '0.4rem', gap: '0.75rem' }}>
+                {/* Title and Price Row */}
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', gap: '0.75rem', marginBottom: '0.35rem' }}>
                   <strong style={{ fontSize: '1.05rem', fontWeight: 700, margin: 0, lineHeight: '1.4', color: '#1A1A1A' }}>
-                    {item.title}
+                    {item.cleanTitle || item.title}
                   </strong>
                   <span style={{ 
                     color: '#C45C26', 
                     fontWeight: 800, 
                     fontSize: '1.05rem', 
                     whiteSpace: 'nowrap',
-                    letterSpacing: '-0.01em'
+                    letterSpacing: '-0.01em',
+                    flexShrink: 0,
                   }}>
                     {item.price}
                   </span>
                 </div>
+
+                {/* Dietary Options Pills Row (Restored exact design from screenshot) */}
+                {item.tags && item.tags.length > 0 && (
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '6px', flexWrap: 'wrap', marginBottom: '0.45rem' }}>
+                    {item.tags.map((tag: string) => {
+                      const normalizedTag = (tag || '').toUpperCase() === 'D' ? 'M' : (tag || '').toUpperCase();
+                      const cfg = DIETARY_CONFIG_MAP[normalizedTag] || DIETARY_CONFIG_MAP[tag];
+                      return (
+                        <span
+                          key={tag}
+                          title={cfg?.label || tag}
+                          style={{
+                            fontSize: '0.72rem',
+                            fontWeight: 700,
+                            padding: '2px 8px',
+                            borderRadius: '6px',
+                            backgroundColor: cfg?.bg || '#F3F4F6',
+                            color: cfg?.text || '#374151',
+                            border: `1px solid ${cfg?.border || '#E5E7EB'}`,
+                            letterSpacing: '0.4px',
+                            display: 'inline-flex',
+                            alignItems: 'center',
+                            lineHeight: 1.3,
+                            userSelect: 'none',
+                          }}
+                        >
+                          {normalizedTag}
+                        </span>
+                      );
+                    })}
+                  </div>
+                )}
                 {item.desc && (
                   <p style={{ margin: 0, color: '#555555', fontSize: '0.88rem', lineHeight: '1.5', marginTop: '0.35rem' }}>
                     {item.desc}
