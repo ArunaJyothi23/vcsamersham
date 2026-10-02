@@ -1,26 +1,46 @@
 'use client';
 
-export default function OrderOnline() {
-  const cards = [
-    {
-      name: 'Just Eat',
-      url: 'https://www.just-eat.co.uk/restaurants-veg-chennai-srilalitha-restaurant-amersham/menu',
-      image: '/images/migrated/Add-a-heading-6.png',
-      alt: 'Order on Just Eat UK - Veg Chennai Srilalitha Amersham',
-    },
-    {
-      name: 'Deliveroo',
-      url: 'https://deliveroo.co.uk/menu/london/amersham/veg-chennai-srilalitha-restaurant-amersham-94-sycamore-road?srsltid=AfmBOorzUfSYUnlbsIN5SoZGUbYlThiZfIwXAxhjawxxeLOhrBXGmHSu',
-      image: '/images/migrated/Add-a-heading-7.png',
-      alt: 'Order on Deliveroo - Veg Chennai Srilalitha Amersham',
-    },
-    {
-      name: 'Uber Eats',
-      url: 'https://www.ubereats.com/gb/store/veg-chennai-srilalitha-restaurant/bT7Vlm2LXG6Pxxw_AfOPLQ?srsltid=AfmBOopjKkWAUzwoh2nLsTm0qoSvR83K5GvCEfUTAra5oj7gJTmyMXU6',
-      image: '/images/migrated/Add-a-heading-8.png',
-      alt: 'Order on Uber Eats - Veg Chennai Srilalitha Amersham',
-    },
-  ];
+interface DeliveryPlatform {
+  id: string;
+  name: string;
+  url: string;
+  image: string;
+  desc?: string;
+}
+
+interface OrderOnlineProps {
+  deliveryPlatforms?: DeliveryPlatform[];
+}
+
+const DEFAULT_CARDS: DeliveryPlatform[] = [
+  {
+    id: 'just-eat',
+    name: 'Just Eat',
+    url: 'https://www.just-eat.co.uk/restaurants-veg-chennai-srilalitha-restaurant-amersham/menu',
+    image: '/images/migrated/Add-a-heading-6.png',
+    desc: 'Fast local home delivery straight to your doorstep.',
+  },
+  {
+    id: 'deliveroo',
+    name: 'Deliveroo',
+    url: 'https://deliveroo.co.uk/menu/london/amersham/veg-chennai-srilalitha-restaurant-amersham-94-sycamore-road?srsltid=AfmBOorzUfSYUnlbsIN5SoZGUbYlThiZfIwXAxhjawxxeLOhrBXGmHSu',
+    image: '/images/migrated/Add-a-heading-7.png',
+    desc: 'Track your authentic hot meal in real-time.',
+  },
+  {
+    id: 'uber-eats',
+    name: 'Uber Eats',
+    url: 'https://www.ubereats.com/gb/store/veg-chennai-srilalitha-restaurant/bT7Vlm2LXG6Pxxw_AfOPLQ?srsltid=AfmBOopjKkWAUzwoh2nLsTm0qoSvR83K5GvCEfUTAra5oj7gJTmyMXU6',
+    image: '/images/migrated/Add-a-heading-8.png',
+    desc: 'Order with your Uber account for quick pickup or delivery.',
+  },
+];
+
+export default function OrderOnline({ deliveryPlatforms }: OrderOnlineProps) {
+  // Use admin-provided platforms if available, otherwise fall back to defaults
+  const cards = (deliveryPlatforms && deliveryPlatforms.length > 0)
+    ? deliveryPlatforms
+    : DEFAULT_CARDS;
 
   return (
     <section 
@@ -57,7 +77,7 @@ export default function OrderOnline() {
         }}>
           {cards.map((card, idx) => (
             <div
-              key={idx}
+              key={card.id || idx}
               className="tactile-card"
               style={{
                 backgroundColor: '#FFFFFF',
@@ -77,7 +97,7 @@ export default function OrderOnline() {
               <div style={{ width: '100%', maxWidth: '280px', aspectRatio: '1 / 1', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '1.25rem' }}>
                 <img
                   src={card.image}
-                  alt={card.alt}
+                  alt={`Order on ${card.name} - Veg Chennai Srilalitha Amersham`}
                   style={{
                     width: '100%',
                     height: '100%',

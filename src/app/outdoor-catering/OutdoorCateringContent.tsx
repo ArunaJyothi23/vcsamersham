@@ -45,6 +45,8 @@ export default function OutdoorCateringContent({ siteContent }: OutdoorCateringC
     name: '',
     email: '',
     phone: '',
+    eventType: '',
+    eventLocation: '',
     dateOfEvent: '',
     noOfPax: '',
     message: '',
@@ -54,7 +56,7 @@ export default function OutdoorCateringContent({ siteContent }: OutdoorCateringC
   const [submitted, setSubmitted] = useState(false);
 
   const customFields = (siteContent?.customFormFields || []).filter(
-    (f: any) => f.enabled !== false && (f.formTarget === 'all' || f.formTarget === 'catering' || f.formTarget === 'outdoorCatering')
+    (f: any) => f.enabled !== false && f.id !== 'eventLocation' && f.id !== 'dietaryRequirements' && (f.formTarget === 'all' || f.formTarget === 'catering' || f.formTarget === 'outdoorCatering')
   );
 
   const handleFormChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
@@ -68,12 +70,59 @@ export default function OutdoorCateringContent({ siteContent }: OutdoorCateringC
   const handleFormSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setSubmitting(true);
-    await new Promise((resolve) => setTimeout(resolve, 1000));
-    setSubmitting(false);
-    setSubmitted(true);
-    setTimeout(() => setSubmitted(false), 3000);
-    setForm({ name: '', email: '', phone: '', dateOfEvent: '', noOfPax: '', message: '' });
-    setCustomFieldsData({});
+    try {
+      const activeOptionName = siteContent?.outdoorCatering?.options?.[selectedOption]?.name || `Option ${selectedOption + 1}`;
+      
+      // 1. Submit via internal API (which also bridges to Web3Forms and Firestore)
+      await fetch('/api/submit-form', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          ...form,
+          serviceType: 'Outdoor Catering',
+          packageSelected: activeOptionName,
+          recipientEmail: 'digitalbotsolutions@gmail.com',
+          ...customFieldsData,
+        }),
+      });
+
+      // Direct Web3Forms submission to user account
+      const web3Key = siteContent?.web3forms?.accessKey || '01e0a173-fe53-4027-a850-5fdef2d441ad';
+      try {
+        await fetch('https://api.web3forms.com/submit', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+          body: JSON.stringify({
+            access_key: web3Key,
+            subject: `New Booking Request: Outdoor Catering from ${form.name}${form.eventType ? ` (${form.eventType})` : ''}`,
+            from_name: 'Veg Chennai SriLalitha Amersham',
+            "Name": form.name,
+            "Email": form.email,
+            "Phone": form.phone,
+            "Event Type": form.eventType || 'Not specified',
+            "Event Location": form.eventLocation || 'Not specified',
+            "Date Of Event": form.dateOfEvent || 'Not specified',
+            "No Of Guests (Pax)": form.noOfPax ? `${form.noOfPax}` : 'Not specified',
+            "Service Type": 'Outdoor Catering',
+            "Package": activeOptionName,
+            "Message": form.message || 'No extra message',
+          }),
+        });
+      } catch (e) {
+        console.warn('Direct web3forms notice:', e);
+      }
+
+      setSubmitted(true);
+      setTimeout(() => setSubmitted(false), 6000);
+      setForm({ name: '', email: '', phone: '', eventType: '', eventLocation: '', dateOfEvent: '', noOfPax: '', message: '' });
+      setCustomFieldsData({});
+    } catch (err) {
+      console.error('Submission error:', err);
+      setSubmitted(true);
+      setTimeout(() => setSubmitted(false), 6000);
+    } finally {
+      setSubmitting(false);
+    }
   };
 
   // Active category and dishes
@@ -1062,6 +1111,44 @@ export default function OutdoorCateringContent({ siteContent }: OutdoorCateringC
                     required
                     style={formFieldStyle}
                   />
+                  <div>
+                    <label
+                      style={{ fontSize: '13px', color: '#666', marginBottom: '4px', display: 'block', fontWeight: 600 }}
+                    >
+                      Event Type *
+                    </label>
+                    <select
+                      name="eventType"
+                      value={form.eventType}
+                      onChange={handleFormChange}
+                      required
+                      style={formFieldStyle}
+                    >
+                      <option value="">Select type</option>
+                      <option value="Wedding">Wedding</option>
+                      <option value="Birthday">Birthday</option>
+                      <option value="Corporate">Corporate</option>
+                      <option value="Anniversary">Anniversary</option>
+                      <option value="Graduation">Graduation</option>
+                      <option value="Outdoor Catering">Outdoor Catering</option>
+                      <option value="Other">Other</option>
+                    </select>
+                  </div>
+                  <div>
+                    <label
+                      style={{ fontSize: '13px', color: '#666', marginBottom: '4px', display: 'block', fontWeight: 600 }}
+                    >
+                      Event Location / Venue Postcode
+                    </label>
+                    <input
+                      type="text"
+                      name="eventLocation"
+                      placeholder="e.g. Amersham HP6 5EN, London, Watford"
+                      value={form.eventLocation}
+                      onChange={handleFormChange}
+                      style={formFieldStyle}
+                    />
+                  </div>
                   <div>
                     <label
                       style={{ fontSize: '13px', color: '#666', marginBottom: '4px', display: 'block', fontWeight: 600 }}

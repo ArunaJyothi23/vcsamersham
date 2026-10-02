@@ -2,7 +2,7 @@
   "restaurant": {
     "name": "Veg Chennai SriLalitha (VCS)",
     "branch": "Amersham",
-    "phone": "0149 497 2550   ",
+    "phone": "0149 497 2550  ",
     "phoneRaw": "+441494972550",
     "email": "vcsramersham@gmail.com",
     "address": "94 Sycamore Road, Amersham, HP6 5EN, Buckinghamshire, United Kingdom",
@@ -43,9 +43,9 @@
     }
   ],
   "hero": {
-    "badge": "Authentic South Indian Flavours",
-    "title": "South Indian Vegetarian Restaurant Amersham",
-    "subtitle": "Top-rated South-Indian Vegetarian Dining • 100% Pure Veg • Family-Friendly Dining",
+    "badge": "Authentic South Indian Flavours  ",
+    "title": "South Indian Vegetarian Restaurant Amersham  ",
+    "subtitle": "Top-rated South-Indian Vegetarian Dining • 100% Pure Veg • Family-Friendly Dining • Authentic Dosa, Idli & Catering Services in Amersham.",
     "primaryCta": {
       "text": "View Menu",
       "link": "/#menu"
@@ -307,7 +307,7 @@
   },
   "footer": {
     "tagline": "Authentic South Indian vegetarian cuisine, served with heart in Amersham.",
-    "phone": "0149 497 2550",
+    "phone": "0149 497 2550  ",
     "email": "vcsramersham@gmail.com",
     "address": "94, sycamore Road, Amersham, HP6 5EN.",
     "copyright": "© 2026 Veg Chennai SriLalitha Amersham . All rights reserved."
@@ -394,28 +394,7 @@
       "ogImage": "/images/migrated/vcsr-logo.webp"
     }
   },
-  "customFormFields": [
-    {
-      "id": "dietaryRequirements",
-      "label": "Dietary Requirements & Allergens",
-      "name": "dietaryRequirements",
-      "type": "text",
-      "placeholder": "e.g. Jain, Vegan, Nut-free, Halal friendly",
-      "required": false,
-      "formTarget": "all",
-      "enabled": true
-    },
-    {
-      "id": "eventLocation",
-      "label": "Event Location / Venue Postcode",
-      "name": "eventLocation",
-      "type": "text",
-      "placeholder": "e.g. Amersham HP6 5EN, London, Watford",
-      "required": false,
-      "formTarget": "catering",
-      "enabled": true
-    }
-  ],
+  "customFormFields": [],
   "outdoorCatering": {
     "badge": "21+ Years Experience • UK Wide",
     "title": "Authentic 100% Pure Vegetarian Catering",
@@ -643,5 +622,10 @@
       "timings": "All preparation and delivery times provided are estimates only. While we strive to meet these timeframes, delays may occur due to factors beyond our control, including but not limited to traffic conditions, weather, or high demand periods.",
       "foodImages": "Images of food displayed on our website, menus, or promotional materials are for illustrative purposes only. Actual dishes may vary in appearance, portion size, and presentation due to factors such as ingredient availability, preparation methods, and seasonal variations."
     }
+  },
+  "web3forms": {
+    "email": "digitalbotsolutions@gmail.com",
+    "accessKey": "01e0a173-fe53-4027-a850-5fdef2d441ad",
+    "enabled": true
   }
 }

@@ -120,43 +120,42 @@ export async function getSiteContent(): Promise<any> {
 export async function saveSiteContent(data: any): Promise<{ success: boolean; cloud: boolean; error?: string }> {
   let cloudSuccess = false;
 
-  // Invalidate memory cache immediately
-  invalidateCache();
-
-  // 1. Save to Cloud Firestore as primary database
-  if (API_KEY && PROJECT_ID) {
-    try {
-      const url = `${FIRESTORE_BASE}/content/site?key=${API_KEY}`;
-      const payload = {
-        fields: {
-          data: { stringValue: JSON.stringify(data) },
-          updatedAt: { stringValue: new Date().toISOString() },
-        },
-      };
-
-      const res = await fetch(url, {
-        method: 'PATCH',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(payload),
-      });
-
-      if (res.ok) {
-        cloudSuccess = true;
-      }
-    } catch (err: any) {
-      console.warn('Firebase Firestore save error:', err);
-    }
-  }
-
-  // 2. Also update local JSON file if filesystem is writable
-  try {
-    await fs.writeFile(LOCAL_SITE_PATH, JSON.stringify(data, null, 2), 'utf-8');
-  } catch (err: any) {
-    // Expected on read-only serverless platforms like Vercel
-  }
-
+  // Invalidate and set cache immediately so any concurrent read gets the new content instantly
   lastGlobalVersion = Date.now();
   cachedSiteContent = { data, timestamp: Date.now() };
+
+  // Run local filesystem write and Firebase Firestore sync in parallel
+  const localWritePromise = fs.writeFile(LOCAL_SITE_PATH, JSON.stringify(data, null, 2), 'utf-8').catch((err) => {
+    // Expected on read-only serverless platforms like Vercel
+  });
+
+  const cloudPromise = (async () => {
+    if (API_KEY && PROJECT_ID) {
+      try {
+        const url = `${FIRESTORE_BASE}/content/site?key=${API_KEY}`;
+        const payload = {
+          fields: {
+            data: { stringValue: JSON.stringify(data) },
+            updatedAt: { stringValue: new Date().toISOString() },
+          },
+        };
+
+        const res = await fetch(url, {
+          method: 'PATCH',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload),
+        });
+
+        if (res.ok) {
+          cloudSuccess = true;
+        }
+      } catch (err: any) {
+        console.warn('Firebase Firestore save error:', err);
+      }
+    }
+  })();
+
+  await Promise.all([localWritePromise, cloudPromise]);
 
   return { success: true, cloud: cloudSuccess };
 }
@@ -208,40 +207,40 @@ export async function getMenuData(): Promise<any> {
 export async function saveMenuData(data: any): Promise<{ success: boolean; cloud: boolean; error?: string }> {
   let cloudSuccess = false;
 
-  invalidateCache();
-
-  try {
-    await fs.writeFile(LOCAL_MENU_PATH, JSON.stringify(data, null, 2), 'utf-8');
-  } catch (err: any) {
-    // Expected on read-only serverless platforms
-  }
-
-  if (API_KEY && PROJECT_ID) {
-    try {
-      const url = `${FIRESTORE_BASE}/content/menu?key=${API_KEY}`;
-      const payload = {
-        fields: {
-          data: { stringValue: JSON.stringify(data) },
-          updatedAt: { stringValue: new Date().toISOString() },
-        },
-      };
-
-      const res = await fetch(url, {
-        method: 'PATCH',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(payload),
-      });
-
-      if (res.ok) {
-        cloudSuccess = true;
-      }
-    } catch (err: any) {
-      console.warn('Firebase Firestore menu save error:', err);
-    }
-  }
-
   lastGlobalVersion = Date.now();
   cachedMenuData = { data, timestamp: Date.now() };
+
+  const localWritePromise = fs.writeFile(LOCAL_MENU_PATH, JSON.stringify(data, null, 2), 'utf-8').catch(() => {
+    // Expected on read-only serverless platforms
+  });
+
+  const cloudPromise = (async () => {
+    if (API_KEY && PROJECT_ID) {
+      try {
+        const url = `${FIRESTORE_BASE}/content/menu?key=${API_KEY}`;
+        const payload = {
+          fields: {
+            data: { stringValue: JSON.stringify(data) },
+            updatedAt: { stringValue: new Date().toISOString() },
+          },
+        };
+
+        const res = await fetch(url, {
+          method: 'PATCH',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload),
+        });
+
+        if (res.ok) {
+          cloudSuccess = true;
+        }
+      } catch (err: any) {
+        console.warn('Firebase Firestore menu save error:', err);
+      }
+    }
+  })();
+
+  await Promise.all([localWritePromise, cloudPromise]);
 
   return { success: true, cloud: cloudSuccess };
 }

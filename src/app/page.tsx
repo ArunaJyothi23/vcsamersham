@@ -25,12 +25,12 @@ export default async function Home() {
       <Hero content={siteContent?.hero} />
       <AboutSection content={siteContent?.about} restaurant={siteContent?.restaurant} />
       <TopFood content={siteContent?.topFood} />
-      <Menu menuConfig={menuData} />
-      <OrderOnline />
+      <Menu menuConfig={menuData} spotlightData={siteContent?.menuSpotlight} />
+      <OrderOnline deliveryPlatforms={siteContent?.deliveryPlatforms} />
       <Catering content={siteContent?.catering} />
       <WhyChooseUs content={siteContent?.whyChooseUs} />
       <FAQ faqs={siteContent?.faqs} />
-      <Contact restaurant={siteContent?.restaurant} />
+      <Contact restaurant={siteContent?.restaurant} siteContent={siteContent} />
       <Reviews testimonials={siteContent?.testimonials} />
     </>
   );

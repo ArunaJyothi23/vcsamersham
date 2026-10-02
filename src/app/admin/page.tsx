@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
 
 export default function AdminDashboard() {
@@ -14,6 +14,10 @@ export default function AdminDashboard() {
   const [activeLegalTab, setActiveLegalTab] = useState<'privacyPolicy' | 'cookiesPolicy' | 'disclaimer'>('privacyPolicy');
   const [siteData, setSiteData] = useState<any>(null);
   const [menuData, setMenuData] = useState<any>(null);
+  const siteDataRef = useRef<any>(null);
+  const menuDataRef = useRef<any>(null);
+  siteDataRef.current = siteData;
+  menuDataRef.current = menuData;
   const [selectedMenuCategory, setSelectedMenuCategory] = useState<string>('');
   
   const [loading, setLoading] = useState(true);
@@ -147,36 +151,29 @@ export default function AdminDashboard() {
   }
 
   async function saveAllChanges() {
+    if (saving) return;
     setSaving(true);
     setStatusMessage(null);
     try {
       const currentPass = password || sessionStorage.getItem('vcs_admin_pass') || 'VCS@Amersham94';
-      
-      const [siteRes, menuRes] = await Promise.all([
-        fetch('/api/admin/content', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            password: currentPass,
-            type: 'site',
-            data: siteData,
-          }),
-        }),
-        fetch('/api/admin/content', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            password: currentPass,
-            type: 'menu',
-            data: menuData,
-          }),
-        }),
-      ]);
+      const currentSite = siteDataRef.current || siteData;
+      const currentMenu = menuDataRef.current || menuData;
 
-      const [siteJson, menuJson] = await Promise.all([siteRes.json(), menuRes.json()]);
+      const res = await fetch('/api/admin/content', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          password: currentPass,
+          type: 'all',
+          siteData: currentSite,
+          menuData: currentMenu,
+        }),
+      });
 
-      if (siteJson.success && menuJson.success) {
-        // Broadcast instant update across all open tabs/windows so live site updates with no manual refresh
+      const json = await res.json();
+
+      if (json.success) {
+        // Broadcast instant update across all open tabs/windows
         try {
           if (typeof window !== 'undefined' && 'BroadcastChannel' in window) {
             const channel = new BroadcastChannel('vcs_content_channel');
@@ -188,10 +185,9 @@ export default function AdminDashboard() {
           localStorage.setItem('vcs_last_content_save', Date.now().toString());
         }
 
-        setStatusMessage({ type: 'success', text: '✓ All changes saved! Live site refreshed automatically without reloading.' });
+        setStatusMessage({ type: 'success', text: '✓ All changes saved! Live site refreshed automatically.' });
       } else {
-        const errorMsg = siteJson.error || menuJson.error || 'Failed to save changes.';
-        setStatusMessage({ type: 'error', text: errorMsg });
+        setStatusMessage({ type: 'error', text: json.error || 'Failed to save changes.' });
       }
     } catch (e: any) {
       setStatusMessage({ type: 'error', text: e.message || 'Error occurred while saving.' });
@@ -432,6 +428,16 @@ export default function AdminDashboard() {
   const removeCustomFormField = (idx: number) => {
     const updated = (siteData.customFormFields || []).filter((_: any, i: number) => i !== idx);
     setSiteData((prev: any) => ({ ...prev, customFormFields: updated }));
+  };
+
+  const updateWeb3Forms = (field: string, val: any) => {
+    setSiteData((prev: any) => ({
+      ...prev,
+      web3forms: {
+        ...(prev.web3forms || {}),
+        [field]: val,
+      },
+    }));
   };
 
   // Outdoor Catering Helpers
@@ -1052,17 +1058,27 @@ export default function AdminDashboard() {
         </div>
 
         <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', flexWrap: 'wrap' }}>
+          {/* Toast Notification positioned fixed at top-right so buttons never shift under cursor */}
           {statusMessage && (
             <div style={{
-              padding: '0.5rem 1rem',
-              borderRadius: '8px',
-              fontSize: '0.85rem',
-              fontWeight: 600,
-              backgroundColor: statusMessage.type === 'success' ? 'rgba(34, 197, 94, 0.2)' : 'rgba(239, 68, 68, 0.2)',
-              color: statusMessage.type === 'success' ? '#4ADE80' : '#F87171',
-              border: `1px solid ${statusMessage.type === 'success' ? '#22C55E' : '#EF4444'}`
+              position: 'fixed',
+              top: '20px',
+              right: '24px',
+              zIndex: 99999,
+              padding: '0.75rem 1.25rem',
+              borderRadius: '10px',
+              fontSize: '0.9rem',
+              fontWeight: 700,
+              backgroundColor: statusMessage.type === 'success' ? '#14532D' : '#7F1D1D',
+              color: statusMessage.type === 'success' ? '#86EFAC' : '#FCA5A5',
+              border: `1px solid ${statusMessage.type === 'success' ? '#22C55E' : '#EF4444'}`,
+              boxShadow: '0 10px 30px rgba(0, 0, 0, 0.6)',
+              display: 'flex',
+              alignItems: 'center',
+              gap: '8px',
             }}>
-              {statusMessage.text}
+              <span>{statusMessage.type === 'success' ? '✓' : '⚠'}</span>
+              <span>{statusMessage.text}</span>
             </div>
           )}
 
@@ -1730,6 +1746,119 @@ export default function AdminDashboard() {
                     </button>
                   </div>
                 ))}
+              </div>
+
+              {/* Menu Category Spotlight Banners */}
+              <div style={{ marginTop: '2.5rem' }}>
+                <div style={{ marginBottom: '1.5rem' }}>
+                  <h3 style={{ fontSize: '1.25rem', fontWeight: 700, margin: '0 0 0.5rem 0', color: '#DE7843' }}>Category Spotlight Banners</h3>
+                  <p style={{ color: '#A8A29E', fontSize: '0.88rem', margin: 0 }}>
+                    Edit the feature banner shown above the dish grid for each menu category. Changes reflect instantly on the live site.
+                  </p>
+                </div>
+
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+                  {(menuData?.categories || []).map((cat: string) => {
+                    const spotlight = siteData.menuSpotlight?.[cat] || {};
+                    const defaults: Record<string, { title: string; subtitle: string; img: string; tag: string }> = {
+                      "Dosa Corner": { title: "Signature Crispy Long Dosas", subtitle: "Stone-ground fermented lentil batter roasted golden on traditional hot tawa with pure ghee.", img: "/images/long-dosa-feast.png", tag: "Tawa Masterpiece" },
+                      "Breads and Curries": { title: "Royal Curries & Handi Specials", subtitle: "Paneer Tikka, buttery dals and aromatic gravies cooked with freshly ground whole spices.", img: "/images/3d/paneer-tikka-3d.jpg", tag: "Chef's Special Gravy" },
+                      "Tiffins": { title: "Heritage South Indian Tiffins", subtitle: "Fluffy steamed idlis, crispy medu vadas, and warm sambars prepared fresh daily.", img: "/images/3d/idli-vada-3d.jpg", tag: "Morning & Evening Classics" },
+                      "Super Staters": { title: "Crispy South Indian Starters", subtitle: "Freshly prepared crunchy fritters, samosas, and spicy savory bites with dipping sauces.", img: "/images/3d/starters-3d.jpg", tag: "Crunchy Starters" },
+                      "Any Timers": { title: "South Indian Comfort Classics", subtitle: "Traditional light bites and snacks served with fresh coconut and tomato chutneys.", img: "/images/3d/masala-dosa-3d.jpg", tag: "All-Day Favourites" },
+                      "Rice & Noodles": { title: "Fragrant Rice & Grand Feasts", subtitle: "Traditional South Indian Thalis, aromatic biryanis, lemon rice, and bisibelebath.", img: "/images/3d/thali-royal-3d.jpg", tag: "Complete Feast" },
+                      "Desserts/Beverges/Others": { title: "Traditional Beverages & Sweets", subtitle: "Authentic South Indian Filter Coffee frothed in brass dabara, alongside traditional sweets.", img: "/images/3d/filter-coffee-3d.jpg", tag: "Authentic Brew" },
+                    };
+                    const def = defaults[cat] || { title: '', subtitle: '', img: '', tag: '' };
+
+                    return (
+                      <div key={cat} style={{ backgroundColor: '#1C1917', padding: '1.25rem', borderRadius: '14px', border: '1px solid #292524' }}>
+                        <div style={{ fontWeight: 700, fontSize: '1rem', color: '#F5F5F4', marginBottom: '1rem', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                          <span style={{ color: '#DE7843' }}>📸</span> {cat}
+                        </div>
+                        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0.75rem' }}>
+                          <div>
+                            <label style={{ display: 'block', fontSize: '0.8rem', fontWeight: 600, color: '#A8A29E', marginBottom: '0.3rem' }}>Banner Title</label>
+                            <input
+                              type="text"
+                              value={spotlight.title || def.title}
+                              onChange={(e) => {
+                                const updated = { ...(siteData.menuSpotlight || {}), [cat]: { ...def, ...(siteData.menuSpotlight?.[cat] || {}), title: e.target.value } };
+                                setSiteData((prev: any) => ({ ...prev, menuSpotlight: updated }));
+                              }}
+                              style={{ width: '100%', padding: '0.6rem', borderRadius: '6px', backgroundColor: '#292524', border: '1px solid #44403C', color: '#fff', fontSize: '0.88rem' }}
+                            />
+                          </div>
+                          <div>
+                            <label style={{ display: 'block', fontSize: '0.8rem', fontWeight: 600, color: '#A8A29E', marginBottom: '0.3rem' }}>Tag Label</label>
+                            <input
+                              type="text"
+                              value={spotlight.tag || def.tag}
+                              onChange={(e) => {
+                                const updated = { ...(siteData.menuSpotlight || {}), [cat]: { ...def, ...(siteData.menuSpotlight?.[cat] || {}), tag: e.target.value } };
+                                setSiteData((prev: any) => ({ ...prev, menuSpotlight: updated }));
+                              }}
+                              style={{ width: '100%', padding: '0.6rem', borderRadius: '6px', backgroundColor: '#292524', border: '1px solid #44403C', color: '#fff', fontSize: '0.88rem' }}
+                            />
+                          </div>
+                          <div style={{ gridColumn: 'span 2' }}>
+                            <label style={{ display: 'block', fontSize: '0.8rem', fontWeight: 600, color: '#A8A29E', marginBottom: '0.3rem' }}>Subtitle / Description</label>
+                            <input
+                              type="text"
+                              value={spotlight.subtitle || def.subtitle}
+                              onChange={(e) => {
+                                const updated = { ...(siteData.menuSpotlight || {}), [cat]: { ...def, ...(siteData.menuSpotlight?.[cat] || {}), subtitle: e.target.value } };
+                                setSiteData((prev: any) => ({ ...prev, menuSpotlight: updated }));
+                              }}
+                              style={{ width: '100%', padding: '0.6rem', borderRadius: '6px', backgroundColor: '#292524', border: '1px solid #44403C', color: '#fff', fontSize: '0.88rem' }}
+                            />
+                          </div>
+                          <div style={{ gridColumn: 'span 2', display: 'flex', gap: '0.75rem', alignItems: 'center' }}>
+                            <div style={{ flexGrow: 1 }}>
+                              <label style={{ display: 'block', fontSize: '0.8rem', fontWeight: 600, color: '#A8A29E', marginBottom: '0.3rem' }}>Banner Image Path</label>
+                              <input
+                                type="text"
+                                value={spotlight.img || def.img}
+                                onChange={(e) => {
+                                  const updated = { ...(siteData.menuSpotlight || {}), [cat]: { ...def, ...(siteData.menuSpotlight?.[cat] || {}), img: e.target.value } };
+                                  setSiteData((prev: any) => ({ ...prev, menuSpotlight: updated }));
+                                }}
+                                style={{ width: '100%', padding: '0.6rem', borderRadius: '6px', backgroundColor: '#292524', border: '1px solid #44403C', color: '#fff', fontSize: '0.88rem' }}
+                              />
+                            </div>
+                            <label
+                              style={{
+                                display: 'inline-flex', alignItems: 'center', gap: '0.4rem',
+                                padding: '0.55rem 0.9rem', borderRadius: '6px',
+                                backgroundColor: 'rgba(222, 120, 67, 0.18)', color: '#F97316',
+                                border: '1px solid rgba(222, 120, 67, 0.45)',
+                                fontSize: '0.82rem', fontWeight: 700, cursor: 'pointer',
+                                whiteSpace: 'nowrap', marginTop: '1.2rem',
+                              }}
+                              title="Upload banner image"
+                            >
+                              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+                                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+                                <polyline points="17 8 12 3 7 8" />
+                                <line x1="12" y1="3" x2="12" y2="15" />
+                              </svg>
+                              <span>Upload</span>
+                              <input
+                                type="file"
+                                accept="image/*"
+                                style={{ display: 'none' }}
+                                onChange={(e) => handleImageUpload(e, (url) => {
+                                  const updated = { ...(siteData.menuSpotlight || {}), [cat]: { ...def, ...(siteData.menuSpotlight?.[cat] || {}), img: url } };
+                                  setSiteData((prev: any) => ({ ...prev, menuSpotlight: updated }));
+                                }, `spotlight-${cat}`)}
+                              />
+                            </label>
+                          </div>
+                        </div>
+                      </div>
+                    );
+                  })}
+                </div>
               </div>
             </div>
           )}
@@ -3032,6 +3161,75 @@ export default function AdminDashboard() {
                 </button>
               </div>
 
+              {/* Web3Forms Email Integration Card */}
+              <div
+                style={{
+                  backgroundColor: '#1C1917',
+                  border: '1.5px solid rgba(222, 120, 67, 0.4)',
+                  borderRadius: '16px',
+                  padding: '1.5rem',
+                  marginBottom: '2rem',
+                  display: 'flex',
+                  flexDirection: 'column',
+                  gap: '1rem',
+                  boxShadow: '0 8px 24px rgba(0, 0, 0, 0.25)',
+                }}
+              >
+                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: '0.75rem' }}>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
+                    <span style={{ fontSize: '1.6rem' }}>✉️</span>
+                    <div>
+                      <h3 style={{ margin: 0, fontSize: '1.15rem', color: '#FFFFFF', fontWeight: 800 }}>
+                        Web3Forms Email Notification Target
+                      </h3>
+                      <p style={{ margin: '0.2rem 0 0 0', fontSize: '0.84rem', color: '#A8A29E' }}>
+                        All catering quotes, booking requests, and contact messages route to this email inbox.
+                      </p>
+                    </div>
+                  </div>
+                  <span
+                    style={{
+                      padding: '4px 12px',
+                      borderRadius: '12px',
+                      backgroundColor: 'rgba(34, 197, 94, 0.15)',
+                      color: '#4ADE80',
+                      border: '1px solid rgba(34, 197, 94, 0.35)',
+                      fontSize: '0.8rem',
+                      fontWeight: 700,
+                    }}
+                  >
+                    ✓ Active: digitalbotsolutions@gmail.com
+                  </span>
+                </div>
+
+                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '1rem', marginTop: '0.5rem' }}>
+                  <div>
+                    <label style={{ display: 'block', fontSize: '0.85rem', fontWeight: 700, color: '#D6D3D1', marginBottom: '0.4rem' }}>
+                      Target Notification Email Address *
+                    </label>
+                    <input
+                      type="email"
+                      value={siteData.web3forms?.email || 'digitalbotsolutions@gmail.com'}
+                      onChange={(e) => updateWeb3Forms('email', e.target.value)}
+                      placeholder="digitalbotsolutions@gmail.com"
+                      style={{ width: '100%', padding: '0.75rem', borderRadius: '8px', backgroundColor: '#292524', border: '1px solid #44403C', color: '#fff', fontSize: '0.95rem' }}
+                    />
+                  </div>
+                  <div>
+                    <label style={{ display: 'block', fontSize: '0.85rem', fontWeight: 700, color: '#D6D3D1', marginBottom: '0.4rem' }}>
+                      Web3Forms Public Access Key (Optional)
+                    </label>
+                    <input
+                      type="text"
+                      value={siteData.web3forms?.accessKey || ''}
+                      onChange={(e) => updateWeb3Forms('accessKey', e.target.value)}
+                      placeholder="e.g. 1a2b3c4d-5e6f-7a8b-9c0d-1e2f3a4b5c6d"
+                      style={{ width: '100%', padding: '0.75rem', borderRadius: '8px', backgroundColor: '#292524', border: '1px solid #44403C', color: '#fff', fontSize: '0.95rem' }}
+                    />
+                  </div>
+                </div>
+              </div>
+
               {/* Notice Banner */}
               <div
                 style={{
@@ -3320,92 +3518,95 @@ export default function AdminDashboard() {
 
                 {/* 3 Major Delivery Partners */}
                 <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: '1.25rem' }}>
-                  {/* Just Eat */}
-                  <div style={{ backgroundColor: '#1C1917', padding: '1.5rem', borderRadius: '14px', border: '1px solid #292524', display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-                    <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-                      <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
-                        <span style={{ fontSize: '1.5rem' }}>🍔</span>
-                        <span style={{ fontWeight: 800, fontSize: '1.1rem', color: '#FFFFFF' }}>Just Eat</span>
+                  {[
+                    { key: 'justEat', label: 'Just Eat', icon: '🍔', defaultName: 'Just Eat', defaultUrl: 'https://www.just-eat.co.uk/', defaultImage: '/images/migrated/Add-a-heading-6.png', defaultDesc: 'Fast local home delivery straight to your doorstep.' },
+                    { key: 'deliveroo', label: 'Deliveroo', icon: '🦘', defaultName: 'Deliveroo', defaultUrl: 'https://deliveroo.co.uk/', defaultImage: '/images/migrated/Add-a-heading-7.png', defaultDesc: 'Track your authentic hot meal in real-time.' },
+                    { key: 'uberEats', label: 'Uber Eats', icon: '🟢', defaultName: 'Uber Eats', defaultUrl: 'https://www.ubereats.com/', defaultImage: '/images/migrated/Add-a-heading-8.png', defaultDesc: 'Order with your Uber account for quick pickup or delivery.' },
+                  ].map((platform) => (
+                    <div key={platform.key} style={{ backgroundColor: '#1C1917', padding: '1.5rem', borderRadius: '14px', border: '1px solid #292524', display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+                      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+                        <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
+                          <span style={{ fontSize: '1.5rem' }}>{platform.icon}</span>
+                          <span style={{ fontWeight: 800, fontSize: '1.1rem', color: '#FFFFFF' }}>{platform.label}</span>
+                        </div>
+                        <label style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem', cursor: 'pointer', fontSize: '0.82rem', color: '#D6D3D1', fontWeight: 600 }}>
+                          <input
+                            type="checkbox"
+                            checked={siteData.deliveryPlatforms?.[platform.key]?.enabled !== false}
+                            onChange={(e) => updateDelivery(platform.key, 'enabled', e.target.checked)}
+                            style={{ width: '16px', height: '16px', accentColor: '#DE7843' }}
+                          />
+                          <span>Active</span>
+                        </label>
                       </div>
-                      <label style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem', cursor: 'pointer', fontSize: '0.82rem', color: '#D6D3D1', fontWeight: 600 }}>
+                      <div>
+                        <label style={{ display: 'block', fontSize: '0.82rem', fontWeight: 600, color: '#A8A29E', marginBottom: '0.35rem' }}>Display Name</label>
                         <input
-                          type="checkbox"
-                          checked={siteData.deliveryPlatforms?.justEat?.enabled !== false}
-                          onChange={(e) => updateDelivery('justEat', 'enabled', e.target.checked)}
-                          style={{ width: '16px', height: '16px', accentColor: '#DE7843' }}
+                          type="text"
+                          value={siteData.deliveryPlatforms?.[platform.key]?.name || platform.defaultName}
+                          onChange={(e) => updateDelivery(platform.key, 'name', e.target.value)}
+                          placeholder={platform.defaultName}
+                          style={{ width: '100%', padding: '0.65rem', borderRadius: '8px', backgroundColor: '#292524', border: '1px solid #44403C', color: '#fff', fontSize: '0.9rem' }}
                         />
-                        <span>Active</span>
-                      </label>
-                    </div>
-                    <div>
-                      <label style={{ display: 'block', fontSize: '0.82rem', fontWeight: 600, color: '#A8A29E', marginBottom: '0.35rem' }}>Just Eat Restaurant Link URL</label>
-                      <input
-                        type="text"
-                        value={siteData.deliveryPlatforms?.justEat?.url || ''}
-                        onChange={(e) => updateDelivery('justEat', 'url', e.target.value)}
-                        placeholder="https://www.just-eat.co.uk/..."
-                        style={{ width: '100%', padding: '0.65rem', borderRadius: '8px', backgroundColor: '#292524', border: '1px solid #44403C', color: '#fff', fontSize: '0.9rem' }}
-                      />
-                    </div>
-                  </div>
-
-                  {/* Deliveroo */}
-                  <div style={{ backgroundColor: '#1C1917', padding: '1.5rem', borderRadius: '14px', border: '1px solid #292524', display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-                    <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-                      <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
-                        <span style={{ fontSize: '1.5rem' }}>🦘</span>
-                        <span style={{ fontWeight: 800, fontSize: '1.1rem', color: '#FFFFFF' }}>Deliveroo</span>
                       </div>
-                      <label style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem', cursor: 'pointer', fontSize: '0.82rem', color: '#D6D3D1', fontWeight: 600 }}>
+                      <div>
+                        <label style={{ display: 'block', fontSize: '0.82rem', fontWeight: 600, color: '#A8A29E', marginBottom: '0.35rem' }}>{platform.label} Restaurant Link URL</label>
                         <input
-                          type="checkbox"
-                          checked={siteData.deliveryPlatforms?.deliveroo?.enabled !== false}
-                          onChange={(e) => updateDelivery('deliveroo', 'enabled', e.target.checked)}
-                          style={{ width: '16px', height: '16px', accentColor: '#DE7843' }}
+                          type="text"
+                          value={siteData.deliveryPlatforms?.[platform.key]?.url || ''}
+                          onChange={(e) => updateDelivery(platform.key, 'url', e.target.value)}
+                          placeholder={platform.defaultUrl}
+                          style={{ width: '100%', padding: '0.65rem', borderRadius: '8px', backgroundColor: '#292524', border: '1px solid #44403C', color: '#fff', fontSize: '0.9rem' }}
                         />
-                        <span>Active</span>
-                      </label>
-                    </div>
-                    <div>
-                      <label style={{ display: 'block', fontSize: '0.82rem', fontWeight: 600, color: '#A8A29E', marginBottom: '0.35rem' }}>Deliveroo Restaurant Link URL</label>
-                      <input
-                        type="text"
-                        value={siteData.deliveryPlatforms?.deliveroo?.url || ''}
-                        onChange={(e) => updateDelivery('deliveroo', 'url', e.target.value)}
-                        placeholder="https://deliveroo.co.uk/..."
-                        style={{ width: '100%', padding: '0.65rem', borderRadius: '8px', backgroundColor: '#292524', border: '1px solid #44403C', color: '#fff', fontSize: '0.9rem' }}
-                      />
-                    </div>
-                  </div>
-
-                  {/* Uber Eats */}
-                  <div style={{ backgroundColor: '#1C1917', padding: '1.5rem', borderRadius: '14px', border: '1px solid #292524', display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-                    <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-                      <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
-                        <span style={{ fontSize: '1.5rem' }}>🟢</span>
-                        <span style={{ fontWeight: 800, fontSize: '1.1rem', color: '#FFFFFF' }}>Uber Eats</span>
                       </div>
-                      <label style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem', cursor: 'pointer', fontSize: '0.82rem', color: '#D6D3D1', fontWeight: 600 }}>
+                      <div>
+                        <label style={{ display: 'block', fontSize: '0.82rem', fontWeight: 600, color: '#A8A29E', marginBottom: '0.35rem' }}>Description</label>
                         <input
-                          type="checkbox"
-                          checked={siteData.deliveryPlatforms?.uberEats?.enabled !== false}
-                          onChange={(e) => updateDelivery('uberEats', 'enabled', e.target.checked)}
-                          style={{ width: '16px', height: '16px', accentColor: '#DE7843' }}
+                          type="text"
+                          value={siteData.deliveryPlatforms?.[platform.key]?.desc || platform.defaultDesc}
+                          onChange={(e) => updateDelivery(platform.key, 'desc', e.target.value)}
+                          placeholder={platform.defaultDesc}
+                          style={{ width: '100%', padding: '0.65rem', borderRadius: '8px', backgroundColor: '#292524', border: '1px solid #44403C', color: '#fff', fontSize: '0.9rem' }}
                         />
-                        <span>Active</span>
-                      </label>
+                      </div>
+                      <div style={{ display: 'flex', gap: '0.75rem', alignItems: 'center' }}>
+                        <div style={{ flexGrow: 1 }}>
+                          <label style={{ display: 'block', fontSize: '0.82rem', fontWeight: 600, color: '#A8A29E', marginBottom: '0.35rem' }}>Card Image Path</label>
+                          <input
+                            type="text"
+                            value={siteData.deliveryPlatforms?.[platform.key]?.image || platform.defaultImage}
+                            onChange={(e) => updateDelivery(platform.key, 'image', e.target.value)}
+                            placeholder={platform.defaultImage}
+                            style={{ width: '100%', padding: '0.65rem', borderRadius: '8px', backgroundColor: '#292524', border: '1px solid #44403C', color: '#fff', fontSize: '0.9rem' }}
+                          />
+                        </div>
+                        <label
+                          style={{
+                            display: 'inline-flex', alignItems: 'center', gap: '0.4rem',
+                            padding: '0.55rem 0.9rem', borderRadius: '6px',
+                            backgroundColor: 'rgba(222, 120, 67, 0.18)', color: '#F97316',
+                            border: '1px solid rgba(222, 120, 67, 0.45)',
+                            fontSize: '0.82rem', fontWeight: 700, cursor: 'pointer',
+                            whiteSpace: 'nowrap', marginTop: '1.2rem',
+                          }}
+                          title="Upload card image"
+                        >
+                          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+                            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+                            <polyline points="17 8 12 3 7 8" />
+                            <line x1="12" y1="3" x2="12" y2="15" />
+                          </svg>
+                          <span>Upload</span>
+                          <input
+                            type="file"
+                            accept="image/*"
+                            style={{ display: 'none' }}
+                            onChange={(e) => handleImageUpload(e, (url) => updateDelivery(platform.key, 'image', url), `delivery-${platform.key}`)}
+                          />
+                        </label>
+                      </div>
                     </div>
-                    <div>
-                      <label style={{ display: 'block', fontSize: '0.82rem', fontWeight: 600, color: '#A8A29E', marginBottom: '0.35rem' }}>Uber Eats Restaurant Link URL</label>
-                      <input
-                        type="text"
-                        value={siteData.deliveryPlatforms?.uberEats?.url || ''}
-                        onChange={(e) => updateDelivery('uberEats', 'url', e.target.value)}
-                        placeholder="https://www.ubereats.com/..."
-                        style={{ width: '100%', padding: '0.65rem', borderRadius: '8px', backgroundColor: '#292524', border: '1px solid #44403C', color: '#fff', fontSize: '0.9rem' }}
-                      />
-                    </div>
-                  </div>
+                  ))}
                 </div>
               </div>
             </div>

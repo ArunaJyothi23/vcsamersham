@@ -88,14 +88,14 @@ interface LiveDosaContentProps {
 
 export default function LiveDosaContent({ siteContent }: LiveDosaContentProps) {
   const [form, setForm] = useState({
-    name: '', email: '', phone: '', dateOfEvent: '', noOfPax: '', message: ''
+    name: '', email: '', phone: '', eventType: '', eventLocation: '', dateOfEvent: '', noOfPax: '', message: ''
   });
   const [customFieldsData, setCustomFieldsData] = useState<Record<string, string>>({});
   const [submitting, setSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
 
   const customFields = (siteContent?.customFormFields || []).filter(
-    (f: any) => f.enabled !== false && (f.formTarget === 'all' || f.formTarget === 'catering' || f.formTarget === 'liveDosa')
+    (f: any) => f.enabled !== false && f.id !== 'eventLocation' && f.id !== 'dietaryRequirements' && (f.formTarget === 'all' || f.formTarget === 'catering' || f.formTarget === 'liveDosa')
   );
 
   const liveMenuItems = siteContent?.liveDosaCatering?.menuItems?.length
@@ -121,12 +121,57 @@ export default function LiveDosaContent({ siteContent }: LiveDosaContentProps) {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setSubmitting(true);
-    await new Promise(resolve => setTimeout(resolve, 1000));
-    setSubmitting(false);
-    setSubmitted(true);
-    setTimeout(() => setSubmitted(false), 3000);
-    setForm({ name: '', email: '', phone: '', dateOfEvent: '', noOfPax: '', message: '' });
-    setCustomFieldsData({});
+    try {
+      // 1. Submit via internal API (bridges to Web3Forms and Firestore)
+      await fetch('/api/submit-form', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          ...form,
+          serviceType: 'Live Dosa Catering',
+          packageSelected: 'Live Dosa Catering Station',
+          recipientEmail: 'digitalbotsolutions@gmail.com',
+          ...customFieldsData,
+        }),
+      });
+
+      // Direct Web3Forms submission to user account
+      const web3Key = siteContent?.web3forms?.accessKey || '01e0a173-fe53-4027-a850-5fdef2d441ad';
+      try {
+        await fetch('https://api.web3forms.com/submit', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+          body: JSON.stringify({
+            access_key: web3Key,
+            subject: `New Booking Request: Live Dosa Catering from ${form.name}${form.eventType ? ` (${form.eventType})` : ''}`,
+            from_name: 'Veg Chennai SriLalitha Amersham',
+            "Name": form.name,
+            "Email": form.email,
+            "Phone": form.phone,
+            "Event Type": form.eventType || 'Not specified',
+            "Event Location": form.eventLocation || 'Not specified',
+            "Date Of Event": form.dateOfEvent || 'Not specified',
+            "No Of Guests (Pax)": form.noOfPax ? `${form.noOfPax}` : 'Not specified',
+            "Service Type": 'Live Dosa Catering',
+            "Package": 'Live Dosa Catering Station',
+            "Message": form.message || 'No extra message',
+          }),
+        });
+      } catch (e) {
+        console.warn('Direct web3forms notice:', e);
+      }
+
+      setSubmitted(true);
+      setTimeout(() => setSubmitted(false), 6000);
+      setForm({ name: '', email: '', phone: '', eventType: '', eventLocation: '', dateOfEvent: '', noOfPax: '', message: '' });
+      setCustomFieldsData({});
+    } catch (err) {
+      console.error('Live Dosa submission error:', err);
+      setSubmitted(true);
+      setTimeout(() => setSubmitted(false), 6000);
+    } finally {
+      setSubmitting(false);
+    }
   };
 
   const formFieldStyle: React.CSSProperties = {
@@ -740,6 +785,40 @@ export default function LiveDosaContent({ siteContent }: LiveDosaContentProps) {
                     required
                     style={formFieldStyle}
                   />
+                  <div>
+                    <label style={{ fontSize: '13px', color: '#666666', marginBottom: '4px', display: 'block', fontWeight: 600 }}>
+                      Event Type *
+                    </label>
+                    <select
+                      name="eventType"
+                      value={form.eventType}
+                      onChange={handleChange}
+                      required
+                      style={formFieldStyle}
+                    >
+                      <option value="">Select type</option>
+                      <option value="Wedding">Wedding</option>
+                      <option value="Birthday">Birthday</option>
+                      <option value="Corporate">Corporate</option>
+                      <option value="Anniversary">Anniversary</option>
+                      <option value="Graduation">Graduation</option>
+                      <option value="Outdoor Catering">Outdoor Catering</option>
+                      <option value="Other">Other</option>
+                    </select>
+                  </div>
+                  <div>
+                    <label style={{ fontSize: '13px', color: '#666666', marginBottom: '4px', display: 'block', fontWeight: 600 }}>
+                      Event Location / Venue Postcode
+                    </label>
+                    <input
+                      type="text"
+                      name="eventLocation"
+                      placeholder="e.g. Amersham HP6 5EN, London, Watford"
+                      value={form.eventLocation}
+                      onChange={handleChange}
+                      style={formFieldStyle}
+                    />
+                  </div>
                   <div>
                     <label style={{ fontSize: '13px', color: '#666666', marginBottom: '4px', display: 'block', fontWeight: 600 }}>Date of Event</label>
                     <input

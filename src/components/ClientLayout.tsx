@@ -19,6 +19,15 @@ export default function ClientLayout({ children, siteContent }: ClientLayoutProp
   useEffect(() => {
     if (isAdmin) return;
 
+    let reloadTimer: any = null;
+    const triggerLiveUpdate = () => {
+      if (reloadTimer) clearTimeout(reloadTimer);
+      // Clean, debounced reload gives the server 400ms to flush disk & caches, ensuring fresh content
+      reloadTimer = setTimeout(() => {
+        window.location.reload();
+      }, 400);
+    };
+
     // 1. Instant cross-tab sync via BroadcastChannel
     let channel: BroadcastChannel | null = null;
     try {
@@ -26,10 +35,7 @@ export default function ClientLayout({ children, siteContent }: ClientLayoutProp
         channel = new BroadcastChannel('vcs_content_channel');
         channel.onmessage = (event) => {
           if (event.data?.type === 'CONTENT_SAVED') {
-            router.refresh();
-            setTimeout(() => {
-              window.location.reload();
-            }, 300);
+            triggerLiveUpdate();
           }
         };
       }
@@ -40,10 +46,7 @@ export default function ClientLayout({ children, siteContent }: ClientLayoutProp
     // 2. Storage event listener (standard browser cross-tab sync)
     const handleStorage = (e: StorageEvent) => {
       if (e.key === 'vcs_last_content_save') {
-        router.refresh();
-        setTimeout(() => {
-          window.location.reload();
-        }, 300);
+        triggerLiveUpdate();
       }
     };
     window.addEventListener('storage', handleStorage);
@@ -58,10 +61,7 @@ export default function ClientLayout({ children, siteContent }: ClientLayoutProp
             currentVersionRef.current = json.version;
           } else if (json.version > currentVersionRef.current) {
             currentVersionRef.current = json.version;
-            router.refresh();
-            setTimeout(() => {
-              window.location.reload();
-            }, 300);
+            triggerLiveUpdate();
           }
         }
       } catch (e) {
@@ -88,6 +88,7 @@ export default function ClientLayout({ children, siteContent }: ClientLayoutProp
     checkVersion();
 
     return () => {
+      if (reloadTimer) clearTimeout(reloadTimer);
       channel?.close();
       window.removeEventListener('storage', handleStorage);
       window.removeEventListener('focus', handleFocus);

@@ -242,7 +242,7 @@ export default function Header({ restaurant, header }: HeaderProps = {}) {
                   fontWeight: 'bold',
                 }}
               >
-                Home
+                {header?.navItems?.[0]?.label || 'Home'}
               </Link>
             </li>
             <li
@@ -266,7 +266,7 @@ export default function Header({ restaurant, header }: HeaderProps = {}) {
                   if (!isMenuActive) e.currentTarget.style.color = '#ccc';
                 }}
               >
-                Menu
+                {header?.navItems?.[1]?.label || 'Menu'}
               </Link>
             </li>
             <li
@@ -290,7 +290,7 @@ export default function Header({ restaurant, header }: HeaderProps = {}) {
                   if (!isContactActive) e.currentTarget.style.color = '#ccc';
                 }}
               >
-                Contact
+                {header?.navItems?.[2]?.label || 'Contact'}
               </Link>
             </li>
 
@@ -320,7 +320,7 @@ export default function Header({ restaurant, header }: HeaderProps = {}) {
                   if (!isCateringActive) e.currentTarget.style.color = '#ccc';
                 }}
               >
-                Catering <span style={{ fontSize: '0.7em' }}>▼</span>
+                {header?.navItems?.[3]?.label || 'Catering'} <span style={{ fontSize: '0.7em' }}>▼</span>
               </span>
               {cateringOpen && (
                 <ul
@@ -363,7 +363,7 @@ export default function Header({ restaurant, header }: HeaderProps = {}) {
                         e.currentTarget.style.color = '#eee';
                       }}
                     >
-                      Live Dosa Catering
+                      {header?.navItems?.[3]?.subItems?.[0]?.label || 'Live Dosa Catering'}
                     </Link>
                   </li>
                   <li>
@@ -387,7 +387,7 @@ export default function Header({ restaurant, header }: HeaderProps = {}) {
                         e.currentTarget.style.color = '#eee';
                       }}
                     >
-                      Outdoor Catering
+                      {header?.navItems?.[3]?.subItems?.[1]?.label || 'Outdoor Catering'}
                     </Link>
                   </li>
                 </ul>
@@ -591,7 +591,7 @@ export default function Header({ restaurant, header }: HeaderProps = {}) {
                   transition: 'background 0.15s, color 0.15s',
                 }}
               >
-                <span>Home</span>
+                <span>{header?.navItems?.[0]?.label || 'Home'}</span>
                 {activeTab === 'home' && (
                   <span style={{ width: '7px', height: '7px', borderRadius: '50%', backgroundColor: '#d38b6d' }} />
                 )}
@@ -616,7 +616,7 @@ export default function Header({ restaurant, header }: HeaderProps = {}) {
                   transition: 'background 0.15s, color 0.15s',
                 }}
               >
-                <span>Menu</span>
+                <span>{header?.navItems?.[1]?.label || 'Menu'}</span>
                 {activeTab === 'menu' && (
                   <span style={{ width: '7px', height: '7px', borderRadius: '50%', backgroundColor: '#d38b6d' }} />
                 )}
@@ -641,7 +641,7 @@ export default function Header({ restaurant, header }: HeaderProps = {}) {
                   transition: 'background 0.15s, color 0.15s',
                 }}
               >
-                <span>Contact</span>
+                <span>{header?.navItems?.[2]?.label || 'Contact'}</span>
                 {activeTab === 'contact' && (
                   <span style={{ width: '7px', height: '7px', borderRadius: '50%', backgroundColor: '#d38b6d' }} />
                 )}
@@ -665,7 +665,9 @@ export default function Header({ restaurant, header }: HeaderProps = {}) {
                     borderLeft: isCateringActive ? '3px solid #d38b6d' : '3px solid transparent',
                   }}
                 >
-                  <span style={{ color: isCateringActive ? '#ffffff' : '#dddddd' }}>Catering Services</span>
+                  <span style={{ color: isCateringActive ? '#ffffff' : '#dddddd' }}>
+                    {header?.navItems?.[3]?.label || 'Catering Services'}
+                  </span>
                   <span
                     style={{
                       fontSize: '0.75rem',
@@ -709,7 +711,7 @@ export default function Header({ restaurant, header }: HeaderProps = {}) {
                       }}
                     >
                       <span style={{ color: '#d38b6d' }}>›</span>
-                      <span>Live Dosa Catering</span>
+                      <span>{header?.navItems?.[3]?.subItems?.[0]?.label || 'Live Dosa Catering'}</span>
                     </Link>
                     <Link
                       href="/outdoor-catering"
@@ -728,7 +730,7 @@ export default function Header({ restaurant, header }: HeaderProps = {}) {
                       }}
                     >
                       <span style={{ color: '#d38b6d' }}>›</span>
-                      <span>Outdoor Catering</span>
+                      <span>{header?.navItems?.[3]?.subItems?.[1]?.label || 'Outdoor Catering'}</span>
                     </Link>
                   </div>
                 )}
