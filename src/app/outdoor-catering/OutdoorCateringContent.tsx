@@ -552,10 +552,22 @@ export default function OutdoorCateringContent({ siteContent }: OutdoorCateringC
             >
               Bespoke Menus
             </span>
-            <h2 style={{ fontSize: 'clamp(2rem, 4.5vw, 2.8rem)', color: '#1A1A1A', marginBottom: '0.75rem', fontWeight: 800, letterSpacing: '-0.02em' }}>
+            <h2 style={{ 
+              fontSize: 'clamp(28px, 4vw, 36px)', 
+              color: '#000000', 
+              marginBottom: '0.75rem', 
+              fontWeight: 700, 
+              letterSpacing: '-0.01em',
+              fontFamily: 'var(--font-roboto), "Roboto", var(--font-sans), sans-serif'
+            }}>
               Catering Package Options
             </h2>
-            <p style={{ fontSize: '1.05rem', color: '#555555', fontStyle: 'italic', margin: 0 }}>
+            <p style={{ 
+              fontFamily: 'var(--font-roboto), "Roboto", var(--font-sans), sans-serif',
+              fontSize: '18px', 
+              color: '#555555', 
+              margin: 0 
+            }}>
               Tailored packages for weddings, family celebrations, and corporate gatherings
             </p>
           </div>
@@ -898,16 +910,23 @@ export default function OutdoorCateringContent({ siteContent }: OutdoorCateringC
               </span>
               <h2
                 style={{
-                  fontSize: 'clamp(2rem, 4.5vw, 2.6rem)',
-                  fontWeight: 800,
-                  color: '#1A1A1A',
+                  fontFamily: 'var(--font-roboto), "Roboto", var(--font-sans), sans-serif',
+                  fontSize: 'clamp(28px, 4vw, 36px)',
+                  fontWeight: 700,
+                  color: '#000000',
                   margin: 0,
-                  letterSpacing: '-0.02em',
+                  letterSpacing: '-0.01em',
                 }}
               >
                 Enquire Now
               </h2>
-              <p style={{ color: '#666666', fontSize: '1rem', marginTop: '0.5rem', marginBottom: 0 }}>
+              <p style={{ 
+                fontFamily: 'var(--font-roboto), "Roboto", var(--font-sans), sans-serif',
+                color: '#666666', 
+                fontSize: '16px', 
+                marginTop: '0.5rem', 
+                marginBottom: 0 
+              }}>
                 Speak with our catering specialists to curate your bespoke vegetarian menu
               </p>
             </div>

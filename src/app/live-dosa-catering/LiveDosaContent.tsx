@@ -44,8 +44,9 @@ function ForkIcon() {
 
 function CheckCircleIcon() {
   return (
-    <svg viewBox="0 0 512 512" width="22" height="22" fill="#C45C26" style={{ flexShrink: 0 }}>
-      <path d="M256 8C119.033 8 8 119.033 8 256s111.033 248 248 248 248-111.033 248-248S392.967 8 256 8zm0 48c110.532 0 200 89.451 200 200 0 110.532-89.451 200-200 200-110.532 0-200-89.451-200-200 0-110.532 89.451-200 200-200m140.204 130.267l-22.536-22.718c-4.667-4.705-12.265-4.736-16.97-.068L215.346 303.697l-59.792-60.277c-4.667-4.705-12.265-4.736-16.97-.069l-22.719 22.536c-4.705 4.667-4.736 12.265-.068 16.971l90.781 91.516c4.667 4.705 12.265 4.736 16.97.068l172.589-171.204c4.704-4.668 4.734-12.266.067-16.971z"/>
+    <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="#DE7843" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" style={{ flexShrink: 0 }}>
+      <circle cx="12" cy="12" r="10" />
+      <polyline points="16 9 10.5 14.5 8 12" />
     </svg>
   );
 }
@@ -102,9 +103,10 @@ export default function LiveDosaContent({ siteContent }: LiveDosaContentProps) {
     ? siteContent.liveDosaCatering.menuItems
     : menuItems;
 
-  const liveInclusions = siteContent?.liveDosaCatering?.includedItems?.length
+  const rawInclusions = siteContent?.liveDosaCatering?.includedItems?.length
     ? siteContent.liveDosaCatering.includedItems
     : includedItems;
+  const liveInclusions = rawInclusions.filter((item: string) => !item.toLowerCase().startsWith('pricing'));
 
   const heroBadge = siteContent?.liveDosaCatering?.badge || '🌿 100% Pure Vegetarian Live Catering';
   const heroTitle = siteContent?.liveDosaCatering?.title || 'Live Dosa Catering';
@@ -210,8 +212,8 @@ export default function LiveDosaContent({ siteContent }: LiveDosaContentProps) {
         }
         .live-dosa-included-grid {
           display: grid;
-          grid-template-columns: repeat(auto-fit, minmax(min(100%, 340px), 1fr));
-          gap: 1rem;
+          grid-template-columns: repeat(2, 1fr);
+          gap: 1.25rem;
         }
         .live-dosa-enquire-container {
           background-color: rgba(255, 255, 255, 0.94);
@@ -249,6 +251,10 @@ export default function LiveDosaContent({ siteContent }: LiveDosaContentProps) {
           }
         }
         @media (max-width: 768px) {
+          .live-dosa-included-grid {
+            grid-template-columns: 1fr !important;
+            gap: 0.85rem !important;
+          }
           .live-dosa-hero-section {
             height: auto !important;
             min-height: 85vh !important;
@@ -471,10 +477,22 @@ export default function LiveDosaContent({ siteContent }: LiveDosaContentProps) {
         {/* 2. Live Dosa Station Menu */}
         <section className="live-dosa-section-wrapper">
           <div style={{ textAlign: 'center', marginBottom: '3rem' }}>
-            <h2 style={{ fontSize: 'clamp(2rem, 4.5vw, 2.8rem)', color: '#1A1A1A', marginBottom: '0.75rem', fontWeight: 800, letterSpacing: '-0.02em', fontFamily: 'Fraunces, serif' }}>
+            <h2 style={{ 
+              fontSize: 'clamp(28px, 4vw, 36px)', 
+              color: '#000000', 
+              marginBottom: '0.75rem', 
+              fontWeight: 700, 
+              letterSpacing: '-0.01em', 
+              fontFamily: 'var(--font-roboto), "Roboto", var(--font-sans), sans-serif' 
+            }}>
               Live Dosa Station Menu
             </h2>
-            <p style={{ fontSize: '1.08rem', color: '#555555', margin: 0 }}>
+            <p style={{ 
+              fontFamily: 'var(--font-roboto), "Roboto", var(--font-sans), sans-serif',
+              fontSize: '18px', 
+              color: '#555555', 
+              margin: 0 
+            }}>
               Each item is prepared fresh on the spot with theatrical flair
             </p>
           </div>
@@ -525,7 +543,14 @@ export default function LiveDosaContent({ siteContent }: LiveDosaContentProps) {
           {/* 3. What's Included */}
           <div style={{ marginBottom: '3.5rem' }}>
             <div style={{ textAlign: 'center', marginBottom: '2rem' }}>
-              <h2 style={{ fontSize: 'clamp(1.8rem, 4vw, 2.4rem)', fontWeight: 800, color: '#1A1A1A', margin: 0, letterSpacing: '-0.02em', fontFamily: 'Fraunces, serif' }}>
+              <h2 style={{ 
+                fontSize: 'clamp(28px, 4vw, 36px)', 
+                fontWeight: 700, 
+                color: '#000000', 
+                margin: 0, 
+                letterSpacing: '-0.01em', 
+                fontFamily: 'var(--font-roboto), "Roboto", var(--font-sans), sans-serif' 
+              }}>
                 What&apos;s Included
               </h2>
             </div>
@@ -534,21 +559,27 @@ export default function LiveDosaContent({ siteContent }: LiveDosaContentProps) {
               {liveInclusions.map((item: string, idx: number) => (
                 <div 
                   key={idx} 
-                  className="tactile-card"
                   style={{
                     display: 'flex',
                     alignItems: 'center',
                     gap: '1rem',
-                    backgroundColor: 'rgba(255, 255, 255, 0.9)',
-                    backdropFilter: 'blur(10px)',
-                    padding: '1.25rem 1.5rem',
-                    borderRadius: '16px',
-                    border: '1px solid #E8E0D5',
-                    boxShadow: '0 2px 10px rgba(0, 0, 0, 0.03)',
+                    backgroundColor: '#FAF6F2',
+                    padding: '1.1rem 1.4rem',
+                    borderRadius: '12px',
+                    border: '1px solid rgba(220, 205, 190, 0.55)',
+                    boxShadow: '0 1px 4px rgba(0, 0, 0, 0.02)',
                   }}
                 >
                   <CheckCircleIcon />
-                  <span style={{ fontSize: '1rem', color: '#1A1A1A', fontWeight: 600 }}>{item}</span>
+                  <span style={{ 
+                    fontFamily: 'var(--font-roboto), "Roboto", var(--font-sans), sans-serif',
+                    fontSize: '19px', 
+                    color: '#1A1A1A', 
+                    fontWeight: 400,
+                    lineHeight: 1.4
+                  }}>
+                    {item}
+                  </span>
                 </div>
               ))}
             </div>
@@ -556,24 +587,28 @@ export default function LiveDosaContent({ siteContent }: LiveDosaContentProps) {
 
           {/* 4. Pricing Note */}
           <div 
-            className="tactile-card"
             style={{
-              backgroundColor: 'rgba(255, 255, 255, 0.94)',
-              backdropFilter: 'blur(12px)',
-              borderRadius: '16px',
-              padding: '1.35rem 1.75rem',
+              backgroundColor: '#FAF6F2',
+              borderRadius: '12px',
+              padding: '1.25rem 1.75rem',
               textAlign: 'center',
               marginBottom: '3.5rem',
+              marginTop: '1.25rem',
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
-              gap: '0.85rem',
-              border: '1px solid #E8E0D5',
-              boxShadow: '0 4px 18px rgba(196, 92, 38, 0.08)',
+              gap: '0.75rem',
+              border: '1px solid rgba(220, 205, 190, 0.55)',
             }}
           >
-            <PoundSignIcon />
-            <span style={{ color: '#1A1A1A', fontWeight: 600, fontSize: '1rem' }}>
+            <span style={{ color: '#DE7843', fontWeight: 700, fontSize: '1.2rem', lineHeight: 1 }}>£</span>
+            <span style={{ 
+              fontFamily: 'var(--font-roboto), "Roboto", var(--font-sans), sans-serif',
+              color: '#333333', 
+              fontWeight: 400, 
+              fontSize: '16px',
+              lineHeight: 1.5
+            }}>
               Pricing: Per item or per-head options available — request a custom quote based on your event size
             </span>
           </div>
@@ -581,12 +616,13 @@ export default function LiveDosaContent({ siteContent }: LiveDosaContentProps) {
           {/* 5. Enquire Now Section Container */}
           <div id="enquire" className="live-dosa-enquire-container">
             <h2 style={{ 
-              fontSize: 'clamp(1.8rem, 4vw, 2.5rem)', 
-              fontWeight: 800, 
-              color: '#1A1A1A', 
+              fontSize: 'clamp(28px, 4vw, 36px)', 
+              fontWeight: 700, 
+              color: '#000000', 
               textAlign: 'center', 
               marginBottom: '2.5rem',
-              letterSpacing: '-0.02em',
+              letterSpacing: '-0.01em',
+              fontFamily: 'var(--font-roboto), "Roboto", var(--font-sans), sans-serif',
             }}>
               Enquire Now
             </h2>

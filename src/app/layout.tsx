@@ -1,11 +1,18 @@
 import type { Metadata, Viewport } from "next";
-import { Plus_Jakarta_Sans, Playfair_Display } from "next/font/google";
+import { Plus_Jakarta_Sans, Roboto, Playfair_Display } from "next/font/google";
 import "./globals.css";
 import ClientLayout from "../components/ClientLayout";
 import { getSiteContent } from "@/lib/firebaseService";
 
 export const dynamic = 'force-dynamic';
 export const revalidate = 0;
+
+const roboto = Roboto({
+  subsets: ["latin"],
+  weight: ["300", "400", "500", "700"],
+  variable: "--font-roboto",
+  display: "swap",
+});
 
 const plusJakartaSans = Plus_Jakarta_Sans({
   subsets: ["latin"],
@@ -138,7 +145,7 @@ export default async function RootLayout({
   const siteContent = await getSiteContent();
 
   return (
-    <html lang="en" className={`${plusJakartaSans.variable} ${playfairDisplay.variable}`}>
+    <html lang="en" className={`${roboto.variable} ${plusJakartaSans.variable} ${playfairDisplay.variable}`}>
       <head>
         <link
           rel="preload"
@@ -153,7 +160,7 @@ export default async function RootLayout({
       <body
         style={{
           margin: 0,
-          fontFamily: 'var(--font-sans), "Plus Jakarta Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif',
+          fontFamily: 'var(--font-roboto), "Roboto", var(--font-sans), "Plus Jakarta Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif',
           minHeight: '100vh',
           backgroundColor: '#FFFDF9',
         }}
