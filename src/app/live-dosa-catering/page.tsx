@@ -8,13 +8,13 @@ export const revalidate = 0;
 export async function generateMetadata(): Promise<Metadata> {
   const siteContent = await getSiteContent();
   const seo = siteContent?.seo?.liveDosaCatering;
-  const title = seo?.title || 'Live Dosa Catering Buckinghamshire | Theatrical Live Stations';
+  const title = seo?.title || 'Live Dosa Catering | Veg Chennai Srilalitha Amersham';
   const description =
     seo?.description ||
-    'Live Dosa catering counters with skilled chefs preparing fresh crispy dosas and vadas right in front of your guests.';
+    'Live Dosa Catering Live Dosa Station Menu Each item is prepared fresh on the spot with theatrical flair Idly, Meduvada';
   const keywords = seo?.keywords ? seo.keywords.split(',').map((k: string) => k.trim()) : undefined;
-  const canonical = seo?.canonical || '/live-dosa-catering';
-  const ogImage = seo?.ogImage || '/images/long-dosa-feast.png';
+  const canonical = seo?.canonical || 'https://vcsamersham.co.uk/live-dosa-catering/';
+  const ogImage = seo?.ogImage || '/images/migrated/WhatsApp-Image-2025-11-01-at-15.41.07-2.jpeg';
 
   return {
     title,
@@ -26,7 +26,7 @@ export async function generateMetadata(): Promise<Metadata> {
     openGraph: {
       title,
       description,
-      url: 'https://vcsamersham.co.uk/live-dosa-catering',
+      url: 'https://vcsamersham.co.uk/live-dosa-catering/',
       siteName: 'Veg Chennai Srilalitha Amersham',
       locale: 'en_GB',
       type: 'website',

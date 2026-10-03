@@ -107,8 +107,8 @@ export default function LiveDosaContent({ siteContent }: LiveDosaContentProps) {
     : includedItems;
 
   const heroBadge = siteContent?.liveDosaCatering?.badge || '🌿 100% Pure Vegetarian Live Catering';
-  const heroTitle = siteContent?.liveDosaCatering?.title || 'Live Dosa Catering Amersham';
-  const heroSubtitle = siteContent?.liveDosaCatering?.subtitle || 'Theatrical live dosa and vada stations prepared fresh on the spot by authentic Chennai chefs for weddings, birthdays, and corporate celebrations. Crisp dosas, soft idlis, and crunchy vadas served steaming hot straight from the tawa with aromatic sambar and traditional chutneys.';
+  const heroTitle = siteContent?.liveDosaCatering?.title || 'Live Dosa Catering';
+  const heroSubtitle = siteContent?.liveDosaCatering?.subtitle || 'Each item is prepared fresh on the spot with theatrical flair';
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     setForm({ ...form, [e.target.name]: e.target.value });
@@ -248,271 +248,222 @@ export default function LiveDosaContent({ siteContent }: LiveDosaContentProps) {
             grid-template-columns: 1fr !important;
           }
         }
+        @media (max-width: 768px) {
+          .live-dosa-hero-section {
+            height: auto !important;
+            min-height: 85vh !important;
+            padding: 3.5rem 0 !important;
+          }
+          .live-dosa-hero-wrapper {
+            padding: 1.25rem 1.25rem !important;
+          }
+        }
+        @media (max-width: 560px) {
+          .live-dosa-hero-actions {
+            flex-direction: column !important;
+            width: 100% !important;
+            gap: 0.9rem !important;
+          }
+          .live-dosa-hero-actions a {
+            width: 100% !important;
+            max-width: 320px !important;
+            box-sizing: border-box !important;
+            padding: 14px 24px !important;
+          }
+        }
       `}</style>
 
       <main style={{ backgroundColor: '#FFFDF9', minHeight: '100vh' }}>
         
-        {/* 1. Split 3D Hero Section (Swiss + Warm Cream Matching Home Page) */}
+        {/* 1. Full Viewport Hero Section (Matches Home Page Dimensions & Aesthetics like 3rd image) */}
         <section
+          className="live-dosa-hero-section"
           style={{
-            padding: 'clamp(5rem, 7.5vw, 6rem) clamp(1rem, 4vw, 2.5rem) clamp(3rem, 5vw, 4.5rem)',
-            backgroundColor: '#FDF6F0',
             position: 'relative',
-            borderBottom: '1px solid #E8E0D5',
+            height: 'calc(100vh - 80px)',
+            minHeight: 'calc(100vh - 80px)',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            color: '#fff',
+            backgroundColor: '#0c0a08',
+            overflow: 'hidden',
+            fontFamily: "var(--font-sans), 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen-Sans, Ubuntu, Cantarell, 'Helvetica Neue', sans-serif",
           }}
         >
+          {/* Full-Bleed Background Image */}
+          <div style={{ position: 'absolute', inset: 0, zIndex: 1 }}>
+            <img
+              src="/images/long-dosa-feast.png"
+              alt="Live Dosa Catering"
+              style={{
+                width: '100%',
+                height: '100%',
+                objectFit: 'cover',
+                objectPosition: 'center 48%',
+                display: 'block',
+              }}
+            />
+            {/* Ambient Fine-Dining Cinematic Vignette: Food has warm 3D depth, text has 100% contrast */}
+            <div
+              style={{
+                position: 'absolute',
+                inset: 0,
+                background:
+                  'radial-gradient(ellipse 95% 85% at 50% 50%, rgba(14, 10, 8, 0.44) 0%, rgba(10, 7, 5, 0.78) 75%, rgba(6, 4, 3, 0.94) 100%), linear-gradient(to bottom, rgba(6, 4, 3, 0.7) 0%, transparent 22%, transparent 78%, rgba(6, 4, 3, 0.88) 100%)',
+                pointerEvents: 'none',
+              }}
+            />
+          </div>
+
+          {/* Foreground Content: Exact Same Clean Layout as Home Hero (Image 2) - No Box */}
           <div
+            className="live-dosa-hero-wrapper"
             style={{
-              maxWidth: '1240px',
+              position: 'relative',
+              zIndex: 10,
+              maxWidth: '960px',
+              width: '100%',
               margin: '0 auto',
-              display: 'grid',
-              gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 480px), 1fr))',
-              gap: 'clamp(2.5rem, 5vw, 4.5rem)',
+              padding: 'clamp(2rem, 4vw, 3.5rem) clamp(1.25rem, 4vw, 2.5rem)',
+              display: 'flex',
+              flexDirection: 'column',
               alignItems: 'center',
+              textAlign: 'center',
             }}
           >
-            {/* Left Column: Heading, Description & Stat Badges */}
-            <div>
+            {/* Eyebrow */}
+            <div
+              style={{
+                display: 'inline-flex',
+                alignItems: 'center',
+                gap: '0.85rem',
+                marginBottom: '1rem',
+              }}
+            >
               <span
                 style={{
-                  display: 'inline-block',
-                  backgroundColor: 'rgba(196, 92, 38, 0.1)',
-                  color: '#C45C26',
-                  border: '1px solid rgba(196, 92, 38, 0.25)',
-                  padding: '6px 16px',
-                  borderRadius: '24px',
-                  fontSize: '0.84rem',
-                  fontWeight: 700,
-                  letterSpacing: '1px',
+                  width: '36px',
+                  height: '1px',
+                  background: 'linear-gradient(90deg, transparent, #E8A87C)',
+                }}
+              />
+              <span
+                style={{
+                  fontSize: 'clamp(0.74rem, 1.4vw, 0.84rem)',
+                  letterSpacing: '0.22em',
                   textTransform: 'uppercase',
-                  marginBottom: '1rem',
+                  color: '#F4D3A1',
+                  fontWeight: 600,
+                  textShadow: '0 2px 10px rgba(0, 0, 0, 0.9)',
                 }}
               >
-                {heroBadge}
+                ✦ 100% PURE VEGETARIAN LIVE CATERING ✦
               </span>
-
-              <h1
+              <span
                 style={{
-                  fontSize: 'clamp(2rem, 4.5vw, 3.4rem)',
-                  fontWeight: 800,
-                  marginBottom: '1.25rem',
-                  lineHeight: 1.2,
-                  color: '#1A1A1A',
-                  letterSpacing: '-0.02em',
+                  width: '36px',
+                  height: '1px',
+                  background: 'linear-gradient(90deg, #E8A87C, transparent)',
                 }}
-              >
-                {heroTitle}
-              </h1>
-
-              <p
-                style={{
-                  fontSize: 'clamp(0.96rem, 1.8vw, 1.12rem)',
-                  color: '#555555',
-                  lineHeight: 1.8,
-                  marginBottom: '2rem',
-                }}
-              >
-                {heroSubtitle}
-              </p>
-
-              {/* Stat / Highlight Badges: Perfect 3-Column Balance on Mobile and Desktop */}
-              <div
-                style={{
-                  display: 'grid',
-                  gridTemplateColumns: 'repeat(3, 1fr)',
-                  gap: 'clamp(0.5rem, 2vw, 1rem)',
-                  marginBottom: '2.25rem',
-                }}
-              >
-                <div
-                  className="tactile-card"
-                  style={{
-                    backgroundColor: 'rgba(255, 255, 255, 0.95)',
-                    border: '1px solid #E8E0D5',
-                    borderRadius: '16px',
-                    padding: 'clamp(0.85rem, 2vw, 1.25rem) clamp(0.35rem, 1.5vw, 0.75rem)',
-                    textAlign: 'center',
-                    boxShadow: '0 4px 14px rgba(0, 0, 0, 0.03)',
-                  }}
-                >
-                  <div style={{ fontSize: 'clamp(1.15rem, 3.6vw, 1.75rem)', fontWeight: 800, color: '#C45C26', lineHeight: 1.1, marginBottom: '0.25rem' }}>
-                    Live Tawa
-                  </div>
-                  <div style={{ fontSize: 'clamp(0.72rem, 2vw, 0.86rem)', fontWeight: 600, color: '#1A1A1A' }}>
-                    Theatrical Station
-                  </div>
-                </div>
-
-                <div
-                  className="tactile-card"
-                  style={{
-                    backgroundColor: 'rgba(255, 255, 255, 0.95)',
-                    border: '1px solid #E8E0D5',
-                    borderRadius: '16px',
-                    padding: 'clamp(0.85rem, 2vw, 1.25rem) clamp(0.35rem, 1.5vw, 0.75rem)',
-                    textAlign: 'center',
-                    boxShadow: '0 4px 14px rgba(0, 0, 0, 0.03)',
-                  }}
-                >
-                  <div style={{ fontSize: 'clamp(1.15rem, 3.6vw, 1.75rem)', fontWeight: 800, color: '#C45C26', lineHeight: 1.1, marginBottom: '0.25rem' }}>
-                    Master Chefs
-                  </div>
-                  <div style={{ fontSize: 'clamp(0.72rem, 2vw, 0.86rem)', fontWeight: 600, color: '#1A1A1A' }}>
-                    Chennai Heritage
-                  </div>
-                </div>
-
-                <div
-                  className="tactile-card"
-                  style={{
-                    backgroundColor: 'rgba(255, 255, 255, 0.95)',
-                    border: '1px solid #E8E0D5',
-                    borderRadius: '16px',
-                    padding: 'clamp(0.85rem, 2vw, 1.25rem) clamp(0.35rem, 1.5vw, 0.75rem)',
-                    textAlign: 'center',
-                    boxShadow: '0 4px 14px rgba(0, 0, 0, 0.03)',
-                  }}
-                >
-                  <div style={{ fontSize: 'clamp(1.15rem, 3.6vw, 1.75rem)', fontWeight: 800, color: '#C45C26', lineHeight: 1.1, marginBottom: '0.25rem' }}>
-                    100% Pure
-                  </div>
-                  <div style={{ fontSize: 'clamp(0.72rem, 2vw, 0.86rem)', fontWeight: 600, color: '#1A1A1A' }}>
-                    Fresh Vegetarian
-                  </div>
-                </div>
-              </div>
-
-              {/* Action Buttons: Responsive & Perfectly Styled on Mobile */}
-              <style>{`
-                @media (max-width: 560px) {
-                  .catering-hero-actions {
-                    flex-direction: column !important;
-                    width: 100% !important;
-                    gap: 0.85rem !important;
-                  }
-                  .catering-hero-actions a {
-                    width: 100% !important;
-                    min-width: 0 !important;
-                    box-sizing: border-box !important;
-                    text-align: center !important;
-                  }
-                }
-              `}</style>
-              <div className="catering-hero-actions" style={{ display: 'flex', gap: '1rem', flexWrap: 'wrap' }}>
-                <a
-                  href="#enquire"
-                  className="btn-3d-primary"
-                  style={{
-                    backgroundColor: '#C45C26',
-                    color: '#FFFFFF',
-                    padding: '0.95rem 2.2rem',
-                    borderRadius: '12px',
-                    textDecoration: 'none',
-                    fontWeight: 700,
-                    fontSize: '1.02rem',
-                    boxShadow: '0 6px 18px rgba(196, 92, 38, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.3)',
-                    minWidth: '160px',
-                    textAlign: 'center',
-                    display: 'inline-flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    transition: 'all 0.25s cubic-bezier(0.16, 1, 0.3, 1)',
-                  }}
-                >
-                  Enquire Now
-                </a>
-                <a
-                  href="tel:+01494972550"
-                  style={{
-                    backgroundColor: '#FFFFFF',
-                    color: '#C45C26',
-                    border: '2px solid #C45C26',
-                    padding: '0.95rem 2.2rem',
-                    borderRadius: '12px',
-                    textDecoration: 'none',
-                    fontWeight: 700,
-                    fontSize: '1.02rem',
-                    minWidth: '160px',
-                    textAlign: 'center',
-                    display: 'inline-flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    gap: '0.5rem',
-                    boxShadow: '0 4px 14px rgba(196, 92, 38, 0.12), inset 0 1px 0 rgba(255, 255, 255, 0.9)',
-                    transition: 'all 0.25s cubic-bezier(0.16, 1, 0.3, 1)',
-                  }}
-                  onMouseEnter={(e) => {
-                    e.currentTarget.style.backgroundColor = '#C45C26';
-                    e.currentTarget.style.color = '#FFFFFF';
-                  }}
-                  onMouseLeave={(e) => {
-                    e.currentTarget.style.backgroundColor = '#FFFFFF';
-                    e.currentTarget.style.color = '#C45C26';
-                  }}
-                >
-                  <span>📞</span>
-                  <span>Call +0149 497 2550</span>
-                </a>
-              </div>
+              />
             </div>
 
-            {/* Right Column: 3D Dosa Station Showcase with Floating Rating Badge */}
-            <div style={{ position: 'relative', width: '100%', paddingBottom: '1.75rem' }}>
-              <div
+            {/* Main Title */}
+            <h1
+              style={{
+                fontFamily: "var(--font-sans), 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif",
+                fontSize: 'clamp(28px, 4.2vw, 44px)',
+                fontWeight: 700,
+                lineHeight: 1.25,
+                letterSpacing: '-0.015em',
+                marginBottom: '1.25rem',
+                maxWidth: '900px',
+                color: '#FFFFFF',
+                textShadow: '0 3px 16px rgba(0, 0, 0, 0.95)',
+              }}
+            >
+              Live Dosa Catering
+            </h1>
+
+            {/* Subtitle directly from Reference Website */}
+            <p
+              style={{
+                fontFamily: "var(--font-sans), 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif",
+                fontSize: 'clamp(15px, 1.6vw, 18px)',
+                fontWeight: 400,
+                lineHeight: 1.75,
+                color: '#FFFFFF',
+                textShadow: '0 2px 14px rgba(0, 0, 0, 0.95), 0 1px 4px rgba(0, 0, 0, 0.9)',
+                maxWidth: '820px',
+                marginBottom: '2rem',
+                letterSpacing: '0.01em',
+              }}
+            >
+              {heroSubtitle}
+            </p>
+
+            {/* Action Buttons */}
+            <div
+              className="live-dosa-hero-actions"
+              style={{
+                display: 'flex',
+                gap: '1.25rem',
+                justifyContent: 'center',
+                alignItems: 'center',
+                flexWrap: 'wrap',
+              }}
+            >
+              <a
+                href="#enquire"
+                className="btn-3d-primary"
                 style={{
-                  position: 'relative',
-                  borderRadius: '24px',
-                  overflow: 'hidden',
-                  boxShadow: '0 20px 50px rgba(0, 0, 0, 0.12)',
-                  border: '1px solid #E8E0D5',
-                  aspectRatio: '4 / 3',
-                  backgroundColor: '#FDF6F0',
+                  background: 'linear-gradient(135deg, #DE7843 0%, #B8531D 100%)',
+                  color: '#FFFFFF',
+                  padding: '14px 32px',
+                  borderRadius: '4px',
+                  textDecoration: 'none',
+                  fontWeight: 600,
+                  fontSize: '16px',
+                  lineHeight: '1em',
+                  letterSpacing: '0.02em',
+                  boxShadow:
+                    '0 8px 24px rgba(184, 83, 29, 0.45), inset 0 1px 1px rgba(255, 255, 255, 0.45)',
+                  minWidth: '160px',
+                  textAlign: 'center',
+                  display: 'inline-block',
+                  transition: 'all 0.25s cubic-bezier(0.16, 1, 0.3, 1)',
                 }}
               >
-                <img
-                  src="/images/3d/masala-dosa-3d.jpg"
-                  alt="Live Dosa Catering 3D Experience"
-                  style={{
-                    width: '100%',
-                    height: '100%',
-                    objectFit: 'cover',
-                    display: 'block',
-                  }}
-                />
-              </div>
-
-              {/* Floating 3D Badge (Matching Screenshot 1) */}
-              <div
-                className="tactile-card"
+                Enquire Now
+              </a>
+              <a
+                href="tel:+441494972550"
+                className="btn-3d-secondary"
                 style={{
-                  position: 'absolute',
-                  bottom: '0',
-                  right: 'clamp(10px, 3vw, 25px)',
-                  backgroundColor: 'rgba(196, 92, 38, 0.96)',
-                  backdropFilter: 'blur(12px)',
-                  WebkitBackdropFilter: 'blur(12px)',
-                  color: '#ffffff',
-                  padding: '1.1rem 1.85rem',
-                  borderRadius: '16px',
-                  boxShadow: '0 14px 32px rgba(196, 92, 38, 0.45)',
-                  border: '1px solid rgba(255, 255, 255, 0.25)',
-                  display: 'flex',
-                  flexDirection: 'column',
+                  background: 'rgba(255, 255, 255, 0.09)',
+                  border: '1.5px solid rgba(248, 213, 158, 0.5)',
+                  color: '#FFFFFF',
+                  padding: '14px 32px',
+                  borderRadius: '4px',
+                  textDecoration: 'none',
+                  fontWeight: 600,
+                  fontSize: '16px',
+                  lineHeight: '1em',
+                  letterSpacing: '0.02em',
+                  minWidth: '160px',
+                  textAlign: 'center',
+                  display: 'inline-flex',
                   alignItems: 'center',
                   justifyContent: 'center',
-                  zIndex: 5,
+                  gap: '0.5rem',
+                  boxShadow: '0 4px 16px rgba(0, 0, 0, 0.25)',
+                  transition: 'all 0.25s cubic-bezier(0.16, 1, 0.3, 1)',
                 }}
               >
-                <div style={{ display: 'flex', gap: '3px', color: '#D4A017', fontSize: '1.25rem', marginBottom: '3px' }}>
-                  <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
-                </div>
-                <div style={{ fontWeight: 800, fontSize: '1.1rem', letterSpacing: '0.2px', whiteSpace: 'nowrap' }}>
-                  5,000+ Happy Guests
-                </div>
-                <div style={{ fontSize: '0.78rem', color: '#FDF6F0', opacity: 0.9, marginTop: '2px' }}>
-                  Live Dosa Station Experience
-                </div>
-              </div>
+                <span>📞</span>
+                <span>Call 0149 497 2550</span>
+              </a>
             </div>
           </div>
         </section>
@@ -520,27 +471,10 @@ export default function LiveDosaContent({ siteContent }: LiveDosaContentProps) {
         {/* 2. Live Dosa Station Menu */}
         <section className="live-dosa-section-wrapper">
           <div style={{ textAlign: 'center', marginBottom: '3rem' }}>
-            <span
-              style={{
-                display: 'inline-block',
-                backgroundColor: 'rgba(196, 92, 38, 0.1)',
-                color: '#C45C26',
-                border: '1px solid rgba(196, 92, 38, 0.25)',
-                padding: '4px 14px',
-                borderRadius: '20px',
-                fontSize: '0.8rem',
-                fontWeight: 700,
-                letterSpacing: '1px',
-                textTransform: 'uppercase',
-                marginBottom: '0.75rem',
-              }}
-            >
-              Fresh On-Site Cooking
-            </span>
-            <h2 style={{ fontSize: 'clamp(2rem, 4.5vw, 2.8rem)', color: '#1A1A1A', marginBottom: '0.75rem', fontWeight: 800, letterSpacing: '-0.02em' }}>
+            <h2 style={{ fontSize: 'clamp(2rem, 4.5vw, 2.8rem)', color: '#1A1A1A', marginBottom: '0.75rem', fontWeight: 800, letterSpacing: '-0.02em', fontFamily: 'Fraunces, serif' }}>
               Live Dosa Station Menu
             </h2>
-            <p style={{ fontSize: '1.05rem', color: '#555555', fontStyle: 'italic', margin: 0 }}>
+            <p style={{ fontSize: '1.08rem', color: '#555555', margin: 0 }}>
               Each item is prepared fresh on the spot with theatrical flair
             </p>
           </div>
@@ -591,24 +525,7 @@ export default function LiveDosaContent({ siteContent }: LiveDosaContentProps) {
           {/* 3. What's Included */}
           <div style={{ marginBottom: '3.5rem' }}>
             <div style={{ textAlign: 'center', marginBottom: '2rem' }}>
-              <span
-                style={{
-                  display: 'inline-block',
-                  backgroundColor: 'rgba(196, 92, 38, 0.1)',
-                  color: '#C45C26',
-                  border: '1px solid rgba(196, 92, 38, 0.25)',
-                  padding: '4px 14px',
-                  borderRadius: '20px',
-                  fontSize: '0.8rem',
-                  fontWeight: 700,
-                  letterSpacing: '1px',
-                  textTransform: 'uppercase',
-                  marginBottom: '0.75rem',
-                }}
-              >
-                Full Service Package
-              </span>
-              <h2 style={{ fontSize: 'clamp(1.8rem, 4vw, 2.4rem)', fontWeight: 800, color: '#1A1A1A', margin: 0, letterSpacing: '-0.02em' }}>
+              <h2 style={{ fontSize: 'clamp(1.8rem, 4vw, 2.4rem)', fontWeight: 800, color: '#1A1A1A', margin: 0, letterSpacing: '-0.02em', fontFamily: 'Fraunces, serif' }}>
                 What&apos;s Included
               </h2>
             </div>
@@ -721,7 +638,7 @@ export default function LiveDosaContent({ siteContent }: LiveDosaContentProps) {
                   </div>
                   <div>
                     <strong style={{ display: 'block', fontSize: '0.85rem', color: '#888888', textTransform: 'uppercase', letterSpacing: '0.5px' }}>Call Us</strong>
-                    <a href={`tel:${siteContent?.restaurant?.phoneRaw || siteContent?.restaurant?.phone || '+01494972550'}`} style={{ color: '#1A1A1A', fontSize: '16px', fontWeight: 700, textDecoration: 'none' }}>
+                    <a href={'tel:' + (siteContent?.restaurant?.phoneRaw || siteContent?.restaurant?.phone || '+01494972550')} style={{ color: '#1A1A1A', fontSize: '16px', fontWeight: 700, textDecoration: 'none' }}>
                       {siteContent?.restaurant?.phone || '+0149 497 2550'}
                     </a>
                   </div>
@@ -877,7 +794,7 @@ export default function LiveDosaContent({ siteContent }: LiveDosaContentProps) {
                             onChange={(e) => handleCustomFieldChange(field.name || field.id, e.target.value)}
                             style={formFieldStyle}
                           >
-                            <option value="">{field.placeholder || `Select ${field.label}`}</option>
+                            <option value="">{field.placeholder || ('Select ' + field.label)}</option>
                             {field.options.map((opt: string, optIdx: number) => (
                               <option key={optIdx} value={opt}>{opt}</option>
                             ))}

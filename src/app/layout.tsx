@@ -32,7 +32,9 @@ export async function generateMetadata(): Promise<Metadata> {
   const siteContent = await getSiteContent();
   const seo = siteContent?.seo?.home;
   const title = seo?.title || "South Indian Vegetarian Restaurant Amersham | 100% Pure Veg";
-  const description = seo?.description || "Top-rated South-Indian Vegetarian Dining • 100% Pure Veg • Family-Friendly Dining • Authentic Dosa, Idli & Catering Services in Amersham.";
+  const description =
+    seo?.description ||
+    "South Indian Vegetarian Restaurant Amersham Top-rated South-Indian Vegetarian Dining • 100% Pure Veg • Family-Friendly Dining View Menu Order Online";
   const keywords = seo?.keywords ? seo.keywords.split(',').map((k: string) => k.trim()) : undefined;
   const canonical = seo?.canonical || "/";
   const ogImage = seo?.ogImage || "/images/migrated/WhatsApp-Image-2025-11-01-at-15.41.07-2.jpeg";

@@ -7,10 +7,13 @@ export async function generateMetadata() {
   const siteContent = await getSiteContent();
   const privacy = siteContent?.legalPolicies?.privacyPolicy;
   const seo = siteContent?.seo?.privacyPolicy;
-  const title = seo?.title || `${privacy?.title || 'Privacy Policy'} - VCS Amersham`;
-  const description = seo?.description || privacy?.intro || 'Privacy Policy for Veg Chennai Srilalitha Amersham.';
+  const title = seo?.title || 'Privacy Policy - vcsamersham';
+  const description =
+    seo?.description ||
+    privacy?.intro ||
+    'Privacy Policy Effective Date: 01/01/2027 At Veg chennai Srilalitha, we are committed to protecting your privacy and ensuring that your personal data is protected.';
   const keywords = seo?.keywords ? seo.keywords.split(',').map((k: string) => k.trim()) : undefined;
-  const canonical = seo?.canonical || '/privacy-policy';
+  const canonical = seo?.canonical || 'https://vcsamersham.co.uk/privacy-policy/';
   const ogImage = seo?.ogImage || '/images/migrated/WhatsApp-Image-2025-11-01-at-15.41.07-2.jpeg';
 
   return {
@@ -21,7 +24,7 @@ export async function generateMetadata() {
     openGraph: {
       title,
       description,
-      url: 'https://vcsamersham.co.uk/privacy-policy',
+      url: 'https://vcsamersham.co.uk/privacy-policy/',
       siteName: 'Veg Chennai Srilalitha Amersham',
       locale: 'en_GB',
       type: 'website',

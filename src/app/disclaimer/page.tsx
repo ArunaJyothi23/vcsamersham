@@ -7,10 +7,13 @@ export async function generateMetadata() {
   const siteContent = await getSiteContent();
   const disclaimer = siteContent?.legalPolicies?.disclaimer;
   const seo = siteContent?.seo?.disclaimer;
-  const title = seo?.title || `${disclaimer?.title || 'Disclaimer'} - VCS Amersham`;
-  const description = seo?.description || disclaimer?.foodSafety || 'Disclaimer for Veg Chennai Srilalitha Amersham.';
+  const title = seo?.title || 'Disclaimer - vcsamersham';
+  const description =
+    seo?.description ||
+    disclaimer?.foodSafety ||
+    'Disclaimer Food Safety and Allergies We are committed to maintaining high standards of food safety and hygiene in the preparation of our food.';
   const keywords = seo?.keywords ? seo.keywords.split(',').map((k: string) => k.trim()) : undefined;
-  const canonical = seo?.canonical || '/disclaimer';
+  const canonical = seo?.canonical || 'https://vcsamersham.co.uk/disclaimer/';
   const ogImage = seo?.ogImage || '/images/migrated/WhatsApp-Image-2025-11-01-at-15.41.07-2.jpeg';
 
   return {
@@ -21,7 +24,7 @@ export async function generateMetadata() {
     openGraph: {
       title,
       description,
-      url: 'https://vcsamersham.co.uk/disclaimer',
+      url: 'https://vcsamersham.co.uk/disclaimer/',
       siteName: 'Veg Chennai Srilalitha Amersham',
       locale: 'en_GB',
       type: 'website',

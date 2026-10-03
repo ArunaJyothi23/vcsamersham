@@ -7,10 +7,13 @@ export async function generateMetadata() {
   const siteContent = await getSiteContent();
   const cookies = siteContent?.legalPolicies?.cookiesPolicy;
   const seo = siteContent?.seo?.cookiesPolicy;
-  const title = seo?.title || `${cookies?.title || 'Cookie Policy'} - VCS Amersham`;
-  const description = seo?.description || cookies?.intro || 'Cookie Policy for Veg Chennai Srilalitha Amersham.';
+  const title = seo?.title || 'Cookies Policy - vcsamersham';
+  const description =
+    seo?.description ||
+    cookies?.intro ||
+    'Cookie Policy Effective Date: 01/01/2027 This Cookie Policy explains how Veg Chennai Srilalitha uses cookies and similar technologies when you visit our website.';
   const keywords = seo?.keywords ? seo.keywords.split(',').map((k: string) => k.trim()) : undefined;
-  const canonical = seo?.canonical || '/cookies-policy';
+  const canonical = seo?.canonical || 'https://vcsamersham.co.uk/cookies-policy/';
   const ogImage = seo?.ogImage || '/images/migrated/WhatsApp-Image-2025-11-01-at-15.41.07-2.jpeg';
 
   return {
@@ -21,7 +24,7 @@ export async function generateMetadata() {
     openGraph: {
       title,
       description,
-      url: 'https://vcsamersham.co.uk/cookies-policy',
+      url: 'https://vcsamersham.co.uk/cookies-policy/',
       siteName: 'Veg Chennai Srilalitha Amersham',
       locale: 'en_GB',
       type: 'website',

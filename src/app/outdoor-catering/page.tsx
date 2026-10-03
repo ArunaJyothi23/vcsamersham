@@ -8,13 +8,13 @@ export const revalidate = 0;
 export async function generateMetadata(): Promise<Metadata> {
   const siteContent = await getSiteContent();
   const seo = siteContent?.seo?.outdoorCatering;
-  const title = seo?.title || 'Outdoor Indian Catering Amersham & Buckinghamshire | VCS';
+  const title = seo?.title || 'Outdoor Catering | Veg Chennai Srilalitha Amersham';
   const description =
     seo?.description ||
-    'Authentic South Indian vegetarian catering for weddings, parties, corporate events, and celebrations across Buckinghamshire.';
+    'Authentic 100% Pure Vegetarian Catering Authentic 100% vegetarian catering in UK, backed by 21+ years of experience. Proud to have catered to all the VIPs and VVIPs of Indian origin across the UK.';
   const keywords = seo?.keywords ? seo.keywords.split(',').map((k: string) => k.trim()) : undefined;
-  const canonical = seo?.canonical || '/outdoor-catering';
-  const ogImage = seo?.ogImage || '/images/3d/restaurant-feast-3d.jpg';
+  const canonical = seo?.canonical || 'https://vcsamersham.co.uk/outdoor-catering/';
+  const ogImage = seo?.ogImage || '/images/migrated/WhatsApp-Image-2025-11-01-at-15.41.07-2.jpeg';
 
   return {
     title,
@@ -26,7 +26,7 @@ export async function generateMetadata(): Promise<Metadata> {
     openGraph: {
       title,
       description,
-      url: 'https://vcsamersham.co.uk/outdoor-catering',
+      url: 'https://vcsamersham.co.uk/outdoor-catering/',
       siteName: 'Veg Chennai Srilalitha Amersham',
       locale: 'en_GB',
       type: 'website',

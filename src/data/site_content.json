@@ -43,7 +43,7 @@
     }
   ],
   "hero": {
-    "badge": "Authentic South Indian Flavours  ",
+    "badge": "Authentic South Indian Flavours    ",
     "title": "South Indian Vegetarian Restaurant Amersham  ",
     "subtitle": "Top-rated South-Indian Vegetarian Dining • 100% Pure Veg • Family-Friendly Dining • Authentic Dosa, Idli & Catering Services in Amersham.",
     "primaryCta": {
@@ -317,7 +317,7 @@
       "pageName": "Home Page",
       "url": "/",
       "title": "South Indian Vegetarian Restaurant Amersham | 100% Pure Veg",
-      "description": "Top-rated South-Indian Vegetarian Dining • 100% Pure Veg • Family-Friendly Dining • Authentic Dosa, Idli & Catering Services in Amersham.",
+      "description": "South Indian Vegetarian Restaurant Amersham Top-rated South-Indian Vegetarian Dining • 100% Pure Veg • Family-Friendly Dining View Menu Order Online",
       "keywords": "South Indian Restaurant Amersham, Vegetarian Restaurant Amersham, Dosa Amersham, Indian Food Buckinghamshire, Vegan Indian Amersham, Pure Veg Restaurant",
       "canonical": "https://vcsamersham.co.uk/",
       "h1": "South Indian Vegetarian Restaurant Amersham",
@@ -336,22 +336,22 @@
     "outdoorCatering": {
       "pageName": "Outdoor Catering",
       "url": "/outdoor-catering",
-      "title": "Outdoor Indian Catering Amersham & Buckinghamshire | VCS",
-      "description": "Authentic South Indian vegetarian catering for weddings, parties, corporate events, and celebrations across Buckinghamshire.",
-      "keywords": "Indian Catering Amersham, Wedding Catering Buckinghamshire, Vegetarian Catering London, Corporate Event Food",
-      "canonical": "https://vcsamersham.co.uk/outdoor-catering",
-      "h1": "Traditional South Indian Outdoor Catering",
-      "ogImage": "/images/3d/restaurant-feast-3d.jpg"
+      "title": "Outdoor Catering | Veg Chennai Srilalitha Amersham",
+      "description": "Authentic 100% Pure Vegetarian Catering Authentic 100% vegetarian catering in UK, backed by 21+ years of experience. Proud to have catered to all the VIPs and VVIPs of Indian origin across the UK.",
+      "keywords": "Outdoor Catering Amersham, Indian Catering Amersham, Vegetarian Catering UK, Wedding Catering Buckinghamshire",
+      "canonical": "https://vcsamersham.co.uk/outdoor-catering/",
+      "h1": "Authentic 100% Pure Vegetarian Catering",
+      "ogImage": "/images/migrated/WhatsApp-Image-2025-11-01-at-15.41.07-2.jpeg"
     },
     "liveDosaCatering": {
       "pageName": "Live Dosa Catering",
       "url": "/live-dosa-catering",
-      "title": "Live Dosa Catering Buckinghamshire | Theatrical Live Stations",
-      "description": "Live Dosa catering counters with skilled chefs preparing fresh crispy dosas and vadas right in front of your guests.",
-      "keywords": "Live Dosa Counter UK, Live Dosa Catering Buckinghamshire, Live Dosa Party London, Fresh Dosa Catering",
-      "canonical": "https://vcsamersham.co.uk/live-dosa-catering",
-      "h1": "Live Dosa & Tiffin Catering",
-      "ogImage": "/images/long-dosa-feast.png"
+      "title": "Live Dosa Catering | Veg Chennai Srilalitha Amersham",
+      "description": "Live Dosa Catering Live Dosa Station Menu Each item is prepared fresh on the spot with theatrical flair Idly, Meduvada",
+      "keywords": "Live Dosa Catering, Live Dosa Amersham, Live Dosa Counter UK, Live Dosa Buckinghamshire",
+      "canonical": "https://vcsamersham.co.uk/live-dosa-catering/",
+      "h1": "Live Dosa Catering",
+      "ogImage": "/images/migrated/WhatsApp-Image-2025-11-01-at-15.41.07-2.jpeg"
     },
     "contact": {
       "pageName": "Contact & Location",
@@ -366,32 +366,32 @@
     "privacyPolicy": {
       "pageName": "Privacy Policy",
       "url": "/privacy-policy",
-      "title": "Privacy Policy | Veg Chennai SriLalitha Amersham",
-      "description": "Privacy policy and personal data protection principles for Veg Chennai SriLalitha Amersham.",
+      "title": "Privacy Policy - vcsamersham",
+      "description": "Privacy Policy Effective Date: 01/01/2027 At Veg chennai Srilalitha, we are committed to protecting your privacy and ensuring that your personal data is protected.",
       "keywords": "Privacy policy VCS Amersham, customer data protection, terms and privacy",
-      "canonical": "https://vcsamersham.co.uk/privacy-policy",
+      "canonical": "https://vcsamersham.co.uk/privacy-policy/",
       "h1": "Privacy Policy",
-      "ogImage": "/images/migrated/vcsr-logo.webp"
+      "ogImage": "/images/migrated/WhatsApp-Image-2025-11-01-at-15.41.07-2.jpeg"
     },
     "cookiesPolicy": {
       "pageName": "Cookies Policy",
       "url": "/cookies-policy",
-      "title": "Cookies Policy | Veg Chennai SriLalitha Amersham",
-      "description": "Information on how Veg Chennai SriLalitha Amersham uses cookies and tracking technologies.",
+      "title": "Cookies Policy - vcsamersham",
+      "description": "Cookie Policy Effective Date: 01/01/2027 This Cookie Policy explains how Veg Chennai Srilalitha uses cookies and similar technologies when you visit our website.",
       "keywords": "Cookies policy VCS Amersham, web cookies, site analytics and tracking",
-      "canonical": "https://vcsamersham.co.uk/cookies-policy",
-      "h1": "Cookie Policy",
-      "ogImage": "/images/migrated/vcsr-logo.webp"
+      "canonical": "https://vcsamersham.co.uk/cookies-policy/",
+      "h1": "Cookies Policy",
+      "ogImage": "/images/migrated/WhatsApp-Image-2025-11-01-at-15.41.07-2.jpeg"
     },
     "disclaimer": {
       "pageName": "Disclaimer",
       "url": "/disclaimer",
-      "title": "Disclaimer & Food Allergens | Veg Chennai SriLalitha Amersham",
-      "description": "Food safety, allergen declarations, and terms disclaimer for Veg Chennai SriLalitha Amersham.",
+      "title": "Disclaimer - vcsamersham",
+      "description": "Disclaimer Food Safety and Allergies We are committed to maintaining high standards of food safety and hygiene in the preparation of our food.",
       "keywords": "Disclaimer VCS Amersham, food allergen notice, dietary disclaimer",
-      "canonical": "https://vcsamersham.co.uk/disclaimer",
+      "canonical": "https://vcsamersham.co.uk/disclaimer/",
       "h1": "Disclaimer",
-      "ogImage": "/images/migrated/vcsr-logo.webp"
+      "ogImage": "/images/migrated/WhatsApp-Image-2025-11-01-at-15.41.07-2.jpeg"
     }
   },
   "customFormFields": [],
@@ -400,6 +400,7 @@
     "title": "Authentic 100% Pure Vegetarian Catering",
     "intro": "Authentic 100% vegetarian catering in UK, backed by 21+ years of experience. Proud to have catered to all the VIPs and VVIPs of Indian origin across the UK. Perfect for weddings, corporate events, housewarmings, and temple functions. Enjoy live dosa stations, soft idlis, crispy vadas, and traditional banana-leaf feasts with sambar, rasam, poriyal, and payasam—freshly prepared for a truly authentic and memorable experience.",
     "bgImage": "/images/migrated/WhatsApp-Image-2025-11-01-at-15.41.07-2.jpeg",
+    "heroImage": "/images/3d/thali-royal-3d.jpg",
     "options": [
       {
         "id": "opt1",
@@ -494,9 +495,9 @@
     ]
   },
   "liveDosaCatering": {
-    "badge": "Theatrical Live Stations ",
-    "title": "Live Dosa Catering Buckinghamshire",
-    "subtitle": "Live Dosa catering counters with skilled master chefs preparing fresh crispy dosas and vadas right in front of your guests across Buckinghamshire, London, and Berkshire.  ",
+    "badge": "100% Pure Vegetarian Live Catering",
+    "title": "Live Dosa Catering",
+    "subtitle": "Each item is prepared fresh on the spot with theatrical flair",
     "heroImage": "/images/long-dosa-feast.png",
     "pricing": {
       "weekdayPrice": "£11.00",
@@ -511,60 +512,61 @@
     "menuItems": [
       {
         "name": "Idly, Meduvada (Live)",
-        "desc": "Steamed fluffy idlis and crisp golden vadas prepared hot on-site"
+        "desc": "Crisp & golden, the classic favourite"
       },
       {
         "name": "Masala Dosa (Live)",
-        "desc": "Crisp golden dosa filled with spiced potato masala"
+        "desc": "Crisp & golden, the classic favourite"
       },
       {
         "name": "Plain Dosa (Live)",
-        "desc": "Classic thin, crispy golden crepe with pure ghee/oil"
+        "desc": "Crisp & golden, the classic favourite"
       },
       {
         "name": "Onion Dosa (Live)",
-        "desc": "Crispy dosa generously topped with finely chopped sauteed onions"
+        "desc": "Crisp & golden, the classic favourite"
       },
       {
-        "name": "Podi Dosa (Live)",
-        "desc": "Spiced with spicy gun powder (karam podi) and pure ghee"
+        "name": "PodiDosa (Live)",
+        "desc": "Crisp & golden, the classic favourite"
       },
       {
         "name": "Onion Uthappam (Live)",
-        "desc": "Thick, soft pancake topped with crunchy onions and cilantro"
+        "desc": "Crisp & golden, the classic favourite"
       },
       {
         "name": "Capsicum Uthappam (Live)",
-        "desc": "Thick soft uthappam topped with sweet bell peppers"
+        "desc": "Crisp & golden, the classic favourite"
       },
       {
         "name": "Chilli Uthappam (Live)",
-        "desc": "Spicy uthappam with green chillies for spice lovers"
+        "desc": "Crisp & golden, the classic favourite"
       },
       {
         "name": "Plain Uthappam (Live)",
-        "desc": "Fluffy traditional South Indian fermented pancake"
+        "desc": "Crisp & golden, the classic favourite"
       },
       {
-        "name": "Podi Uthappam (Live)",
-        "desc": "Soft uthappam dusted with aromatic spicy podi & ghee"
+        "name": "PodiUthappam (Live)",
+        "desc": "Crisp & golden, the classic favourite"
       },
       {
-        "name": "One Dessert Special",
-        "desc": "Pineapple Kesari, Gulab Jamun, or Warm Semiya Payasam"
+        "name": "One Dessert",
+        "desc": "Crisp & golden, the classic favourite"
       },
       {
         "name": "One Main Course Dish",
-        "desc": "Vegetable Biryani, Paneer Butter Masala, or Chana Masala"
+        "desc": "Crisp & golden, the classic favourite"
       }
     ],
     "includedItems": [
-      "Professional master chef with traditional South Indian skills",
-      "Commercial-grade griddle & gas/electrical cooking equipment",
-      "Fresh stone-ground batter & premium quality ingredients",
-      "Authentic condiments: Coconut Chutney, Tomato Chutney & Piping Hot Sambar",
-      "Bain Marie hot holding units to keep food fresh and steaming",
-      "Disposable 9-inch compartment plates, spoons, and serviettes"
+      "Professional chef with traditional skills",
+      "Commercial-grade griddle & cooking equipment",
+      "Fresh batter & premium ingredients",
+      "Authentic condiments & chutneys",
+      "Serving staff for smooth service",
+      "Eco-friendly disposables (optional)",
+      "Pricing: Per item or per-head options available — request a custom quote based on your event size"
     ],
     "upgrades": [
       {
