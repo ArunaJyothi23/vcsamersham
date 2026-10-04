@@ -132,7 +132,7 @@ export default function LiveDosaContent({ siteContent }: LiveDosaContentProps) {
           ...form,
           serviceType: 'Live Dosa Catering',
           packageSelected: 'Live Dosa Catering Station',
-          recipientEmail: 'digitalbotsolutions@gmail.com',
+          recipientEmail: siteContent?.web3forms?.email || 'vcsramersham@gmail.com',
           ...customFieldsData,
         }),
       });

@@ -48,7 +48,7 @@ export default function Contact({ restaurant, siteContent }: ContactProps) {
         body: JSON.stringify({
           ...form,
           serviceType: 'Contact / Table Booking Inquiry',
-          recipientEmail: 'digitalbotsolutions@gmail.com',
+          recipientEmail: siteContent?.web3forms?.email || rest.email || 'vcsramersham@gmail.com',
           ...customFieldsData,
         }),
       });
@@ -336,7 +336,7 @@ export default function Contact({ restaurant, siteContent }: ContactProps) {
                 Send Us a Message
               </h3>
               <p style={{ fontSize: '0.88rem', color: '#666', margin: 0 }}>
-                Powered by Web3Forms • Inquiries received instantly at <strong style={{ color: '#C45C26' }}>digitalbotsolutions@gmail.com</strong>
+                Fill out the form below and our team will get back to you promptly.
               </p>
             </div>
 
@@ -459,8 +459,8 @@ export default function Contact({ restaurant, siteContent }: ContactProps) {
                 {submitting
                   ? 'Sending Message...'
                   : submitted
-                  ? '✓ Message Sent to digitalbotsolutions@gmail.com!'
-                  : 'Send Message via Web3Forms ✉️'}
+                  ? '✓ Message Sent Successfully!'
+                  : 'Send Message ✉️'}
               </button>
             </form>
           </div>

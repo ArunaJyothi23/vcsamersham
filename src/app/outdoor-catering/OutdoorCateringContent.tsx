@@ -88,7 +88,7 @@ export default function OutdoorCateringContent({ siteContent }: OutdoorCateringC
           ...form,
           serviceType: 'Outdoor Catering',
           packageSelected: activeOptionName,
-          recipientEmail: 'digitalbotsolutions@gmail.com',
+          recipientEmail: siteContent?.web3forms?.email || 'vcsramersham@gmail.com',
           ...customFieldsData,
         }),
       });

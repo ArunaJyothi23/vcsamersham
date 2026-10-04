@@ -3198,7 +3198,7 @@ export default function AdminDashboard() {
                       fontWeight: 700,
                     }}
                   >
-                    ✓ Active: digitalbotsolutions@gmail.com
+                    ✓ Active: {siteData.web3forms?.email || 'vcsramersham@gmail.com'}
                   </span>
                 </div>
 
@@ -3209,9 +3209,9 @@ export default function AdminDashboard() {
                     </label>
                     <input
                       type="email"
-                      value={siteData.web3forms?.email || 'digitalbotsolutions@gmail.com'}
+                      value={siteData.web3forms?.email || 'vcsramersham@gmail.com'}
                       onChange={(e) => updateWeb3Forms('email', e.target.value)}
-                      placeholder="digitalbotsolutions@gmail.com"
+                      placeholder="vcsramersham@gmail.com"
                       style={{ width: '100%', padding: '0.75rem', borderRadius: '8px', backgroundColor: '#292524', border: '1px solid #44403C', color: '#fff', fontSize: '0.95rem' }}
                     />
                   </div>

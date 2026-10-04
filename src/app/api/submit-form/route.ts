@@ -10,7 +10,7 @@ export async function POST(request: NextRequest) {
     const data = await request.json();
     const siteContent = await getSiteContent();
 
-    const recipientEmail = siteContent?.web3forms?.email || 'digitalbotsolutions@gmail.com';
+    const recipientEmail = siteContent?.web3forms?.email || 'vcsramersham@gmail.com';
     const web3formsKey = siteContent?.web3forms?.accessKey || process.env.WEB3FORMS_ACCESS_KEY || '';
 
     const {
