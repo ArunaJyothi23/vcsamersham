@@ -1,42 +1,13 @@
 import { getSiteContent } from '@/lib/firebaseService';
+import { buildPageMetadata } from '@/lib/seoService';
+import PageJsonLd from '@/components/PageJsonLd';
 
 export const dynamic = 'force-dynamic';
 export const revalidate = 0;
 
 export async function generateMetadata() {
   const siteContent = await getSiteContent();
-  const cookies = siteContent?.legalPolicies?.cookiesPolicy;
-  const seo = siteContent?.seo?.cookiesPolicy;
-  const title = seo?.title || 'Cookies Policy - vcsamersham';
-  const description =
-    seo?.description ||
-    cookies?.intro ||
-    'Cookie Policy Effective Date: 01/01/2027 This Cookie Policy explains how Veg Chennai Srilalitha uses cookies and similar technologies when you visit our website.';
-  const keywords = seo?.keywords ? seo.keywords.split(',').map((k: string) => k.trim()) : undefined;
-  const canonical = seo?.canonical || 'https://vcsamersham.co.uk/cookies-policy/';
-  const ogImage = seo?.ogImage || '/images/migrated/WhatsApp-Image-2025-11-01-at-15.41.07-2.jpeg';
-
-  return {
-    title,
-    description,
-    keywords,
-    alternates: { canonical },
-    openGraph: {
-      title,
-      description,
-      url: 'https://vcsamersham.co.uk/cookies-policy/',
-      siteName: 'Veg Chennai Srilalitha Amersham',
-      locale: 'en_GB',
-      type: 'website',
-      images: [{ url: ogImage, width: 1200, height: 630, alt: title }],
-    },
-    twitter: {
-      card: 'summary_large_image',
-      title,
-      description,
-      images: [ogImage],
-    },
-  };
+  return buildPageMetadata('/cookies-policy', siteContent);
 }
 
 export default async function CookiePolicy() {
@@ -46,6 +17,7 @@ export default async function CookiePolicy() {
 
   return (
     <div style={{ padding: 'clamp(2.5rem, 5vw, 4rem) clamp(1rem, 4vw, 2rem)', backgroundColor: '#FFFDF9', color: '#111', fontFamily: 'inherit', lineHeight: '1.8' }}>
+      <PageJsonLd route="/cookies-policy" siteContent={siteContent} />
       <div style={{ maxWidth: '900px', margin: '0 auto' }}>
         <h1 style={{ fontSize: 'clamp(2rem, 5vw, 3rem)', fontWeight: 700, marginBottom: '1rem', color: '#1a2f4c' }}>
           {cookies?.title || 'Cookie Policy'}

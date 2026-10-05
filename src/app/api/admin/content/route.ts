@@ -70,6 +70,11 @@ export async function POST(request: NextRequest) {
         revalidatePath('/');
         revalidatePath('/outdoor-catering');
         revalidatePath('/live-dosa-catering');
+        revalidatePath('/privacy-policy');
+        revalidatePath('/cookies-policy');
+        revalidatePath('/disclaimer');
+        revalidatePath('/sitemap.xml');
+        revalidatePath('/robots.txt');
       } catch {}
 
       return NextResponse.json(
@@ -117,6 +122,11 @@ export async function POST(request: NextRequest) {
         revalidatePath('/');
         revalidatePath('/outdoor-catering');
         revalidatePath('/live-dosa-catering');
+        revalidatePath('/privacy-policy');
+        revalidatePath('/cookies-policy');
+        revalidatePath('/disclaimer');
+        revalidatePath('/sitemap.xml');
+        revalidatePath('/robots.txt');
       } catch {}
       return NextResponse.json(
         {

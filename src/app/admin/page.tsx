@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
+import SeoManagement from '@/components/admin/SeoManagement';
 
 export default function AdminDashboard() {
   const [password, setPassword] = useState('');
@@ -178,7 +179,9 @@ export default function AdminDashboard() {
           if (typeof window !== 'undefined' && 'BroadcastChannel' in window) {
             const channel = new BroadcastChannel('vcs_content_channel');
             channel.postMessage({ type: 'CONTENT_SAVED', timestamp: Date.now() });
-            channel.close();
+            setTimeout(() => {
+              try { channel.close(); } catch {}
+            }, 1500);
           }
         } catch (err) {}
         if (typeof window !== 'undefined') {
@@ -286,6 +289,35 @@ export default function AdminDashboard() {
       ...prev,
       topFood: { ...prev.topFood, items: updated }
     }));
+  };
+
+  const updateAbout = (field: string, val: any) => {
+    setSiteData((prev: any) => ({
+      ...prev,
+      about: { ...prev.about, [field]: val }
+    }));
+  };
+
+  const updateAboutParagraph = (idx: number, val: string) => {
+    setSiteData((prev: any) => {
+      const updated = [...(prev.about?.paragraphs || [])];
+      updated[idx] = val;
+      return {
+        ...prev,
+        about: { ...prev.about, paragraphs: updated }
+      };
+    });
+  };
+
+  const updateAboutStat = (idx: number, field: string, val: string) => {
+    setSiteData((prev: any) => {
+      const updated = [...(prev.about?.stats || [])];
+      updated[idx] = { ...updated[idx], [field]: val };
+      return {
+        ...prev,
+        about: { ...prev.about, stats: updated }
+      };
+    });
   };
 
   const updateFaq = (idx: number, field: 'q' | 'a', val: string) => {
@@ -1879,7 +1911,7 @@ export default function AdminDashboard() {
                   <input
                     type="text"
                     value={siteData.about.title || ''}
-                    onChange={(e) => setSiteData({ ...siteData, about: { ...siteData.about, title: e.target.value } })}
+                    onChange={(e) => updateAbout('title', e.target.value)}
                     style={{ width: '100%', padding: '0.75rem', borderRadius: '8px', backgroundColor: '#292524', border: '1px solid #44403C', color: '#fff', fontSize: '0.95rem' }}
                   />
                 </div>
@@ -1890,11 +1922,7 @@ export default function AdminDashboard() {
                     <textarea
                       rows={3}
                       value={p}
-                      onChange={(e) => {
-                        const updated = [...siteData.about.paragraphs];
-                        updated[idx] = e.target.value;
-                        setSiteData({ ...siteData, about: { ...siteData.about, paragraphs: updated } });
-                      }}
+                      onChange={(e) => updateAboutParagraph(idx, e.target.value)}
                       style={{ width: '100%', padding: '0.75rem', borderRadius: '8px', backgroundColor: '#292524', border: '1px solid #44403C', color: '#fff', fontSize: '0.95rem', resize: 'vertical' }}
                     />
                   </div>
@@ -1910,21 +1938,13 @@ export default function AdminDashboard() {
                       <input
                         type="text"
                         value={st.value}
-                        onChange={(e) => {
-                          const updated = [...siteData.about.stats];
-                          updated[idx] = { ...updated[idx], value: e.target.value };
-                          setSiteData({ ...siteData, about: { ...siteData.about, stats: updated } });
-                        }}
+                        onChange={(e) => updateAboutStat(idx, 'value', e.target.value)}
                         style={{ width: '100%', fontSize: '1.25rem', fontWeight: 800, color: '#DE7843', backgroundColor: '#292524', border: '1px solid #44403C', borderRadius: '6px', padding: '0.4rem', marginBottom: '0.5rem' }}
                       />
                       <input
                         type="text"
                         value={st.label}
-                        onChange={(e) => {
-                          const updated = [...siteData.about.stats];
-                          updated[idx] = { ...updated[idx], label: e.target.value };
-                          setSiteData({ ...siteData, about: { ...siteData.about, stats: updated } });
-                        }}
+                        onChange={(e) => updateAboutStat(idx, 'label', e.target.value)}
                         style={{ width: '100%', fontSize: '0.85rem', fontWeight: 600, color: '#FFFFFF', backgroundColor: '#292524', border: '1px solid #44403C', borderRadius: '6px', padding: '0.3rem' }}
                       />
                     </div>
@@ -2779,7 +2799,7 @@ export default function AdminDashboard() {
                               type="text"
                               value={siteData.footer?.logoUrl || siteData.restaurant?.logoUrl || ''}
                               onChange={(e) => updateFooter('logoUrl', e.target.value)}
-                              placeholder="/images/migrated/vcsr-logo.webp"
+                              placeholder="/images/migrated/vcs-amersham-round-logo.webp"
                               style={{ flex: 1, padding: '0.65rem', borderRadius: '8px', backgroundColor: '#1C1917', border: '1px solid #57534E', color: '#fff', fontSize: '0.9rem' }}
                             />
                             <label style={{ padding: '0.65rem 1rem', borderRadius: '8px', backgroundColor: 'rgba(222, 120, 67, 0.15)', color: '#DE7843', border: '1px solid rgba(222, 120, 67, 0.4)', fontSize: '0.82rem', fontWeight: 700, cursor: 'pointer', whiteSpace: 'nowrap' }}>
@@ -2932,200 +2952,13 @@ export default function AdminDashboard() {
 
           {/* TAB 11: SEO & PAGE RANKING */}
           {activeTab === 'seo' && (
-            <div>
-              <div style={{ marginBottom: '2rem' }}>
-                <h2 style={{ fontSize: '1.75rem', fontWeight: 800, margin: '0 0 0.5rem 0' }}>SEO, Keyword Ranking & Meta Data</h2>
-                <p style={{ color: '#A8A29E', fontSize: '0.95rem', margin: 0 }}>
-                  Manage search engine titles, Google ranking keywords, meta descriptions, and H1 tags across all pages.
-                </p>
-              </div>
-
-              {/* Page Selector Tabs */}
-              <div style={{ display: 'flex', gap: '0.5rem', flexWrap: 'wrap', marginBottom: '2rem' }}>
-                {[
-                  { key: 'home', label: '🏠 Home Page' },
-                  { key: 'menu', label: '🍲 Menu Page' },
-                  { key: 'outdoorCatering', label: '🥘 Outdoor Catering' },
-                  { key: 'liveDosaCatering', label: '🥞 Live Dosa' },
-                  { key: 'contact', label: '📍 Contact & Location' },
-                  { key: 'privacyPolicy', label: '🔒 Privacy Policy' },
-                  { key: 'cookiesPolicy', label: '🍪 Cookies Policy' },
-                  { key: 'disclaimer', label: '⚠️ Disclaimer' },
-                ].map((pg) => {
-                  const isCur = activeSeoPage === pg.key;
-                  return (
-                    <button
-                      key={pg.key}
-                      type="button"
-                      onClick={() => setActiveSeoPage(pg.key)}
-                      style={{
-                        padding: '0.65rem 1.25rem',
-                        borderRadius: '10px',
-                        backgroundColor: isCur ? '#DE7843' : '#292524',
-                        color: isCur ? '#fff' : '#D6D3D1',
-                        border: isCur ? '1px solid #DE7843' : '1px solid #44403C',
-                        fontWeight: 700,
-                        fontSize: '0.9rem',
-                        cursor: 'pointer',
-                        transition: 'all 0.2s',
-                      }}
-                    >
-                      {pg.label}
-                    </button>
-                  );
-                })}
-              </div>
-
-              {/* Active SEO Form */}
-              {(() => {
-                const seoData = siteData.seo?.[activeSeoPage] || {};
-                const titleLen = (seoData.title || '').length;
-                const descLen = (seoData.description || '').length;
-
-                return (
-                  <div style={{ display: 'flex', flexDirection: 'column', gap: '1.75rem' }}>
-                    {/* Live Google Search Preview Card */}
-                    <div style={{ backgroundColor: '#1C1917', padding: '1.5rem', borderRadius: '14px', border: '1px solid #292524' }}>
-                      <span style={{ fontSize: '0.78rem', color: '#DE7843', fontWeight: 800, textTransform: 'uppercase', letterSpacing: '1px' }}>
-                        Google SERP Live Preview
-                      </span>
-                      <div style={{ marginTop: '0.85rem', backgroundColor: '#FFFFFF', padding: '1.25rem 1.5rem', borderRadius: '12px', border: '1px solid #E5E7EB' }}>
-                        <div style={{ fontSize: '0.8rem', color: '#202124', marginBottom: '2px', display: 'flex', alignItems: 'center', gap: '6px' }}>
-                          <span style={{ color: '#202124', fontWeight: 600 }}>Veg Chennai SriLalitha</span>
-                          <span style={{ color: '#5f6368' }}>› {seoData.url || '/'}</span>
-                        </div>
-                        <h4 style={{ margin: '0 0 4px 0', fontSize: '1.15rem', color: '#1a0dab', fontWeight: 500, lineHeight: 1.3 }}>
-                          {seoData.title || 'South Indian Vegetarian Restaurant Amersham | 100% Pure Veg'}
-                        </h4>
-                        <p style={{ margin: 0, fontSize: '0.88rem', color: '#4d5156', lineHeight: 1.45 }}>
-                          {seoData.description || 'Top-rated South-Indian Vegetarian Dining in Amersham. Authentic Dosas, Thalis, & Catering Services.'}
-                        </p>
-                      </div>
-                    </div>
-
-                    {/* SEO Inputs */}
-                    <div style={{ backgroundColor: '#1C1917', padding: '1.75rem', borderRadius: '14px', border: '1px solid #292524', display: 'flex', flexDirection: 'column', gap: '1.25rem' }}>
-                      {/* Meta Title */}
-                      <div>
-                        <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '0.5rem' }}>
-                          <label style={{ fontSize: '0.88rem', fontWeight: 700, color: '#D6D3D1' }}>Page Meta Title (Browser &amp; Google Title)</label>
-                          <span style={{ fontSize: '0.8rem', color: titleLen > 65 ? '#EF4444' : '#10B981', fontWeight: 600 }}>
-                            {titleLen} / 60 characters
-                          </span>
-                        </div>
-                        <input
-                          type="text"
-                          value={seoData.title || ''}
-                          onChange={(e) => updateSeo(activeSeoPage, 'title', e.target.value)}
-                          placeholder="Primary Google Title Tag"
-                          style={{ width: '100%', padding: '0.75rem', borderRadius: '8px', backgroundColor: '#292524', border: '1px solid #44403C', color: '#fff', fontSize: '0.95rem' }}
-                        />
-                      </div>
-
-                      {/* Meta Description */}
-                      <div>
-                        <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '0.5rem' }}>
-                          <label style={{ fontSize: '0.88rem', fontWeight: 700, color: '#D6D3D1' }}>Meta Description (Search Snippet)</label>
-                          <span style={{ fontSize: '0.8rem', color: descLen > 165 ? '#EF4444' : '#10B981', fontWeight: 600 }}>
-                            {descLen} / 160 characters
-                          </span>
-                        </div>
-                        <textarea
-                          rows={3}
-                          value={seoData.description || ''}
-                          onChange={(e) => updateSeo(activeSeoPage, 'description', e.target.value)}
-                          placeholder="Brief description that convinces visitors on Google to click your site."
-                          style={{ width: '100%', padding: '0.75rem', borderRadius: '8px', backgroundColor: '#292524', border: '1px solid #44403C', color: '#fff', fontSize: '0.95rem', resize: 'vertical' }}
-                        />
-                      </div>
-
-                      {/* Ranking Keywords */}
-                      <div>
-                        <label style={{ display: 'block', fontSize: '0.88rem', fontWeight: 700, color: '#D6D3D1', marginBottom: '0.5rem' }}>
-                          🎯 Target Google Ranking Keywords (Comma-separated)
-                        </label>
-                        <input
-                          type="text"
-                          value={seoData.keywords || ''}
-                          onChange={(e) => updateSeo(activeSeoPage, 'keywords', e.target.value)}
-                          placeholder="e.g. South Indian Restaurant Amersham, Dosa Amersham, Indian Food Buckinghamshire"
-                          style={{ width: '100%', padding: '0.75rem', borderRadius: '8px', backgroundColor: '#292524', border: '1px solid #44403C', color: '#fff', fontSize: '0.95rem' }}
-                        />
-                        <span style={{ display: 'block', marginTop: '0.35rem', fontSize: '0.78rem', color: '#78716C' }}>
-                          These keywords optimize search engines and meta crawler bots for high ranking in local Amersham &amp; Buckinghamshire searches.
-                        </span>
-                      </div>
-
-                      {/* Primary Page H1 Tag */}
-                      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '1rem' }}>
-                        <div>
-                          <label style={{ display: 'block', fontSize: '0.88rem', fontWeight: 700, color: '#D6D3D1', marginBottom: '0.5rem' }}>
-                            Primary Page H1 Tag
-                          </label>
-                          <input
-                            type="text"
-                            value={seoData.h1 || ''}
-                            onChange={(e) => updateSeo(activeSeoPage, 'h1', e.target.value)}
-                            placeholder="Main H1 headline tag"
-                            style={{ width: '100%', padding: '0.75rem', borderRadius: '8px', backgroundColor: '#292524', border: '1px solid #44403C', color: '#fff', fontSize: '0.95rem' }}
-                          />
-                        </div>
-
-                        <div>
-                          <label style={{ display: 'block', fontSize: '0.88rem', fontWeight: 700, color: '#D6D3D1', marginBottom: '0.5rem' }}>
-                            Canonical URL
-                          </label>
-                          <input
-                            type="text"
-                            value={seoData.canonical || ''}
-                            onChange={(e) => updateSeo(activeSeoPage, 'canonical', e.target.value)}
-                            placeholder="https://vcsamersham.co.uk/..."
-                            style={{ width: '100%', padding: '0.75rem', borderRadius: '8px', backgroundColor: '#292524', border: '1px solid #44403C', color: '#fff', fontSize: '0.95rem' }}
-                          />
-                        </div>
-                      </div>
-
-                      {/* OG Share Image */}
-                      <div>
-                        <label style={{ display: 'block', fontSize: '0.88rem', fontWeight: 700, color: '#D6D3D1', marginBottom: '0.5rem' }}>
-                          Social Share Image (OG Image)
-                        </label>
-                        <div style={{ display: 'flex', gap: '0.75rem', alignItems: 'center' }}>
-                          <input
-                            type="text"
-                            value={seoData.ogImage || ''}
-                            onChange={(e) => updateSeo(activeSeoPage, 'ogImage', e.target.value)}
-                            placeholder="/images/..."
-                            style={{ flex: 1, padding: '0.75rem', borderRadius: '8px', backgroundColor: '#292524', border: '1px solid #44403C', color: '#fff', fontSize: '0.95rem' }}
-                          />
-                          <label
-                            style={{
-                              padding: '0.75rem 1.25rem',
-                              borderRadius: '8px',
-                              backgroundColor: 'rgba(222, 120, 67, 0.15)',
-                              color: '#DE7843',
-                              border: '1px solid rgba(222, 120, 67, 0.4)',
-                              fontSize: '0.85rem',
-                              fontWeight: 700,
-                              cursor: 'pointer',
-                              whiteSpace: 'nowrap',
-                            }}
-                          >
-                            📁 Upload OG Image
-                            <input
-                              type="file"
-                              accept="image/*"
-                              style={{ display: 'none' }}
-                              onChange={(e) => handleImageUpload(e, (url) => updateSeo(activeSeoPage, 'ogImage', url), `seo-${activeSeoPage}`)}
-                            />
-                          </label>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                );
-              })()}
-            </div>
+            <SeoManagement
+              siteData={siteData}
+              setSiteData={setSiteData}
+              handleImageUpload={handleImageUpload}
+              setStatusMessage={setStatusMessage}
+              saveAllChanges={saveAllChanges}
+            />
           )}
 
           {/* TAB 12: CUSTOM FORM FIELDS & INPUT BOXES */}
@@ -3519,9 +3352,9 @@ export default function AdminDashboard() {
                 {/* 3 Major Delivery Partners */}
                 <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: '1.25rem' }}>
                   {[
-                    { key: 'justEat', label: 'Just Eat', icon: '🍔', defaultName: 'Just Eat', defaultUrl: 'https://www.just-eat.co.uk/', defaultImage: '/images/migrated/Add-a-heading-6.png', defaultDesc: 'Fast local home delivery straight to your doorstep.' },
-                    { key: 'deliveroo', label: 'Deliveroo', icon: '🦘', defaultName: 'Deliveroo', defaultUrl: 'https://deliveroo.co.uk/', defaultImage: '/images/migrated/Add-a-heading-7.png', defaultDesc: 'Track your authentic hot meal in real-time.' },
-                    { key: 'uberEats', label: 'Uber Eats', icon: '🟢', defaultName: 'Uber Eats', defaultUrl: 'https://www.ubereats.com/', defaultImage: '/images/migrated/Add-a-heading-8.png', defaultDesc: 'Order with your Uber account for quick pickup or delivery.' },
+                    { key: 'justEat', label: 'Just Eat', icon: '🍔', defaultName: 'Just Eat', defaultUrl: 'https://www.just-eat.co.uk/', defaultImage: '/images/migrated/delivery-platform-just-eat.png', defaultDesc: 'Fast local home delivery straight to your doorstep.' },
+                    { key: 'deliveroo', label: 'Deliveroo', icon: '🦘', defaultName: 'Deliveroo', defaultUrl: 'https://deliveroo.co.uk/', defaultImage: '/images/migrated/delivery-platform-deliveroo.png', defaultDesc: 'Track your authentic hot meal in real-time.' },
+                    { key: 'uberEats', label: 'Uber Eats', icon: '🟢', defaultName: 'Uber Eats', defaultUrl: 'https://www.ubereats.com/', defaultImage: '/images/migrated/delivery-platform-uber-eats.png', defaultDesc: 'Order with your Uber account for quick pickup or delivery.' },
                   ].map((platform) => (
                     <div key={platform.key} style={{ backgroundColor: '#1C1917', padding: '1.5rem', borderRadius: '14px', border: '1px solid #292524', display: 'flex', flexDirection: 'column', gap: '1rem' }}>
                       <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>

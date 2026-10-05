@@ -1,7 +1,7 @@
 'use client';
 
 import { usePathname, useRouter } from 'next/navigation';
-import { useEffect, useRef } from 'react';
+import { useEffect } from 'react';
 import Header from './Header';
 import Footer from './Footer';
 
@@ -14,18 +14,18 @@ export default function ClientLayout({ children, siteContent }: ClientLayoutProp
   const pathname = usePathname();
   const router = useRouter();
   const isAdmin = pathname?.startsWith('/admin');
-  const currentVersionRef = useRef<number | null>(null);
 
   useEffect(() => {
     if (isAdmin) return;
 
-    let reloadTimer: any = null;
-    const triggerLiveUpdate = () => {
-      if (reloadTimer) clearTimeout(reloadTimer);
-      // Clean, debounced reload gives the server 400ms to flush disk & caches, ensuring fresh content
-      reloadTimer = setTimeout(() => {
+    // Track the initial content version timestamp when this tab opened
+    let initialVersion = typeof window !== 'undefined' ? localStorage.getItem('vcs_last_content_save') : null;
+
+    const reloadLiveSite = () => {
+      // Clean full-page reload ensures latest server HTML and zero client-cache lag
+      if (typeof window !== 'undefined') {
         window.location.reload();
-      }, 400);
+      }
     };
 
     // 1. Instant cross-tab sync via BroadcastChannel
@@ -35,67 +35,40 @@ export default function ClientLayout({ children, siteContent }: ClientLayoutProp
         channel = new BroadcastChannel('vcs_content_channel');
         channel.onmessage = (event) => {
           if (event.data?.type === 'CONTENT_SAVED') {
-            triggerLiveUpdate();
+            reloadLiveSite();
           }
         };
       }
-    } catch (err) {
-      // Ignore
-    }
+    } catch (err) {}
 
-    // 2. Storage event listener (standard browser cross-tab sync)
+    // 2. Cross-tab sync via standard storage event
     const handleStorage = (e: StorageEvent) => {
       if (e.key === 'vcs_last_content_save') {
-        triggerLiveUpdate();
+        reloadLiveSite();
       }
     };
     window.addEventListener('storage', handleStorage);
 
-    // 3. Tab visibility / window focus check
-    const checkVersion = async () => {
-      try {
-        const res = await fetch('/api/content-version', { cache: 'no-store' });
-        const json = await res.json();
-        if (json?.version) {
-          if (currentVersionRef.current === null) {
-            currentVersionRef.current = json.version;
-          } else if (json.version > currentVersionRef.current) {
-            currentVersionRef.current = json.version;
-            triggerLiveUpdate();
-          }
+    // 3. Tab-switching sync: when user clicks over from Admin tab to Live Site tab
+    const handleTabFocus = () => {
+      if (document.visibilityState === 'visible') {
+        const latest = localStorage.getItem('vcs_last_content_save');
+        if (latest && latest !== initialVersion) {
+          initialVersion = latest;
+          reloadLiveSite();
         }
-      } catch (e) {
-        // Silently ignore network hiccup
       }
     };
-
-    const handleFocus = () => {
-      if (document.visibilityState === 'visible') {
-        checkVersion();
-      }
-    };
-    window.addEventListener('focus', handleFocus);
-    document.addEventListener('visibilitychange', handleFocus);
-
-    // 4. Lightweight polling check every 3 seconds (only when tab is visible)
-    const interval = setInterval(() => {
-      if (document.visibilityState === 'visible') {
-        checkVersion();
-      }
-    }, 3000);
-
-    // Initial check
-    checkVersion();
+    document.addEventListener('visibilitychange', handleTabFocus);
+    window.addEventListener('focus', handleTabFocus);
 
     return () => {
-      if (reloadTimer) clearTimeout(reloadTimer);
       channel?.close();
       window.removeEventListener('storage', handleStorage);
-      window.removeEventListener('focus', handleFocus);
-      document.removeEventListener('visibilitychange', handleFocus);
-      clearInterval(interval);
+      document.removeEventListener('visibilitychange', handleTabFocus);
+      window.removeEventListener('focus', handleTabFocus);
     };
-  }, [isAdmin, router]);
+  }, [isAdmin]);
 
   if (isAdmin) {
     return <div style={{ width: '100%', minHeight: '100vh' }}>{children}</div>;

@@ -127,7 +127,7 @@ content.catering = {
   outdoorButtonLink: "/outdoor-catering",
   liveDosaButtonText: "Live Dosa Catering",
   liveDosaButtonLink: "/live-dosa-catering",
-  image: "/images/migrated/CaffeChennai-70-1024x683.jpg"
+  image: "/images/migrated/vcs-catering-buffet-setup-1024x683.jpg"
 };
 
 // 5. Why Families Love Us matching live website
@@ -263,7 +263,7 @@ content.header = {
   phone: "0149 497 2550",
   orderButtonText: "Order Online",
   orderButtonLink: "/#order",
-  logoUrl: "/images/migrated/vcsr-logo.webp"
+  logoUrl: "/images/migrated/vcs-amersham-round-logo.webp"
 };
 
 content.footer = {
@@ -275,7 +275,7 @@ content.footer = {
 };
 
 // 8. SEO with Long Dosa OG Images
-content.seo.home.ogImage = "/images/migrated/WhatsApp-Image-2025-11-01-at-15.41.07-2.jpeg";
+content.seo.home.ogImage = "/images/migrated/vcs-authentic-south-indian-feast.jpeg";
 content.seo.menu.ogImage = "/images/long-dosa-feast.png";
 content.seo.liveDosaCatering.ogImage = "/images/long-dosa-feast.png";
 

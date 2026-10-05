@@ -17,7 +17,7 @@ export async function GET() {
       }
     );
   } catch (err: any) {
-    return NextResponse.json({ version: Date.now() });
+    return NextResponse.json({ version: 0 });
   }
 }
 

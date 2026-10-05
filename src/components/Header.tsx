@@ -119,9 +119,20 @@ export default function Header({ restaurant, header }: HeaderProps = {}) {
           right: 0 !important;
           width: 100% !important;
           z-index: 1000 !important;
-          padding: 0.4rem 2.5rem;
+          padding: 0 1.5rem !important;
           background-color: #000000 !important;
           box-shadow: 0 2px 10px rgba(0,0,0,0.5) !important;
+          box-sizing: border-box !important;
+        }
+        .header-inner {
+          max-width: 1200px;
+          margin: 0 auto;
+          width: 100%;
+          padding: 0.45rem 0;
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          box-sizing: border-box;
         }
         .header-logo {
           height: 68px;
@@ -179,7 +190,11 @@ export default function Header({ restaurant, header }: HeaderProps = {}) {
             gap: 0.75rem;
           }
           .header-container {
-            padding: 0.55rem 1.25rem !important;
+            padding: 0 1.25rem !important;
+            min-height: 64px !important;
+          }
+          .header-inner {
+            padding: 0.55rem 0 !important;
             min-height: 64px !important;
           }
           .header-logo {
@@ -192,9 +207,7 @@ export default function Header({ restaurant, header }: HeaderProps = {}) {
       <header
         className="header-container"
         style={{
-          display: 'flex',
-          justifyContent: 'space-between',
-          alignItems: 'center',
+          width: '100%',
           backgroundColor: '#000',
           color: '#fff',
           position: 'sticky',
@@ -202,16 +215,17 @@ export default function Header({ restaurant, header }: HeaderProps = {}) {
           zIndex: 1000,
         }}
       >
-        {/* Left: Logo */}
-        <div style={{ display: 'flex', alignItems: 'center' }}>
-          <Link href="/" onClick={(e) => handleNavClick(e, 'home')}>
-            <img
-              src={header?.logo || "/images/migrated/WhatsApp-Image-2025-11-03-at-18.48.43-1024x430.jpeg"}
-              alt={restaurant?.name || "VCS Amersham Logo"}
-              className="header-logo"
-            />
-          </Link>
-        </div>
+        <div className="header-inner">
+          {/* Left: Logo */}
+          <div style={{ display: 'flex', alignItems: 'center' }}>
+            <Link href="/" onClick={(e) => handleNavClick(e, 'home')}>
+              <img
+                src={header?.logo || "/images/migrated/vcsr-veg-chennai-srilalitha-logo.jpeg"}
+                alt={restaurant?.name || "VCS Amersham Logo"}
+                className="header-logo"
+              />
+            </Link>
+          </div>
 
         {/* Center: Desktop Navigation Links */}
         <nav className="desktop-nav" style={{ flex: '2', justifyContent: 'center' }}>
@@ -477,6 +491,7 @@ export default function Header({ restaurant, header }: HeaderProps = {}) {
             />
           </button>
         </div>
+        </div>
       </header>
 
       {/* Luxury Mobile Off-Canvas Drawer */}
@@ -533,7 +548,7 @@ export default function Header({ restaurant, header }: HeaderProps = {}) {
                 style={{ textDecoration: 'none', display: 'flex', flexDirection: 'column', gap: '3px' }}
               >
                 <img
-                  src={header?.logo || "/images/migrated/WhatsApp-Image-2025-11-03-at-18.48.43-1024x430.jpeg"}
+                  src={header?.logo || "/images/migrated/vcsr-veg-chennai-srilalitha-logo.jpeg"}
                   alt={restaurant?.name || "VCS Amersham Logo"}
                   style={{
                     height: '46px',

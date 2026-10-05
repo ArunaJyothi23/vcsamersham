@@ -2,24 +2,24 @@
 import defaultSiteContent from "../data/site_content.json";
 
 const carouselImages = [
-  "/images/migrated/WhatsApp-Image-2026-04-25-at-12.56.14-2.jpeg",
-  "/images/migrated/WhatsApp-Image-2026-04-25-at-12.56.14-7.jpeg",
-  "/images/migrated/WhatsApp-Image-2026-04-25-at-12.56.14-6.jpeg",
-  "/images/migrated/WhatsApp-Image-2026-04-25-at-12.56.15-3.jpeg",
-  "/images/migrated/WhatsApp-Image-2026-04-25-at-12.56.15-2.jpeg",
-  "/images/migrated/WhatsApp-Image-2026-04-25-at-12.56.16-4.jpeg",
-  "/images/migrated/WhatsApp-Image-2026-04-25-at-12.56.16-2.jpeg",
-  "/images/migrated/WhatsApp-Image-2026-04-25-at-12.56.16-1.jpeg",
-  "/images/migrated/WhatsApp-Image-2026-04-25-at-12.56.17.jpeg",
-  "/images/migrated/WhatsApp-Image-2026-04-25-at-12.56.16-6.jpeg",
-  "/images/migrated/WhatsApp-Image-2026-04-25-at-12.56.13-8.jpeg",
-  "/images/migrated/WhatsApp-Image-2026-04-25-at-12.56.13-3.jpeg",
-  "/images/migrated/WhatsApp-Image-2026-04-25-at-12.56.12-2.jpeg",
-  "/images/migrated/WhatsApp-Image-2026-04-25-at-12.56.12.jpeg",
-  "/images/migrated/WhatsApp-Image-2026-04-25-at-12.56.12-4.jpeg",
-  "/images/migrated/WhatsApp-Image-2026-04-25-at-12.56.13.jpeg",
-  "/images/migrated/WhatsApp-Image-2026-04-25-at-12.56.12-1.jpeg",
-  "/images/migrated/WhatsApp-Image-2026-04-25-at-12.56.12-3.jpeg",
+  "/images/migrated/cocktail-idli-skewers-platter.jpeg",
+  "/images/migrated/crispy-potli-samosa-starter.jpeg",
+  "/images/migrated/crispy-podi-idli-skewers.jpeg",
+  "/images/migrated/crispy-masala-dal-vada.jpeg",
+  "/images/migrated/crispy-vegetable-spring-rolls.jpeg",
+  "/images/migrated/veg-manchurian-dry.jpeg",
+  "/images/migrated/paneer-tikka-masala-tandoori-roti.jpeg",
+  "/images/migrated/dal-makhani-jeera-rice.jpeg",
+  "/images/migrated/chettinad-spicy-roast-starter.jpeg",
+  "/images/migrated/chilli-paneer-tossed-appetizer.jpeg",
+  "/images/migrated/chilli-paneer-dry-starter.jpeg",
+  "/images/migrated/crispy-medu-vada-chutney-sambar.jpeg",
+  "/images/migrated/gourmet-fruit-vegetable-catering-display.jpeg",
+  "/images/migrated/fresh-green-salad-platter.jpeg",
+  "/images/migrated/fresh-strawberry-orange-fruit-salad.jpeg",
+  "/images/migrated/steamed-idli-medu-vada-chutney.jpeg",
+  "/images/migrated/fresh-fruit-salad-platter.jpeg",
+  "/images/migrated/tropical-dragonfruit-kiwi-platter.jpeg",
 ];
 
 // Double the array to allow for seamless infinite scrolling
@@ -42,7 +42,7 @@ export default function TopFood({ content }: TopFoodProps) {
     rating: String(item.rating || "4.9"),
   }));
   return (
-    <section style={{ padding: '0.75rem 0 2rem 0', backgroundColor: '#FFFDF9', textAlign: 'center', overflow: 'hidden' }}>
+    <section style={{ padding: '0.75rem 1.5rem 2rem', backgroundColor: '#FFFDF9', textAlign: 'center', overflow: 'hidden', boxSizing: 'border-box' }}>
       <style>{`
         @keyframes scrollMarquee {
           0% {
@@ -110,7 +110,7 @@ export default function TopFood({ content }: TopFoodProps) {
         }
       `}</style>
       
-      <div style={{ maxWidth: '1320px', margin: '0 auto', padding: '0 clamp(1rem, 2.5vw, 2rem)', marginBottom: '1.25rem' }}>
+      <div style={{ maxWidth: '1200px', margin: '0 auto', marginBottom: '1.25rem', boxSizing: 'border-box' }}>
         <h2 style={{ 
           fontFamily: "var(--font-sans), 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif",
           fontSize: 'clamp(25px, 2.5vw, 30px)', 
@@ -232,26 +232,46 @@ export default function TopFood({ content }: TopFoodProps) {
         </div>
       </div>
 
-      {/* Marquee Header & Carousel */}
-      <div style={{ maxWidth: '1200px', margin: '0 auto 1.5rem', padding: '0 1.25rem' }}>
+      {/* Marquee Header & Carousel (Constrained cleanly to 1200px matching Section 2) */}
+      <div style={{ maxWidth: '1200px', margin: '0 auto 1.25rem', boxSizing: 'border-box' }}>
         <p style={{ fontSize: '0.9rem', color: '#888888', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '1.5px', margin: 0 }}>
           More From Our Daily Kitchen
         </p>
       </div>
 
-      <div className="marquee-track">
-        {marqueeImages.map((src, index) => (
-          <img 
-            key={index}
-            src={src} 
-            alt={`Top Food Dish ${index + 1}`}
-            className="marquee-img"
-            loading="lazy"
-            onError={(e) => {
-              (e.currentTarget as HTMLElement).style.display = 'none';
-            }}
-          />
-        ))}
+      <div
+        style={{
+          maxWidth: '1200px',
+          margin: '0 auto',
+          boxSizing: 'border-box',
+          position: 'relative',
+        }}
+      >
+        <div
+          style={{
+            overflow: 'hidden',
+            borderRadius: '20px',
+            position: 'relative',
+            width: '100%',
+            maskImage: 'linear-gradient(to right, transparent, black 32px, black calc(100% - 32px), transparent)',
+            WebkitMaskImage: 'linear-gradient(to right, transparent, black 32px, black calc(100% - 32px), transparent)',
+          }}
+        >
+          <div className="marquee-track">
+            {marqueeImages.map((src, index) => (
+              <img 
+                key={index}
+                src={src} 
+                alt={`Top Food Dish ${index + 1}`}
+                className="marquee-img"
+                loading="lazy"
+                onError={(e) => {
+                  (e.currentTarget as HTMLElement).style.display = 'none';
+                }}
+              />
+            ))}
+          </div>
+        </div>
       </div>
     </section>
   );

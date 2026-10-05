@@ -1,42 +1,13 @@
 import { getSiteContent } from '@/lib/firebaseService';
+import { buildPageMetadata } from '@/lib/seoService';
+import PageJsonLd from '@/components/PageJsonLd';
 
 export const dynamic = 'force-dynamic';
 export const revalidate = 0;
 
 export async function generateMetadata() {
   const siteContent = await getSiteContent();
-  const disclaimer = siteContent?.legalPolicies?.disclaimer;
-  const seo = siteContent?.seo?.disclaimer;
-  const title = seo?.title || 'Disclaimer - vcsamersham';
-  const description =
-    seo?.description ||
-    disclaimer?.foodSafety ||
-    'Disclaimer Food Safety and Allergies We are committed to maintaining high standards of food safety and hygiene in the preparation of our food.';
-  const keywords = seo?.keywords ? seo.keywords.split(',').map((k: string) => k.trim()) : undefined;
-  const canonical = seo?.canonical || 'https://vcsamersham.co.uk/disclaimer/';
-  const ogImage = seo?.ogImage || '/images/migrated/WhatsApp-Image-2025-11-01-at-15.41.07-2.jpeg';
-
-  return {
-    title,
-    description,
-    keywords,
-    alternates: { canonical },
-    openGraph: {
-      title,
-      description,
-      url: 'https://vcsamersham.co.uk/disclaimer/',
-      siteName: 'Veg Chennai Srilalitha Amersham',
-      locale: 'en_GB',
-      type: 'website',
-      images: [{ url: ogImage, width: 1200, height: 630, alt: title }],
-    },
-    twitter: {
-      card: 'summary_large_image',
-      title,
-      description,
-      images: [ogImage],
-    },
-  };
+  return buildPageMetadata('/disclaimer', siteContent);
 }
 
 export default async function Disclaimer() {
@@ -45,6 +16,7 @@ export default async function Disclaimer() {
 
   return (
     <div style={{ padding: 'clamp(2.5rem, 5vw, 4rem) clamp(1rem, 4vw, 2rem)', backgroundColor: '#FFFDF9', color: '#111', fontFamily: 'inherit', lineHeight: '1.8' }}>
+      <PageJsonLd route="/disclaimer" siteContent={siteContent} />
       <div style={{ maxWidth: '900px', margin: '0 auto' }}>
         <h1 style={{ fontSize: 'clamp(2rem, 5vw, 3rem)', fontWeight: 700, marginBottom: '1.5rem', color: '#1a2f4c' }}>
           {disclaimer?.title || 'Disclaimer'}

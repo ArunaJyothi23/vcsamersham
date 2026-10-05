@@ -15,22 +15,32 @@ function getPageBySlug(slug: string) {
   return data.pages.find((page: any) => page.slug === slug);
 }
 
-// Generate exact SEO metadata mapped from WordPress
+import { getSiteContent } from "@/lib/firebaseService";
+import { buildPageMetadata } from "@/lib/seoService";
+import PageJsonLd from "@/components/PageJsonLd";
+
+// Generate exact SEO metadata from admin system or mapped WordPress fallback
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;
+  const siteContent = await getSiteContent();
   const page = getPageBySlug(slug);
 
   if (!page) {
-    return {
-      title: "Not Found",
-    };
+    notFound();
+  }
+
+  // Check if admin has configured SEO for this route
+  const route = `/${slug}`;
+  const metadata = buildPageMetadata(route, siteContent);
+  if (metadata.title) {
+    return metadata;
   }
 
   return {
-    title: page.seo.title || page.title,
-    description: page.seo.description,
+    title: page.seo?.title || page.title,
+    description: page.seo?.description,
     alternates: {
-      canonical: page.seo.canonical,
+      canonical: page.seo?.canonical,
     },
   };
 }
@@ -48,7 +58,10 @@ export async function generateStaticParams() {
 
 export default async function DynamicPage({ params }: Props) {
   const { slug } = await params;
-  const page = getPageBySlug(slug);
+  const [page, siteContent] = await Promise.all([
+    getPageBySlug(slug),
+    getSiteContent(),
+  ]);
 
   if (!page) {
     notFound();
@@ -56,6 +69,7 @@ export default async function DynamicPage({ params }: Props) {
 
   return (
     <main className="container mx-auto px-4 py-12 min-h-screen">
+      <PageJsonLd route={`/${slug}`} siteContent={siteContent} />
       <h1 className="text-4xl font-bold mb-8">{page.title}</h1>
       
       {/* 

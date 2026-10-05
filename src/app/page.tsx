@@ -1,3 +1,4 @@
+import type { Metadata } from 'next';
 import Hero from '../components/Hero';
 import AboutSection from '../components/AboutSection';
 import TopFood from '../components/TopFood';
@@ -8,11 +9,17 @@ import WhyChooseUs from '../components/WhyChooseUs';
 import FAQ from '../components/FAQ';
 import Contact from '../components/Contact';
 import Reviews from '../components/Reviews';
+import PageJsonLd from '@/components/PageJsonLd';
 import { getSiteContent, getMenuData } from '@/lib/firebaseService';
+import { buildPageMetadata } from '@/lib/seoService';
 
-// Force dynamic SSR so edits saved in Admin Studio appear immediately on page reload
 export const dynamic = 'force-dynamic';
 export const revalidate = 0;
+
+export async function generateMetadata(): Promise<Metadata> {
+  const siteContent = await getSiteContent();
+  return buildPageMetadata('/', siteContent);
+}
 
 export default async function Home() {
   const [siteContent, menuData] = await Promise.all([
@@ -22,6 +29,7 @@ export default async function Home() {
 
   return (
     <>
+      <PageJsonLd route="/" siteContent={siteContent} />
       <Hero content={siteContent?.hero} />
       <AboutSection content={siteContent?.about} restaurant={siteContent?.restaurant} />
       <TopFood content={siteContent?.topFood} />

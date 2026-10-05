@@ -24,26 +24,26 @@
       "id": "just-eat",
       "name": "Just Eat",
       "url": "https://www.just-eat.co.uk/",
-      "image": "/images/migrated/Add-a-heading-6.png",
+      "image": "/images/migrated/delivery-platform-just-eat.png",
       "desc": "Fast local home delivery straight to your doorstep."
     },
     {
       "id": "deliveroo",
       "name": "Deliveroo",
       "url": "https://deliveroo.co.uk/",
-      "image": "/images/migrated/Add-a-heading-7.png",
+      "image": "/images/migrated/delivery-platform-deliveroo.png",
       "desc": "Track your authentic hot meal in real-time."
     },
     {
       "id": "uber-eats",
       "name": "Uber Eats",
       "url": "https://www.ubereats.com/",
-      "image": "/images/migrated/Add-a-heading-8.png",
+      "image": "/images/migrated/delivery-platform-uber-eats.png",
       "desc": "Order with your Uber account for quick pickup or delivery."
     }
   ],
   "hero": {
-    "badge": "Authentic South Indian Flavours    ",
+    "badge": "Authentic South Indian Flavours ",
     "title": "South Indian Vegetarian Restaurant Amersham  ",
     "subtitle": "Top-rated South-Indian Vegetarian Dining • 100% Pure Veg • Family-Friendly Dining • Authentic Dosa, Idli & Catering Services in Amersham.",
     "primaryCta": {
@@ -84,7 +84,7 @@
   },
   "about": {
     "badge": "Our Culinary Heritage",
-    "title": "Award-Winning South Indian Vegetarian Restaurant Amersham",
+    "title": "Award-Winning South Indian Vegetarian Restaurant Amersham ",
     "paragraphs": [
       "Welcome to Veg Chennai SriLalitha (VCS) Amersham, the premier destination for authentic, traditional South Indian vegetarian and vegan cuisine in Buckinghamshire.",
       "Rooted in centuries-old recipes from Chennai, our master chefs grind our batter fresh daily using stone grinders and prepare every sambar, rasam, and chutney from scratch using hand-roasted spices and cold-pressed sesame oil.",
@@ -274,14 +274,14 @@
     "outdoorButtonLink": "/outdoor-catering",
     "liveDosaButtonText": "Live Dosa Catering",
     "liveDosaButtonLink": "/live-dosa-catering",
-    "image": "/images/migrated/CaffeChennai-70-1024x683.jpg"
+    "image": "/images/migrated/vcs-catering-buffet-setup-1024x683.jpg"
   },
   "header": {
     "announcement": "Authentic South Indian Pure Vegetarian Cuisine in Amersham",
     "phone": "0149 497 2550",
     "orderButtonText": "Order Online",
     "orderButtonLink": "/#order",
-    "logoUrl": "/images/migrated/vcsr-logo.webp"
+    "logoUrl": "/images/migrated/vcs-amersham-round-logo.webp"
   },
   "whyChooseUs": {
     "badge": "",
@@ -316,12 +316,16 @@
     "home": {
       "pageName": "Home Page",
       "url": "/",
-      "title": "South Indian Vegetarian Restaurant Amersham | 100% Pure Veg",
+      "title": "South Indian Vegetarian Restaurant Amersham | 100% Pure Veg ",
       "description": "South Indian Vegetarian Restaurant Amersham Top-rated South-Indian Vegetarian Dining • 100% Pure Veg • Family-Friendly Dining View Menu Order Online",
       "keywords": "South Indian Restaurant Amersham, Vegetarian Restaurant Amersham, Dosa Amersham, Indian Food Buckinghamshire, Vegan Indian Amersham, Pure Veg Restaurant",
       "canonical": "https://vcsamersham.co.uk/",
       "h1": "South Indian Vegetarian Restaurant Amersham",
-      "ogImage": "/images/migrated/WhatsApp-Image-2025-11-01-at-15.41.07-2.jpeg"
+      "ogImage": "/images/migrated/vcs-authentic-south-indian-feast.jpeg",
+      "id": "home",
+      "route": "/",
+      "seoTitle": "South Indian Vegetarian Restaurant Amersham | 100% Pure Veg ",
+      "updatedAt": "2026-10-05T12:41:56.001Z"
     },
     "menu": {
       "pageName": "Menu Page",
@@ -341,7 +345,7 @@
       "keywords": "Outdoor Catering Amersham, Indian Catering Amersham, Vegetarian Catering UK, Wedding Catering Buckinghamshire",
       "canonical": "https://vcsamersham.co.uk/outdoor-catering/",
       "h1": "Authentic 100% Pure Vegetarian Catering",
-      "ogImage": "/images/migrated/WhatsApp-Image-2025-11-01-at-15.41.07-2.jpeg"
+      "ogImage": "/images/migrated/vcs-authentic-south-indian-feast.jpeg"
     },
     "liveDosaCatering": {
       "pageName": "Live Dosa Catering",
@@ -351,7 +355,7 @@
       "keywords": "Live Dosa Catering, Live Dosa Amersham, Live Dosa Counter UK, Live Dosa Buckinghamshire",
       "canonical": "https://vcsamersham.co.uk/live-dosa-catering/",
       "h1": "Live Dosa Catering",
-      "ogImage": "/images/migrated/WhatsApp-Image-2025-11-01-at-15.41.07-2.jpeg"
+      "ogImage": "/images/migrated/vcs-authentic-south-indian-feast.jpeg"
     },
     "contact": {
       "pageName": "Contact & Location",
@@ -361,7 +365,7 @@
       "keywords": "VCS Amersham contact, Indian restaurant Sycamore Road, book table VCS, phone number VCS Amersham",
       "canonical": "https://vcsamersham.co.uk/#contact",
       "h1": "Contact Us",
-      "ogImage": "/images/migrated/vcsr-logo.webp"
+      "ogImage": "/images/migrated/vcs-amersham-round-logo.webp"
     },
     "privacyPolicy": {
       "pageName": "Privacy Policy",
@@ -371,7 +375,7 @@
       "keywords": "Privacy policy VCS Amersham, customer data protection, terms and privacy",
       "canonical": "https://vcsamersham.co.uk/privacy-policy/",
       "h1": "Privacy Policy",
-      "ogImage": "/images/migrated/WhatsApp-Image-2025-11-01-at-15.41.07-2.jpeg"
+      "ogImage": "/images/migrated/vcs-authentic-south-indian-feast.jpeg"
     },
     "cookiesPolicy": {
       "pageName": "Cookies Policy",
@@ -381,7 +385,7 @@
       "keywords": "Cookies policy VCS Amersham, web cookies, site analytics and tracking",
       "canonical": "https://vcsamersham.co.uk/cookies-policy/",
       "h1": "Cookies Policy",
-      "ogImage": "/images/migrated/WhatsApp-Image-2025-11-01-at-15.41.07-2.jpeg"
+      "ogImage": "/images/migrated/vcs-authentic-south-indian-feast.jpeg"
     },
     "disclaimer": {
       "pageName": "Disclaimer",
@@ -391,7 +395,7 @@
       "keywords": "Disclaimer VCS Amersham, food allergen notice, dietary disclaimer",
       "canonical": "https://vcsamersham.co.uk/disclaimer/",
       "h1": "Disclaimer",
-      "ogImage": "/images/migrated/WhatsApp-Image-2025-11-01-at-15.41.07-2.jpeg"
+      "ogImage": "/images/migrated/vcs-authentic-south-indian-feast.jpeg"
     }
   },
   "customFormFields": [],
@@ -399,7 +403,7 @@
     "badge": "21+ Years Experience • UK Wide",
     "title": "Authentic 100% Pure Vegetarian Catering",
     "intro": "Authentic 100% vegetarian catering in UK, backed by 21+ years of experience. Proud to have catered to all the VIPs and VVIPs of Indian origin across the UK. Perfect for weddings, corporate events, housewarmings, and temple functions. Enjoy live dosa stations, soft idlis, crispy vadas, and traditional banana-leaf feasts with sambar, rasam, poriyal, and payasam—freshly prepared for a truly authentic and memorable experience.",
-    "bgImage": "/images/migrated/WhatsApp-Image-2025-11-01-at-15.41.07-2.jpeg",
+    "bgImage": "/images/migrated/vcs-authentic-south-indian-feast.jpeg",
     "heroImage": "/images/3d/thali-royal-3d.jpg",
     "options": [
       {

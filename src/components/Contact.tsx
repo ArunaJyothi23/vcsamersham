@@ -475,16 +475,22 @@ export default function Contact({ restaurant, siteContent }: ContactProps) {
             overflow: 'hidden',
             boxShadow: '0 16px 36px rgba(0, 0, 0, 0.08)',
             border: '1px solid #E8E0D5',
+            backgroundColor: '#F5F0EB',
           }}
         >
           <iframe
             loading="lazy"
-            src="https://maps.google.com/maps?q=srilatha%2094%2C%20sycamore%20Road%2C%20Amersham%2C%20HP6%205EN.&t=m&z=12&output=embed&iwloc=near"
-            title="srilatha 94, sycamore Road, Amersham, HP6 5EN."
-            aria-label="srilatha 94, sycamore Road, Amersham, HP6 5EN."
+            src={
+              rest.mapEmbedUrl ||
+              'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2475.2936263595237!2d-0.610547!3d51.674997!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x487661001dfadfb5%3A0x7d896323cfa0ea75!2sVeg%20Chennai%20SriLalitha!5e0!3m2!1sen!2suk!4v1700000000000!5m2!1sen!2suk'
+            }
+            title="Veg Chennai SriLalitha, 94 Sycamore Road, Amersham"
+            aria-label="Google Map showing location of Veg Chennai SriLalitha at 94 Sycamore Road, Amersham, HP6 5EN"
             width="100%"
             height="100%"
-            style={{ border: 0, minHeight: '420px', display: 'block' }}
+            style={{ border: 0, minHeight: '420px', display: 'block', width: '100%' }}
+            allowFullScreen
+            referrerPolicy="no-referrer-when-downgrade"
           />
         </div>
 

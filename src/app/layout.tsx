@@ -4,8 +4,8 @@ import "./globals.css";
 import ClientLayout from "../components/ClientLayout";
 import { getSiteContent } from "@/lib/firebaseService";
 
-export const dynamic = 'force-dynamic';
 export const revalidate = 0;
+export const dynamic = 'force-dynamic';
 
 const roboto = Roboto({
   subsets: ["latin"],
@@ -35,107 +35,12 @@ export const viewport: Viewport = {
   themeColor: "#C5926B",
 };
 
+import { buildPageMetadata, buildSiteLevelJsonLd } from "@/lib/seoService";
+
 export async function generateMetadata(): Promise<Metadata> {
   const siteContent = await getSiteContent();
-  const seo = siteContent?.seo?.home;
-  const title = seo?.title || "South Indian Vegetarian Restaurant Amersham | 100% Pure Veg";
-  const description =
-    seo?.description ||
-    "South Indian Vegetarian Restaurant Amersham Top-rated South-Indian Vegetarian Dining • 100% Pure Veg • Family-Friendly Dining View Menu Order Online";
-  const keywords = seo?.keywords ? seo.keywords.split(',').map((k: string) => k.trim()) : undefined;
-  const canonical = seo?.canonical || "/";
-  const ogImage = seo?.ogImage || "/images/migrated/WhatsApp-Image-2025-11-01-at-15.41.07-2.jpeg";
-
-  return {
-    metadataBase: new URL("https://vcsamersham.co.uk"),
-    title,
-    description,
-    keywords,
-    alternates: {
-      canonical,
-    },
-    openGraph: {
-      title,
-      description,
-      url: "https://vcsamersham.co.uk/",
-      siteName: "Veg Chennai Srilalitha Amersham",
-      locale: "en_GB",
-      type: "website",
-      images: [
-        {
-          url: ogImage,
-          width: 1200,
-          height: 630,
-          alt: title,
-        },
-      ],
-    },
-    twitter: {
-      card: "summary_large_image",
-      title,
-      description,
-      images: [ogImage],
-    },
-    icons: {
-      icon: "/icon.jpeg",
-      apple: "/icon.jpeg",
-    },
-  };
+  return buildPageMetadata('/', siteContent);
 }
-
-const jsonLd = {
-  "@context": "https://schema.org",
-  "@graph": [
-    {
-      "@type": "Restaurant",
-      "@id": "https://vcsamersham.co.uk/#restaurant",
-      "name": "Veg Chennai Srilalitha Restaurant Amersham",
-      "image": "/images/migrated/vcsr-logo.webp",
-      "url": "https://vcsamersham.co.uk/",
-      "telephone": "+44 1494 972550",
-      "email": "vcsramersham@gmail.com",
-      "priceRange": "££",
-      "servesCuisine": ["South Indian", "Indian", "Vegetarian", "Vegan Friendly"],
-      "address": {
-        "@type": "PostalAddress",
-        "streetAddress": "94 Sycamore Road",
-        "addressLocality": "Amersham",
-        "postalCode": "HP6 5EN",
-        "addressCountry": "GB"
-      },
-      "geo": {
-        "@type": "GeoCoordinates",
-        "latitude": 51.6749,
-        "longitude": -0.6074
-      },
-      "hasMenu": "https://vcsamersham.co.uk/#menu",
-      "acceptsReservations": "True",
-      "openingHoursSpecification": [
-        {
-          "@type": "OpeningHoursSpecification",
-          "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
-          "opens": "12:00",
-          "closes": "22:00"
-        },
-        {
-          "@type": "OpeningHoursSpecification",
-          "dayOfWeek": ["Saturday", "Sunday"],
-          "opens": "11:00",
-          "closes": "22:00"
-        }
-      ]
-    },
-    {
-      "@type": "WebSite",
-      "@id": "https://vcsamersham.co.uk/#website",
-      "url": "https://vcsamersham.co.uk/",
-      "name": "Veg Chennai Srilalitha Amersham",
-      "publisher": {
-        "@id": "https://vcsamersham.co.uk/#restaurant"
-      }
-    }
-  ]
-};
 
 export default async function RootLayout({
   children,
@@ -143,6 +48,7 @@ export default async function RootLayout({
   children: React.ReactNode;
 }>) {
   const siteContent = await getSiteContent();
+  const siteJsonLd = buildSiteLevelJsonLd(siteContent);
 
   return (
     <html lang="en" className={`${roboto.variable} ${plusJakartaSans.variable} ${playfairDisplay.variable}`}>
@@ -150,11 +56,11 @@ export default async function RootLayout({
         <link
           rel="preload"
           as="image"
-          href="/images/migrated/WhatsApp-Image-2025-11-01-at-15.41.07-2.jpeg"
+          href="/images/migrated/vcs-authentic-south-indian-feast.jpeg"
         />
         <script
           type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(siteJsonLd) }}
         />
       </head>
       <body

@@ -56,7 +56,7 @@ export default function Footer({ footer: propFooter, restaurant: propRestaurant 
         <div>
           <div style={{ backgroundColor: '#fff', display: 'inline-flex', padding: '0.4rem 0.8rem', borderRadius: '6px', marginBottom: '1.2rem' }}>
             <img 
-              src={footer.logoUrl || rest.logoUrl || "/images/migrated/vcsr-logo.webp"} 
+              src={footer.logoUrl || rest.logoUrl || "/images/migrated/vcs-amersham-round-logo.webp"} 
               alt="VCS Amersham Logo" 
               style={{ height: '40px', width: 'auto' }}
             />

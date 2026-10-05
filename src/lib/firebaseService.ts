@@ -10,10 +10,10 @@ const LOCAL_MENU_PATH = path.join(process.cwd(), 'src', 'data', 'menu.json');
 
 const FIRESTORE_BASE = `https://firestore.googleapis.com/v1/projects/${PROJECT_ID}/databases/(default)/documents`;
 
-// In-memory cache with short TTL (3s) for near-instant Admin Studio reflection
-let cachedSiteContent: { data: any; timestamp: number } | null = null;
-let cachedMenuData: { data: any; timestamp: number } | null = null;
-const CACHE_TTL = 3000; // 3 seconds
+// In-memory micro-cache with file timestamp tracking for instant updates without stale lag
+let cachedSiteContent: { data: any; timestamp: number; fileMtime: number } | null = null;
+let cachedMenuData: { data: any; timestamp: number; fileMtime: number } | null = null;
+const CACHE_TTL = 1000; // 1 second micro-cache for same-request deduping
 
 let lastGlobalVersion = Date.now();
 
@@ -23,6 +23,19 @@ export function invalidateCache() {
   lastGlobalVersion = Date.now();
 }
 
+const fetchWithTimeout = async (url: string, ms = 1200): Promise<Response> => {
+  const controller = new AbortController();
+  const id = setTimeout(() => controller.abort(), ms);
+  try {
+    const res = await fetch(url, { signal: controller.signal, cache: 'no-store' });
+    clearTimeout(id);
+    return res;
+  } catch (e) {
+    clearTimeout(id);
+    throw e;
+  }
+};
+
 /**
  * Returns latest content timestamp for live tab synchronization
  */
@@ -31,7 +44,7 @@ export async function getContentVersion(): Promise<number> {
   if (API_KEY && PROJECT_ID) {
     try {
       const url = `${FIRESTORE_BASE}/content/site?key=${API_KEY}&mask.fieldPaths=updatedAt`;
-      const res = await fetch(url, { cache: 'no-store' });
+      const res = await fetchWithTimeout(url, 1000);
       if (res.ok) {
         const json = await res.json();
         if (json?.updateTime) {
@@ -76,7 +89,18 @@ function deepMerge(target: any, source: any): any {
  */
 export async function getSiteContent(): Promise<any> {
   const now = Date.now();
-  if (cachedSiteContent && now - cachedSiteContent.timestamp < CACHE_TTL) {
+
+  let fileMtime = 0;
+  try {
+    const stat = await fs.stat(LOCAL_SITE_PATH);
+    fileMtime = stat.mtimeMs;
+  } catch {}
+
+  if (
+    cachedSiteContent &&
+    cachedSiteContent.fileMtime === fileMtime &&
+    now - cachedSiteContent.timestamp < CACHE_TTL
+  ) {
     return cachedSiteContent.data;
   }
 
@@ -90,27 +114,27 @@ export async function getSiteContent(): Promise<any> {
     defaultData = fallback.default || fallback;
   }
 
-  // 1. Fetch from Firebase Cloud Firestore FIRST so Admin Studio edits always reflect on the live site
+  // 1. Fetch from Firebase Cloud Firestore FIRST with fast timeout fallback
   if (API_KEY && PROJECT_ID) {
     try {
       const url = `${FIRESTORE_BASE}/content/site?key=${API_KEY}`;
-      const res = await fetch(url, { cache: 'no-store' });
+      const res = await fetchWithTimeout(url, 1200);
       if (res.ok) {
         const json = await res.json();
         if (json?.fields?.data?.stringValue) {
           const parsed = JSON.parse(json.fields.data.stringValue);
           const merged = deepMerge(defaultData, parsed);
-          cachedSiteContent = { data: merged, timestamp: now };
+          cachedSiteContent = { data: merged, timestamp: now, fileMtime };
           return merged;
         }
       }
     } catch (err) {
-      console.warn('Firebase Firestore read failed, falling back to local store:', err);
+      // Fast fallback to local store without delaying page load
     }
   }
 
   // 2. Fall back to local JSON file if offline or Firestore temporarily unavailable
-  cachedSiteContent = { data: defaultData, timestamp: now };
+  cachedSiteContent = { data: defaultData, timestamp: now, fileMtime };
   return defaultData;
 }
 
@@ -120,9 +144,9 @@ export async function getSiteContent(): Promise<any> {
 export async function saveSiteContent(data: any): Promise<{ success: boolean; cloud: boolean; error?: string }> {
   let cloudSuccess = false;
 
-  // Invalidate and set cache immediately so any concurrent read gets the new content instantly
+  // Invalidate cache immediately so any concurrent read gets the new content instantly
   lastGlobalVersion = Date.now();
-  cachedSiteContent = { data, timestamp: Date.now() };
+  cachedSiteContent = null;
 
   // Run local filesystem write and Firebase Firestore sync in parallel
   const localWritePromise = fs.writeFile(LOCAL_SITE_PATH, JSON.stringify(data, null, 2), 'utf-8').catch((err) => {
@@ -165,25 +189,36 @@ export async function saveSiteContent(data: any): Promise<{ success: boolean; cl
  */
 export async function getMenuData(): Promise<any> {
   const now = Date.now();
-  if (cachedMenuData && now - cachedMenuData.timestamp < CACHE_TTL) {
+
+  let fileMtime = 0;
+  try {
+    const stat = await fs.stat(LOCAL_MENU_PATH);
+    fileMtime = stat.mtimeMs;
+  } catch {}
+
+  if (
+    cachedMenuData &&
+    cachedMenuData.fileMtime === fileMtime &&
+    now - cachedMenuData.timestamp < CACHE_TTL
+  ) {
     return cachedMenuData.data;
   }
 
-  // 1. Fetch from Firebase Cloud Firestore FIRST
+  // 1. Fetch from Firebase Cloud Firestore FIRST with fast timeout fallback
   if (API_KEY && PROJECT_ID) {
     try {
       const url = `${FIRESTORE_BASE}/content/menu?key=${API_KEY}`;
-      const res = await fetch(url, { cache: 'no-store' });
+      const res = await fetchWithTimeout(url, 1200);
       if (res.ok) {
         const json = await res.json();
         if (json?.fields?.data?.stringValue) {
           const parsed = JSON.parse(json.fields.data.stringValue);
-          cachedMenuData = { data: parsed, timestamp: now };
+          cachedMenuData = { data: parsed, timestamp: now, fileMtime };
           return parsed;
         }
       }
     } catch (err) {
-      console.warn('Firebase Firestore menu read failed:', err);
+      // Fast fallback to local store without delaying page load
     }
   }
 
@@ -191,7 +226,7 @@ export async function getMenuData(): Promise<any> {
   try {
     const raw = await fs.readFile(LOCAL_MENU_PATH, 'utf-8');
     const parsed = JSON.parse(raw);
-    cachedMenuData = { data: parsed, timestamp: now };
+    cachedMenuData = { data: parsed, timestamp: now, fileMtime };
     return parsed;
   } catch {
     // Continue to import fallback
@@ -208,7 +243,7 @@ export async function saveMenuData(data: any): Promise<{ success: boolean; cloud
   let cloudSuccess = false;
 
   lastGlobalVersion = Date.now();
-  cachedMenuData = { data, timestamp: Date.now() };
+  cachedMenuData = null;
 
   const localWritePromise = fs.writeFile(LOCAL_MENU_PATH, JSON.stringify(data, null, 2), 'utf-8').catch(() => {
     // Expected on read-only serverless platforms

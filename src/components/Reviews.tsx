@@ -207,7 +207,7 @@ export default function Reviews({ testimonials }: ReviewsProps) {
               }}
             >
               <div style={{ display: 'flex', alignItems: 'flex-start', gap: '1rem', marginBottom: '1.25rem' }}>
-                <img src="/images/migrated/vcsr-logo.webp" alt="Logo" style={{ width: '42px', height: '42px', objectFit: 'contain' }} />
+                <img src="/images/migrated/vcs-amersham-round-logo.webp" alt="Veg Chennai Srilalitha logo" style={{ width: '42px', height: '42px', objectFit: 'contain' }} />
                 <strong style={{ fontSize: '0.92rem', margin: 0, fontWeight: 700, color: '#1A1A1A', textTransform: 'uppercase', lineHeight: 1.4, display: 'block' }}>
                   VEG CHENNAI SRILALITHA RESTAURANT, AMERSHAM
                 </strong>
